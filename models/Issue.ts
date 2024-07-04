@@ -5,6 +5,8 @@ export interface IIssue {
   name: string,
   description: string,
   type?: "component" | "page",
+  assigned_designers: mongoose.Types.ObjectId[],
+  assigned_engineers: mongoose.Types.ObjectId[],
   route_location?: string,
   design_figma_link?: string,
   eng_team_gh_issue_link?: string,
@@ -45,6 +47,14 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
     enum: ["component", "page"],
     required: false
   },
+  assigned_designers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"    
+  }],
+  assigned_engineers: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  }],
   route_location: {
     type: String,
     required: false
