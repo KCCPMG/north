@@ -38,7 +38,7 @@ const TablePropertySchema = new mongoose.Schema<ITableProperty, TablePropertyMod
 TablePropertySchema.virtual('table', {
   ref: "Table",
   localField: "_id",
-  foreignField: "user_stories"
+  foreignField: "table_properties"
 })
 
 
