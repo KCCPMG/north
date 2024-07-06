@@ -1,5 +1,6 @@
 "use client";
 import { useSession, signIn, signOut } from "next-auth/react"
+import Button from "@mui/material/Button";
 
 export default function Component() {
   const { data: session } = useSession()
@@ -7,14 +8,18 @@ export default function Component() {
     return (
       <>
         Signed in as {session.user?.email} <br />
-        <button onClick={() => signOut()}>Sign out</button>
+        <Button variant="outlined" onClick={() => signOut()}>
+          Sign out
+        </Button>
       </>
     )
   }
   return (
     <>
       Not signed in <br />
-      <button onClick={() => signIn()}>Sign in</button>
+      <Button variant="outlined" onClick={() => signIn()}>
+        Sign in
+      </Button>
     </>
   )
 }
