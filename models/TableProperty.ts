@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 export interface ITableProperty {
   field: string,
   field_type: "Unique ID" | "Timestamp" | "Text" | "Integer" | "True/False" | "Date",
-  special?: "text",
+  special?: string,
 }
 
 // declare instance methods, define later
