@@ -11,7 +11,7 @@ export default async function Page() {
   return (
     <>
       <h1>Tables</h1>
-      {/* {tables.map(table => {
+      {tables.map(table => {
         return (
           <Paper elevation={4} key={table._id.toString()}>
             <Typography level="h2">
@@ -31,7 +31,7 @@ export default async function Page() {
 
           </Paper>
         )
-      })} */}
+      })}
     </>
   )
 
