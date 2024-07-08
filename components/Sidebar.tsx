@@ -1,4 +1,5 @@
 import { Drawer, List, ListItem, ListItemText, Toolbar } from "@mui/material";
+import Link from "next/link";
 
 export default function Sidebar({width}: {width: string}) {
   return (
@@ -14,10 +15,14 @@ export default function Sidebar({width}: {width: string}) {
       <Toolbar />
       <List>
         <ListItem>
-          <ListItemText primary="Menu Item 1" />
+          <Link href="/database_tables">
+            <ListItemText primary="Database Tables" />
+          </Link>
         </ListItem>
         <ListItem>
-          <ListItemText primary="Menu Item 2" />
+          <Link href="/issues">
+            <ListItemText primary="Issues" />
+          </Link>
         </ListItem>
       </List>
     </Drawer>

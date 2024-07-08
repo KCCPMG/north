@@ -1,29 +1,26 @@
-import Table, { PopulatedTableType } from "@/models/Table"
 import { Paper } from "@mui/material";
 import Typography from '@mui/joy/Typography';
+import { getPopulatedTables, PopulatedTableType } from "@/models/Controls";
 
 
 export default async function Page() {
 
-  const tables: PopulatedTableType[] = await Table.populateAll();
-
-  await Table.goInsane();
-
-  // console.log(JSON.stringify(tables));
+  const tables: PopulatedTableType[] = await getPopulatedTables();
+  // console.log(JSON.stringify(tables, null, 2));
 
   return (
     <>
       <h1>Tables</h1>
-      {tables.map(table => {
+      {/* {tables.map(table => {
         return (
-          <Paper elevation={4}>
+          <Paper elevation={4} key={table._id.toString()}>
             <Typography level="h2">
               {table.name}
             </Typography>
             {
               table.table_properties.map(tp => {
                 return (
-                  <p>
+                  <p key={tp._id.toString()}>
                     <span>{tp.field}</span>
                     <span>{tp.field_type}</span>
                     <span>{tp.special}</span>
@@ -34,7 +31,7 @@ export default async function Page() {
 
           </Paper>
         )
-      })}
+      })} */}
     </>
   )
 
