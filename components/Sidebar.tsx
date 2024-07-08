@@ -1,5 +1,6 @@
-import { Drawer, List, ListItem, ListItemText, Toolbar } from "@mui/material";
-import Link from "next/link";
+import theme from "@/theme";
+import { Drawer, List, ListItem, ListItemText, Toolbar, Link } from "@mui/material";
+
 
 export default function Sidebar({width}: {width: string}) {
   return (
@@ -11,17 +12,18 @@ export default function Sidebar({width}: {width: string}) {
       sx={{
         width: width
       }}
+      PaperProps={{sx: {backgroundColor: "#3023b8"}}}
     >
       <Toolbar />
       <List>
         <ListItem>
           <Link href="/database_tables">
-            <ListItemText primary="Database Tables" />
+            <ListItemText sx={{color: "#fff"}} primary="Database Tables" />
           </Link>
         </ListItem>
         <ListItem>
           <Link href="/issues">
-            <ListItemText primary="Issues" />
+            <ListItemText sx={{color: "#fff"}} primary="Issues" />
           </Link>
         </ListItem>
       </List>

@@ -122,13 +122,13 @@ const theme = createTheme({
         disableRipple: true,
       },
     },
-    // MuiPaper: {
-    //   styleOverrides: {
-    //     root: {
-    //       margin: '12px'
-    //     },
-    //   },
-    // }
+    MuiAccordion: {
+      styleOverrides: {
+        root: {
+          margin: '2rem'
+        },
+      },
+    },
   },
 });
 

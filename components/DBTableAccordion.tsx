@@ -28,37 +28,35 @@ type DBTableAccordionProps = {
 export default function DBTableAccordion({table_id, table_name, table_properties}: DBTableAccordionProps ) {
 
   return (
-    <Paper elevation={4} key={table_id}>
-      <Accordion>
-        <AccordionSummary expandIcon={<KeyboardArrowUpIcon/>}>
-          <Typography level="h2">
-            {table_name}
-          </Typography>
-        </AccordionSummary>
-        <AccordionDetails>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Field</TableCell>
-                <TableCell>Field Type</TableCell>
-                <TableCell>Special</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {table_properties.map(tp => {
-                return (
-                  <TableRow key={tp.tp_id}>
-                    <TableCell>{tp.tp_field}</TableCell>
-                    <TableCell>{tp.tp_field_type}</TableCell>
-                    <TableCell>{tp.tp_special}</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
-        </AccordionDetails>
-      </Accordion>
-    </Paper>
+    <Accordion>
+      <AccordionSummary expandIcon={<KeyboardArrowUpIcon/>}>
+        <Typography level="h2">
+          {table_name}
+        </Typography>
+      </AccordionSummary>
+      <AccordionDetails>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Field</TableCell>
+              <TableCell>Field Type</TableCell>
+              <TableCell>Special</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {table_properties.map(tp => {
+              return (
+                <TableRow key={tp.tp_id}>
+                  <TableCell>{tp.tp_field}</TableCell>
+                  <TableCell>{tp.tp_field_type}</TableCell>
+                  <TableCell>{tp.tp_special}</TableCell>
+                </TableRow>
+              )
+            })}
+          </TableBody>
+        </Table>
+      </AccordionDetails>
+    </Accordion>
   )
 
 }
