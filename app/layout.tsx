@@ -5,6 +5,8 @@ import ClientSessionProvider from "@/context/ClientSessionProvider";
 import mongooseConnect from "@/lib/mongooseConnect";
 import Sidebar from "@/components/Sidebar";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import theme from "@/theme";
 
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
@@ -34,15 +36,17 @@ export default async function RootLayout({
       <ClientSessionProvider>
         <body className={inter.className}>
           <AppRouterCacheProvider>
-            <CssBaseline />
-            <Box display="flex">
-              <Topbar />
-              <Sidebar width={drawerWidth} />
-              <Box component="main">
-                <Toolbar />
-                {children}
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              <Box display="flex">
+                <Topbar />
+                <Sidebar width={drawerWidth} />
+                <Box component="main">
+                  <Toolbar />
+                  {children}
+                </Box>
               </Box>
-            </Box>
+            </ThemeProvider>
           </AppRouterCacheProvider>
         </body>
       </ClientSessionProvider>
