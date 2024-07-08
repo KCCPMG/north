@@ -3,7 +3,7 @@ import Paper from "@mui/material/Paper";
 import Accordion from "@mui/material/Accordion"
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
-import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowUpDown from '@mui/icons-material/KeyboardArrowDown';
 import Typography from '@mui/joy/Typography';
 import { PopulatedTableType } from "@/models/Controls";
 import { Table, TableHead, TableRow, TableCell, TableBody, Box, useTheme } from "@mui/material";
@@ -29,7 +29,7 @@ export default function DBTableAccordion({table_id, table_name, table_properties
 
   return (
     <Accordion>
-      <AccordionSummary expandIcon={<KeyboardArrowUpIcon/>}>
+      <AccordionSummary expandIcon={<KeyboardArrowUpDown/>}>
         <Typography level="h2">
           {table_name}
         </Typography>
