@@ -1,8 +1,6 @@
 import mongoose from "mongoose";
 import TableProperty, { ITableProperty } from "./TableProperty";
 
-console.log("TableProperty.modelName: ", TableProperty.modelName);
-
 // basic interface
 export interface ITable {
   name: string,

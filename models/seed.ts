@@ -2,18 +2,14 @@ import dotenv from "dotenv";
 import mongoose from "mongoose";
 import mongooseConnect from "@/lib/mongooseConnect";
 import User from "./User";
-import Issue from "./Issue";
+import Issue, { IIssue } from "./Issue";
 import Table from "./Table";
 import TableProperty from "./TableProperty";
 import UserStory from "./UserStory";
+import { getPopulatedIssues } from "./Controls";
 
 
-
-async function run() {
-
-  // mongoose setup
-  dotenv.config({path: ".env.local"});
-  await mongooseConnect();
+async function seedTables() {
 
   await Table.deleteMany({});
   await TableProperty.deleteMany({});
@@ -509,11 +505,6 @@ async function run() {
 
 
   // check
-  const populated_user_table = await user_table.populate({
-    path: 'table_properties',
-    select: 'field field_type special'
-  })
-
   const populated_tables = await Promise.all([
     user_table.populate({
       path: 'table_properties',
@@ -566,9 +557,143 @@ async function run() {
   
   ])
 
-
-
   console.log(JSON.stringify(populated_tables, null, 2));
+
+}
+
+
+async function seedIssues() {
+
+  await Issue.deleteMany({});
+  await UserStory.deleteMany({});
+
+  const CM_CollectingDataStep1 = await Issue.create({
+    name: "CM - Collecting Data Step 1",
+    issueType: "page",
+    description: "Step 1 in the desktop view of collecting data - outlining information to be known by CM or para in advance of data collection",
+    type: "page",
+    design_figma_link: "https://www.figma.com/design/m09znscRXNqSziAiEbNLTf/Compass-Designs?node-id=10411-66810&t=iwmoiYf1zfthSjMG-0",
+    design_complete: true
+  })
+
+  console.log("issue created");
+
+  const CM_CollectingDataStep1UserStories = await Promise.all([
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "View the "
+        },
+        {
+          textType: "tablePropertyRef",
+          text: "Goal.created_at"
+        }
+      ],
+    }),
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "View the "
+        },
+        {
+          textType: "tablePropertyRef",
+          text: "Goal.description"
+        }
+      ],
+    }),
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "View the "
+        },
+        {
+          textType: "tablePropertyRef",
+          text: "Subgoal.materials"
+        }
+      ]
+    }),
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "View the "
+        },
+        {
+          textType: "tablePropertyRef",
+          text: "Subgoal.instructions"
+        }
+      ]
+    }),
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "View the "
+        },
+        {
+          textType: "tablePropertyRef",
+          text: "Subgoal.frequency"
+        }
+      ]
+    }),
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "Link to the "
+        },
+        {
+          textType: "pageRef",
+          text: "Edit Goal Page"
+        },
+      ]
+    }),
+    UserStory.create({
+      issue: CM_CollectingDataStep1._id,
+      description: [
+        {
+          textType: "string",
+          text: "Have a button that clicks through to the "
+        },
+        {
+          textType: "pageRef",
+          text: "CM - Collecting Data Step 2"
+        },
+        {
+          textType: "string",
+          text: " page"
+        }
+      ]
+    })
+  ]);
+
+  console.log("user stories created and assigned");
+
+  // check
+  const populated_issues = await getPopulatedIssues();
+  console.log(JSON.stringify(populated_issues, null, 2));
+
+  return;
+
+}
+
+async function run() {
+
+  // mongoose setup
+  dotenv.config({path: ".env.local"});
+  await mongooseConnect();
+
+  // await seedTables();
+  await seedIssues();
 
   await mongoose.disconnect();
 }

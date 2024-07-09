@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-import Issue from "./Issue";
+import Issue, { IIssue } from "./Issue";
+import UserStory, { IUserStory } from "./UserStory";
 import Table, { ITable } from "./Table";
 import TableProperty, { ITableProperty } from "./TableProperty";
 import mongooseConnect from "@/lib/mongooseConnect";
@@ -14,6 +15,12 @@ export type PopulatedTableType = Omit<ITable, 'table_properties'> & {
   }>
 }
 
+export type PopulatedIssueType = IIssue & {
+  _id: mongoose.Types.ObjectId,
+  user_stories: Array<IUserStory & {
+    _id: mongoose.Types.ObjectId
+  }>
+}
 
 // functions
 export async function getPopulatedTables(): Promise<Array<PopulatedTableType>> {
@@ -31,6 +38,26 @@ export async function getPopulatedTables(): Promise<Array<PopulatedTableType>> {
     // console.log(JSON.stringify(tables, null, 2));
 
     return tables;
+
+  } catch(err) {
+    console.log(err);
+    throw err;
+  }
+}
+
+export async function getPopulatedIssues(): Promise<Array<PopulatedIssueType>> {
+
+  try {
+    
+    await mongooseConnect();
+
+    const issues = await Issue.find({})
+      .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
+        path: 'user_stories',
+        select: '_id issue description database_references links components'
+      });
+
+    return issues;
 
   } catch(err) {
     console.log(err);

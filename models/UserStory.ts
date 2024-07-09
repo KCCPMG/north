@@ -1,9 +1,14 @@
 import mongoose from "mongoose";
 
+export type dynamicDescription = Array<{
+  textType: "string" | "tableRef" | "tablePropertyRef" | "pageRef" | "componentRef",
+  text: string
+}>
+
 // basic interface
 export interface IUserStory {
   issue: mongoose.Types.ObjectId,
-  description: string,
+  description: dynamicDescription,
   database_references: mongoose.Types.ObjectId[],
   links: mongoose.Types.ObjectId[],
   components: mongoose.Types.ObjectId[]
@@ -36,10 +41,17 @@ export interface UserStoryModel extends mongoose.Model<IUserStory, {}, IUserStor
 const UserStorySchema = new mongoose.Schema<IUserStory, UserStoryModel, IUserStoryMethods>({ 
   issue: {
     type: mongoose.Schema.Types.ObjectId,
-    required: true
+    required: true,
+    ref: "Issue"
   },
   description: {
-    type: String,
+    type: [{
+      textType: {
+        type: String,
+        enum: ["string", "tableRef", "tablePropertyRef", "pageRef", "componentRef"]
+      },
+      text: String
+    }],
     required: true
   },
   database_references: [{

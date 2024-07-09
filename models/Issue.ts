@@ -1,17 +1,17 @@
 import mongoose from "mongoose";
+import UserStory from "./UserStory";
 
 // basic interface
 export interface IIssue {
   name: string,
   description: string,
-  type?: "component" | "page",
+  issueType: "component" | "page",
   assigned_designers: mongoose.Types.ObjectId[],
   assigned_engineers: mongoose.Types.ObjectId[],
   route_location?: string,
   design_figma_link?: string,
   eng_team_gh_issue_link?: string,
   eng_team_files: string[],
-  user_stories: mongoose.Types.ObjectId[],
   // merge checklist
   design_complete: boolean,
   eng_implementation_complete: boolean,
@@ -42,7 +42,7 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
     type: String,
     required: true
   },
-  type: {
+  issueType: {
     type: String,
     enum: ["component", "page"],
     required: false
@@ -70,10 +70,6 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
   eng_team_files: [{
     type: String,
   }],
-  user_stories: [{
-    type: mongoose.Types.ObjectId,
-    ref: "UserStory"
-  }],
   // merge checklist
   design_complete: {
     type: Boolean,
@@ -99,13 +95,18 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
       }
     }
   }
+}, {
+  toJSON: { virtuals: true }, // So `res.json()` and other `JSON.stringify()` functions include virtuals
+  toObject: { virtuals: true } // So `console.log()` and other functions that use `toObject()` include virtuals
 })
+
+console.log('UserStory.modelName: ', UserStory.modelName)
 
 // back references
 IssueSchema.virtual('user_stories', {
-  ref: "UserStory",
-  localField: "_id",
-  foreignField: "issue"
+  ref: UserStory.modelName,
+  localField: '_id',
+  foreignField: 'issue'
 })
 
 // define instance methods
