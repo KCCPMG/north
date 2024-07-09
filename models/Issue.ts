@@ -88,12 +88,17 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
       },
       approving_designer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: User.modelName
+        ref: User.modelName,
+        required: false
       },
       approval_date: {
         type: Date,
         required: false
       }
+    },
+    required: true,
+    default: {
+      meets_design: false,
     }
   }
 }, {
