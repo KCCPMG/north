@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import UserStory from "./UserStory";
+import User from "./User";
 
 // basic interface
 export interface IIssue {
@@ -49,11 +50,11 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
   },
   assigned_designers: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"    
+    ref: User.modelName    
   }],
   assigned_engineers: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User"
+    ref: User.modelName
   }],
   route_location: {
     type: String,
@@ -87,7 +88,7 @@ const IssueSchema = new mongoose.Schema<IIssue, IssueModel, IIssueMethods>({
       },
       approving_designer: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        ref: User.modelName
       },
       approval_date: {
         type: Date,

@@ -29,6 +29,19 @@ export type PopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_e
   }>,
 }
 
+export type ParsedPopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_engineers'> & {
+  _id: string,
+  user_stories: Array<IUserStory & {
+    _id: string
+  }>,
+  assigned_designers: Array<IUser & {
+    _id: string
+  }>,
+  assigned_engineers: Array<IUser & {
+    _id: string
+  }>,
+}
+
 // functions
 export async function getPopulatedTables(): Promise<Array<PopulatedTableType>> {
 

@@ -41,7 +41,7 @@ export default async function RootLayout({
               <Box display="flex">
                 <Topbar />
                 <Sidebar width={drawerWidth} />
-                <Box sx={{margin: 4}} component="main">
+                <Box width={"100%"} sx={{margin: 4}} component="main">
                   <Toolbar />
                   {children}
                 </Box>
