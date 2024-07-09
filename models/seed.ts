@@ -567,12 +567,19 @@ async function seedIssues() {
   await Issue.deleteMany({});
   await UserStory.deleteMany({});
 
+  const connor = await User.create({
+    email: "connorwales@gmail.com",
+    registered: true,
+    active: true
+  })
+
   const CM_CollectingDataStep1 = await Issue.create({
     name: "CM - Collecting Data Step 1",
     issueType: "page",
     description: "Step 1 in the desktop view of collecting data - outlining information to be known by CM or para in advance of data collection",
     type: "page",
     design_figma_link: "https://www.figma.com/design/m09znscRXNqSziAiEbNLTf/Compass-Designs?node-id=10411-66810&t=iwmoiYf1zfthSjMG-0",
+    assigned_engineers: [connor._id],
     design_complete: true
   })
 
