@@ -9,6 +9,8 @@ export type dynamicDescription = Array<{
 export interface IUserStory {
   issue: mongoose.Types.ObjectId,
   description: dynamicDescription,
+  engineering_done: boolean,
+  design_done: boolean,
   database_references: mongoose.Types.ObjectId[],
   links: mongoose.Types.ObjectId[],
   components: mongoose.Types.ObjectId[]
@@ -53,6 +55,14 @@ const UserStorySchema = new mongoose.Schema<IUserStory, UserStoryModel, IUserSto
       text: String
     }],
     required: true
+  },
+  engineering_done: {
+    type: Boolean,
+    default: false,
+  },
+  design_done: {
+    type: Boolean,
+    default: false,
   },
   database_references: [{
     type: mongoose.Schema.Types.ObjectId,
