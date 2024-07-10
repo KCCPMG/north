@@ -2,21 +2,21 @@ import { Typography, TableRow, TableCell } from "@mui/material";
 import { ReactNode } from "react";
 
 type ModalTableRowProps = {
-  firstText: string,
-  secondText: string | undefined | ReactNode
+  property: string,
+  value: string | undefined | ReactNode
 }
 
-export default function ModalTableRow({firstText, secondText}: ModalTableRowProps) {
+export default function ModalTableRow({property, value}: ModalTableRowProps) {
   return (
     <TableRow>
       <TableCell>
         <Typography variant="body2">
-          {firstText}
+          {property}
         </Typography>
       </TableCell>
       <TableCell>
         <Typography variant="body2">
-          {secondText}
+          {value}
         </Typography>
       </TableCell>
     </TableRow>

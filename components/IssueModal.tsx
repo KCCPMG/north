@@ -1,6 +1,9 @@
 import { ParsedPopulatedIssueType } from "@/models/Controls"
-import { Modal, Typography, Box, Divider, Table, TableRow, TableCell, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
+import { Modal, Typography, Box, Divider, Table, TableHead, TableRow, TableCell, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import BlockIcon from '@mui/icons-material/Block';
 import ModalTableRow from "./ModalTableRow";
+import { useTheme } from "@mui/material";
 
 type IssueModalProps = {
   issue: ParsedPopulatedIssueType,
@@ -9,6 +12,8 @@ type IssueModalProps = {
 }
 
 export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
+
+  const theme = useTheme();
 
   return (
     <Dialog 
@@ -29,20 +34,20 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
             </Typography>
           <Table>
             <ModalTableRow 
-              firstText="Designers:" 
-              secondText={issue.assigned_designers.map(ad => ad.email).join(", ")}
+              property="Designers:" 
+              value={issue.assigned_designers.map(ad => ad.email).join(", ")}
             />
             <ModalTableRow 
-              firstText="Engineers:"
-              secondText={issue.assigned_engineers.map(ad => ad.email).join(", ")}
+              property="Engineers:"
+              value={issue.assigned_engineers.map(ad => ad.email).join(", ")}
             />
             <ModalTableRow 
-              firstText="Route Location:"
-              secondText={issue.route_location || ""}
+              property="Route Location:"
+              value={issue.route_location || ""}
             />
             <ModalTableRow 
-              firstText="Design Figma Link"
-              secondText={issue.design_figma_link && 
+              property="Design Figma Link"
+              value={issue.design_figma_link && 
                 <Link
                   href={issue.design_figma_link}
                 >
@@ -51,26 +56,69 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
               }
             />
             <ModalTableRow 
-              firstText="Eng. GitHub Issue Link"
-              secondText={issue.eng_team_gh_issue_link || ""}
+              property="Eng. GitHub Issue Link"
+              value={issue.eng_team_gh_issue_link || ""}
             />
             <ModalTableRow 
-              firstText="Eng. Team Files"
-              secondText={issue.eng_team_files.join(", ") || ""}
+              property="Eng. Team Files"
+              value={issue.eng_team_files.join(", ") || ""}
             />
           </Table>
-          <Typography variant="h6">Merge Checklist</Typography>
+          <Table>
+            <TableHead>
+              <Typography variant="h6">Merge Checklist</Typography>
+            </TableHead>
+          </Table>
+            <TableRow>
+              <TableCell>
+                Design Complete:
+              </TableCell>
+              <TableCell>
+                {issue.design_complete ? 
+                  <CheckCircleIcon color="primary" /> :
+                  <BlockIcon />
+                }
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                Engineering Complete:
+              </TableCell>
+              <TableCell>
+                {issue.eng_implementation_complete ? 
+                  <CheckCircleIcon color="primary" /> :
+                  <BlockIcon />
+                }
+              </TableCell>
+            </TableRow>
+            <TableRow>
+              <TableCell>
+                Engineering Meets Design:
+              </TableCell>
+              <TableCell>
+                {issue.eng_implementation_meets_design.meets_design ? 
+                  <>
+                    <CheckCircleIcon color="primary" /> 
+                    <Typography variant="body2">
+                      {issue.eng_implementation_meets_design.approving_designer.email}{" - "}
+                      {issue.eng_implementation_meets_design.approval_date.toDateString()}
+                    </Typography>
+                  </>:
+                  <BlockIcon />
+                }
+              </TableCell>
+            </TableRow>
           {/* <ModalTableRow 
-            firstText="Design Complete: "
-            secondText={issue.}
+            property="Design Complete: "
+            value={issue.}
           />
           <ModalTableRow 
-            firstText=""
-            secondText={issue.}
+            property=""
+            value={issue.}
           />
           <ModalTableRow 
-            firstText=""
-            secondText={issue.}
+            property=""
+            value={issue.}
           /> */}
         </DialogContent>
       </Box>
@@ -78,37 +126,3 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
     </Dialog>
   )
 }
-
-
-const style = {
-  position: 'absolute' as 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: "70%",
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
-
-
-// export  function Blah({ issue, open, onClose: handleClose }: IssueModalProps) {
-//   return (
-//     <Modal
-//       open={open}
-//       onClose={handleClose}
-//       aria-labelledby="modal-modal-title"
-//       aria-describedby="modal-modal-description"
-//     >
-//       <Box sx={style}>
-//         <Typography id="modal-modal-title" variant="h6" component="h2">
-//           Text in a modal
-//         </Typography>
-//         <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-//           Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-//         </Typography>
-//       </Box>
-//     </Modal>
-//   )
-// }

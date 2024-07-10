@@ -16,7 +16,7 @@ export type PopulatedTableType = Omit<ITable, 'table_properties'> & {
   }>
 }
 
-export type PopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_engineers'> & {
+export type PopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_engineers' | 'eng_implementation_meets_design'> & {
   _id: mongoose.Types.ObjectId,
   user_stories: Array<IUserStory & {
     _id: mongoose.Types.ObjectId
@@ -27,9 +27,16 @@ export type PopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_e
   assigned_engineers: Array<IUser & {
     _id: mongoose.Types.ObjectId
   }>,
+  eng_implementation_meets_design: {
+    meets_design: boolean,
+    approving_designer: IUser & {
+      _id: mongoose.Types.ObjectId
+    },
+    approval_date: Date
+  }
 }
 
-export type ParsedPopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_engineers'> & {
+export type ParsedPopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assigned_engineers' | 'eng_implementation_meets_design'> & {
   _id: string,
   user_stories: Array<IUserStory & {
     _id: string
@@ -40,6 +47,13 @@ export type ParsedPopulatedIssueType = Omit<IIssue, 'assigned_designers' | 'assi
   assigned_engineers: Array<IUser & {
     _id: string
   }>,
+  eng_implementation_meets_design: {
+    meets_design: boolean,
+    approving_designer: IUser & {
+      _id: string
+    },
+    approval_date: Date
+  }
 }
 
 // functions
@@ -83,7 +97,17 @@ export async function getPopulatedIssues(): Promise<Array<PopulatedIssueType>> {
       .populate<{assigned_engineers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_engineers',
         select: '_id email imageUrl registered active'
-      });;
+      })
+      .populate<{eng_implementation_meets_design: {
+        meets_design: boolean,
+        approving_designer: IUser & {
+          _id: mongoose.Types.ObjectId
+        },
+        approval_date: Date
+      }}>({
+        path: 'eng_implementation_meets_design.approving_designer',
+        select: '_id email imageUrl registered active'
+      });
 
     return issues;
 

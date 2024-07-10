@@ -136,7 +136,14 @@ const theme = createTheme({
           marginBottom: '1rem'
         }
       }
-    }
+    },
+    // MuiSvgIcon: {
+    //   styleOverrides: {
+    //     root: {
+    //       color: "#3023b8"
+    //     }
+    //   }
+    // }
   },
 });
 
