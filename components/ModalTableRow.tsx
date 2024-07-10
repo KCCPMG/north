@@ -1,23 +1,41 @@
-import { Typography, TableRow, TableCell } from "@mui/material";
+import { useEditIssueContext } from "@/context/EditIssueContext";
+import { Typography, TableRow, TableCell, TextField } from "@mui/material";
 import { ReactNode } from "react";
 
 type ModalTableRowProps = {
   property: string,
-  value: string | undefined | ReactNode
+  textValue: string | undefined,
+  child?: ReactNode
 }
 
-export default function ModalTableRow({property, value}: ModalTableRowProps) {
+export default function ModalTableRow({property, textValue, child}: ModalTableRowProps) {
+
+  const { editMode } = useEditIssueContext();
+
+
   return (
     <TableRow>
-      <TableCell>
+      <TableCell sx={{
+        width: "12rem",
+        borderBottom: "none"
+      }}>
         <Typography variant="body2">
           {property}
         </Typography>
       </TableCell>
-      <TableCell>
-        <Typography variant="body2">
-          {value}
-        </Typography>
+      <TableCell sx={{borderBottom: "none"}}>
+        {editMode ? 
+          <TextField 
+            defaultValue={textValue} 
+            variant="standard" 
+            multiline
+            fullWidth
+            maxRows={2}
+          /> :
+          <Typography variant="body2">
+            {child ? child : textValue}
+          </Typography>
+        }
       </TableCell>
     </TableRow>
   )

@@ -24,7 +24,8 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
         setEditMode(false);
         onClose(event, reason);
       }}
-      maxWidth="lg"
+      fullWidth
+      maxWidth="md"
       aria-labelledby="issue-dialog-title"
       aria-describedby="issue-dialog-description"
     >
@@ -39,25 +40,30 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
         </DialogTitle>
         <Divider />
         <DialogContent>
-          <Typography variant="body1" id="issue-dialog-description">
+          {/* <Typography variant="body1" id="issue-dialog-description">
             {issue.description}
-            </Typography>
+          </Typography> */}
           <Table>
             <ModalTableRow 
+              property="Description:" 
+              textValue={issue.description}
+            />
+            <ModalTableRow 
               property="Designers:" 
-              value={issue.assigned_designers.map(ad => ad.email).join(", ")}
+              textValue={issue.assigned_designers.map(ad => ad.email).join(", ")}
             />
             <ModalTableRow 
               property="Engineers:"
-              value={issue.assigned_engineers.map(ad => ad.email).join(", ")}
+              textValue={issue.assigned_engineers.map(ad => ad.email).join(", ")}
             />
             <ModalTableRow 
               property="Route Location:"
-              value={issue.route_location || ""}
+              textValue={issue.route_location || ""}
             />
             <ModalTableRow 
               property="Design Figma Link"
-              value={issue.design_figma_link && 
+              textValue={issue.design_figma_link}
+              child={issue.design_figma_link && 
                 <Link
                   href={issue.design_figma_link}
                 >
@@ -67,18 +73,22 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
             />
             <ModalTableRow 
               property="Eng. GitHub Issue Link"
-              value={issue.eng_team_gh_issue_link || ""}
+              textValue={issue.eng_team_gh_issue_link || ""}
+              child={issue.eng_team_gh_issue_link && 
+                <Link href={issue.eng_team_gh_issue_link} >
+                  {issue.eng_team_gh_issue_link}
+                </Link>
+              }
             />
             <ModalTableRow 
               property="Eng. Team Files"
-              value={issue.eng_team_files.join(", ") || ""}
+              textValue={issue.eng_team_files.join(", ") || ""}
             />
           </Table>
-          <Table>
+          <Table sx={{marginTop: 1.5}}>
             <TableHead>
               <Typography variant="h6">Merge Checklist</Typography>
             </TableHead>
-          </Table>
             <TableRow>
               <TableCell>
                 Design Complete:
@@ -118,6 +128,7 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
                 }
               </TableCell>
             </TableRow>
+          </Table>
           {/* <ModalTableRow 
             property="Design Complete: "
             value={issue.}
