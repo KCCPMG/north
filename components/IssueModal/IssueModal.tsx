@@ -3,10 +3,10 @@ import { ParsedPopulatedIssueType } from "@/models/Controls"
 import { Button, Typography, Box, Divider, Table, TableHead, TableRow, TableCell, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
-import ModalTableRow from "./IssueModalTableRow";
+import ModalTableRow from "./TableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEditIssueContext } from "@/context/EditIssueContext";
-import IssueModalMergeChecklist from "./IssueModalMergeChecklist";
+import IssueModalMergeChecklist from "./MergeChecklist";
 
 type IssueModalProps = {
   issue: ParsedPopulatedIssueType,
@@ -90,21 +90,8 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
             />
           </Table>
           <IssueModalMergeChecklist issue={issue} />
-          {/* <ModalTableRow 
-            property="Design Complete: "
-            value={issue.}
-          />
-          <ModalTableRow 
-            property=""
-            value={issue.}
-          />
-          <ModalTableRow 
-            property=""
-            value={issue.}
-          /> */}
         </DialogContent>
       </Box>
-
     </Dialog>
   )
 }

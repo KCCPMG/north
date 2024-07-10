@@ -2,7 +2,7 @@
 import { Card, CardActions, CardContent, Typography, Button, Divider } from "@mui/material"
 import { ParsedPopulatedIssueType } from "@/models/Controls";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
-import IssueModal from "./IssueModal";
+import IssueModal from "./IssueModal/IssueModal";
 import { useState } from "react";
 import { EditIssueContextProvider } from "@/context/EditIssueContext";
 
