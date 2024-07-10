@@ -4,6 +4,7 @@ import { ParsedPopulatedIssueType } from "@/models/Controls";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import IssueModal from "./IssueModal";
 import { useState } from "react";
+import { EditIssueContextProvider } from "@/context/EditIssueContext";
 
 type IssueCardProps = {
   issue: ParsedPopulatedIssueType
@@ -33,11 +34,13 @@ export default function IssueCard({ issue }: IssueCardProps) {
           <Button onClick={() => setModalOpen(true)} sx={{"marginX": "auto"}}>
             <OpenInFullIcon />
           </Button>
-          <IssueModal 
-            issue={issue} 
-            open={modalOpen} 
-            onClose={() => setModalOpen(false)} 
-          />
+          <EditIssueContextProvider>
+            <IssueModal 
+              issue={issue} 
+              open={modalOpen} 
+              onClose={() => setModalOpen(false)} 
+            />
+          </EditIssueContextProvider>
         </CardActions>
       </CardContent>
     </Card>

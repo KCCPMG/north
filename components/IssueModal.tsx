@@ -1,9 +1,11 @@
+"use client";
 import { ParsedPopulatedIssueType } from "@/models/Controls"
-import { Modal, Typography, Box, Divider, Table, TableHead, TableRow, TableCell, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
+import { Button, Typography, Box, Divider, Table, TableHead, TableRow, TableCell, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import ModalTableRow from "./ModalTableRow";
-import { useTheme } from "@mui/material";
+import EditIcon from '@mui/icons-material/Edit';
+import { useEditIssueContext } from "@/context/EditIssueContext";
 
 type IssueModalProps = {
   issue: ParsedPopulatedIssueType,
@@ -13,7 +15,7 @@ type IssueModalProps = {
 
 export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
 
-  const theme = useTheme();
+  const { editMode, setEditMode } = useEditIssueContext();
 
   return (
     <Dialog 
@@ -26,6 +28,11 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
       <Box>
         <DialogTitle id="issue-dialog-title">
           {issue.issueType[0].toUpperCase()}{issue.issueType.slice(1)}: {issue.name}
+          {!editMode && 
+            <Button>
+              <EditIcon onClick={()=>setEditMode(true)} color="primary" />
+            </Button>
+          }
         </DialogTitle>
         <Divider />
         <DialogContent>
