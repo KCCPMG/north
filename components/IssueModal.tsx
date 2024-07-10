@@ -20,7 +20,10 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
   return (
     <Dialog 
       open={open} 
-      onClose={onClose}
+      onClose={(event, reason) => {
+        setEditMode(false);
+        onClose(event, reason);
+      }}
       maxWidth="lg"
       aria-labelledby="issue-dialog-title"
       aria-describedby="issue-dialog-description"
