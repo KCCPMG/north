@@ -129,6 +129,14 @@ const theme = createTheme({
         },
       },
     },
+    MuiDivider: {
+      styleOverrides: {
+        root: {
+          marginTop: '1rem',
+          marginBottom: '1rem'
+        }
+      }
+    }
   },
 });
 

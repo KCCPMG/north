@@ -43,6 +43,7 @@ export default async function Page() {
         }}>
           <Typography sx={{marginX: "auto"}} variant="h5">{tup[0]}</Typography>
         </Stack>
+        <Divider variant="fullWidth" />
         {tup[1].map(issue => <IssueCard issue={issue} key={issue._id} />)}
       </Stack>
     )
@@ -64,25 +65,6 @@ export default async function Page() {
           divider={<Divider orientation="vertical" flexItem/>}
         >
           {columns}
-          {/* <Stack direction="column">
-            <Typography variant="h5">In Design</Typography>
-            {parsedIssues.map(issue => <IssueCard issue={issue} key={issue._id} />)}
-
-          </Stack>
-          <Stack direction="column">
-            <Typography variant="h5">In Progress</Typography>
-            {parsedIssues.map(issue => <IssueCard issue={issue} key={issue._id} />)}
-
-          </Stack>
-          <Stack direction="column">
-            <Typography variant="h5">Merging</Typography>
-            {parsedIssues.map(issue => <IssueCard issue={issue} key={issue._id} />)}
-
-          </Stack>
-          <Stack direction="column">
-            <Typography variant="h5">Complete</Typography>
-            {parsedIssues.map(issue => <IssueCard issue={issue} key={issue._id} />)} 
-          </Stack> */}
         </Stack>
       </Box>
     </>
