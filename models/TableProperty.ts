@@ -32,6 +32,9 @@ const TablePropertySchema = new mongoose.Schema<ITableProperty, TablePropertyMod
     type: String,
     required: false
   }
+}, {
+  toJSON: {virtuals: true},
+  toObject: {virtuals: true}
 })
 
 // back references

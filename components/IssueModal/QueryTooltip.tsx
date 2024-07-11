@@ -9,20 +9,32 @@ type QueryTooltipProps = {
 
 export default function QueryTooltip({textType, text}: QueryTooltipProps) {
 
-  const [searchResult, setSearchResult] = useState()
+  const [searchResult, setSearchResult] = useState("")
 
-  useEffect(() => {
-    fetch("/api/refSearch?query=" + new URLSearchParams(text))
-    .then(res => {
-      return res.json()
-    }).then(json => {
-      console.log(json);
-    })
-  }, [])
+  async function searchRef() {
+    try {
+      const response = await fetch("/api/refSearch?" + new URLSearchParams({
+        query: text,
+        ref: textType
+      }))
+      const json = await response.json();
+      setSearchResult(json);
+    } catch (err) {
+      console.log(err);
+      setSearchResult("Something went wrong");
+    }
+  }
+
+  // useEffect(() => {
+  //   searchRef();
+  // }, [])
 
   return (
     <Tooltip
-      title={"Ima tooltip"}
+      title={
+        searchResult
+      }
+      onMouseEnter={searchRef}
     >
       <Chip 
         variant="outlined"
