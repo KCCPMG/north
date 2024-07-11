@@ -1,8 +1,10 @@
-import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Checkbox, TextField } from "@mui/material"
+import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Checkbox, TextField, Chip } from "@mui/material"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import { IUserStory } from "@/models/UserStory"
 import { useEditIssueContext } from "@/context/EditIssueContext"
+import QueryTooltip from "./QueryTooltip";
+import { v4 as uuidv4 } from 'uuid';
 
 
 type UserStoryProps = {
@@ -13,8 +15,26 @@ export default function UserStory({story}: UserStoryProps) {
 
   const { editMode } = useEditIssueContext();
 
+  const joinedDescription = story.description.map(des => {
+    if (des.textType === "string") {
+      return des.text
+    } else return (
+      <QueryTooltip 
+        textType={des.textType}
+        text={des.text}   
+        key={uuidv4()}
+      />
+    )
+  })
+
+  // const assembledStory = <span>
+  //   {description.join("")}
+  // </span>
+
+
+
   return (
-    <TableRow>
+    <TableRow key={story._id}>
       <TableCell sx={{borderBottom: "none"}}>
         {
           editMode ? 
@@ -25,9 +45,7 @@ export default function UserStory({story}: UserStoryProps) {
             fullWidth
             maxRows={2}
           /> :
-
-          story.description.map(des => <span>{des.text}</span>) 
-      
+          <span>{joinedDescription}</span>
         }
       </TableCell>
       <TableCell 
