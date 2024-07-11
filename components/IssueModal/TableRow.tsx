@@ -8,26 +8,28 @@ type ModalTableRowProps = {
   child?: ReactNode
 }
 
-export default function ModalTableRow({property, textValue, child}: ModalTableRowProps) {
+export default function ModalTableRow({ property, textValue, child }: ModalTableRowProps) {
 
   const { editMode } = useEditIssueContext();
 
 
   return (
     <TableRow>
-      <TableCell sx={{
-        width: "12rem",
-        borderBottom: "none"
-      }}>
+      <TableCell
+        sx={{
+          width: "12rem",
+          borderBottom: "none"
+        }}
+      >
         <Typography variant="body2">
           {property}
         </Typography>
       </TableCell>
-      <TableCell sx={{borderBottom: "none"}}>
-        {editMode ? 
-          <TextField 
-            defaultValue={textValue} 
-            variant="standard" 
+      <TableCell sx={{ borderBottom: "none" }}>
+        {editMode ?
+          <TextField
+            defaultValue={textValue}
+            variant="standard"
             multiline
             fullWidth
             maxRows={2}

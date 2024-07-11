@@ -1,12 +1,11 @@
 "use client";
 import { ParsedPopulatedIssueType } from "@/models/Controls"
-import { Button, Typography, Box, Divider, Table, TableHead, TableRow, TableCell, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import BlockIcon from '@mui/icons-material/Block';
+import { Button, Typography, Box, Divider, Table, TableHead, Dialog, DialogTitle, DialogContent, Link } from "@mui/material"
 import ModalTableRow from "./TableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEditIssueContext } from "@/context/EditIssueContext";
 import IssueModalMergeChecklist from "./MergeChecklist";
+import UserStories from "./UserStories";
 
 type IssueModalProps = {
   issue: ParsedPopulatedIssueType,
@@ -89,6 +88,7 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
               textValue={issue.eng_team_files.join(", ") || ""}
             />
           </Table>
+          <UserStories stories={issue.user_stories} />
           <IssueModalMergeChecklist issue={issue} />
         </DialogContent>
       </Box>
