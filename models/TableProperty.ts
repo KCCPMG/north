@@ -5,6 +5,7 @@ export interface ITableProperty {
   field: string,
   field_type: "Unique ID" | "Timestamp" | "Text" | "Integer" | "True/False" | "Date",
   special?: string,
+  table: mongoose.Types.ObjectId
 }
 
 // declare instance methods, define later
@@ -31,6 +32,10 @@ const TablePropertySchema = new mongoose.Schema<ITableProperty, TablePropertyMod
   special: {
     type: String,
     required: false
+  },
+  table: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Table"
   }
 }, {
   toJSON: {virtuals: true},
@@ -38,11 +43,7 @@ const TablePropertySchema = new mongoose.Schema<ITableProperty, TablePropertyMod
 })
 
 // back references
-TablePropertySchema.virtual('table', {
-  ref: "Table",
-  localField: "_id",
-  foreignField: "table_properties"
-})
+
 
 
 // define instance methods

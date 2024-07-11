@@ -22,15 +22,18 @@ const TableSchema = new mongoose.Schema<ITable, TableModel, ITableMethods>({
   name: {
     type: String,
     required: true
-  },
-  table_properties: [{
-    type: mongoose.Schema.Types.ObjectId,
-    ref: TableProperty.modelName
-  }],
+  }
+}, {
+  toJSON: {virtuals: true},
+  toObject: {virtuals: true}
 })
 
 // back references
-
+TableSchema.virtual('table_properties', {
+  ref: TableProperty.modelName,
+  localField: "_id",
+  foreignField: "table"
+})
 
 // define instance methods
 
