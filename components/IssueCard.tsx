@@ -7,12 +7,24 @@ import { useState } from "react";
 import { EditIssueContextProvider } from "@/context/EditIssueContext";
 
 type IssueCardProps = {
-  issue: ParsedPopulatedIssueType
+  initialIssue: ParsedPopulatedIssueType
 }
 
-export default function IssueCard({ issue }: IssueCardProps) {
+export default function IssueCard({ initialIssue }: IssueCardProps) {
 
   const [modalOpen, setModalOpen] = useState(false);
+  const [issue, setIssue] = useState<ParsedPopulatedIssueType>(initialIssue);
+
+  async function refresh() {
+    try {
+      const response = await fetch(`/api/issues/${issue._id}`)
+      const json = await response.json();
+      console.log(json);
+      setIssue(json);
+    } catch(err) {
+      console.log(err);
+    }
+  }
 
   return (
     <Card variant="outlined">

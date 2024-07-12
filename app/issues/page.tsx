@@ -44,7 +44,7 @@ export default async function Page() {
           <Typography sx={{marginX: "auto"}} variant="h5">{tup[0]}</Typography>
         </Stack>
         <Divider variant="fullWidth" />
-        {tup[1].map(issue => <IssueCard issue={issue} key={issue._id} />)}
+        {tup[1].map(issue => <IssueCard initialIssue={issue} key={issue._id} />)}
       </Stack>
     )
   })
