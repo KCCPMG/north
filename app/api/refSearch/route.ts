@@ -49,7 +49,9 @@ export async function GET(req: NextRequest) {
       if (tableProperties.length === 0) return Response.json("Document not found");
       else {
         for (let tp of tableProperties) {
-          if (tp.table.name === tableName) return Response.json(tp);
+          if (tp.table.name === tableName) return Response.json({
+            tableProperty: tp
+          });
         }
         return Response.json("Document not found");
       }
