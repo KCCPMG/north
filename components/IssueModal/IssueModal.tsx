@@ -57,8 +57,12 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
                 eng_team_files={issue.eng_team_files}
               />
             </Box>
-            <Box><UserStories stories={issue.user_stories} /></Box>
-            <Box><IssueModalMergeChecklist issue={issue} /></Box>
+            <Box>
+              <UserStories issueId={issue._id} stories={issue.user_stories} />
+            </Box>
+            <Box>
+              <IssueModalMergeChecklist issue={issue} />
+            </Box>
           </Stack>
         </DialogContent>
       </Box>
