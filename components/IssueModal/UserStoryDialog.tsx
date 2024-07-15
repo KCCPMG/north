@@ -1,9 +1,10 @@
 "use client";
 import { IUserStory } from "@/models/UserStory";
-import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button } from "@mui/material";
 import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import QueryTooltip from "./QueryTooltip";
+import { AddCircleOutline } from "@mui/icons-material";
 
 
 type EditableUserStory = Omit<IUserStory, "issue"> & { issue: string }
@@ -47,6 +48,7 @@ export default function UserStoryDialog(
   // })
 
   useEffect(() => {
+    console.log("firing useEffect");
     const joinedDescription = (
       <>
         {story.description.map(des => {
@@ -62,7 +64,8 @@ export default function UserStoryDialog(
         })}
       </>
     )
-  }, [story])
+    setJoinedDescription(joinedDescription);
+  }, [story.description])
 
 
   function updateStoryDescriptionTextType(index: number, value: "string" | "tableRef" | "tablePropertyRef" | "pageRef" | "componentRef") {
@@ -123,6 +126,18 @@ export default function UserStoryDialog(
     )
   }
 
+  function addDescriptionRow() {
+    const description = story.description;
+    description.push({
+      textType: "string",
+      text: ""
+    })
+    setStory({
+      ...story,
+      description
+    })
+  }
+
   return (
     <Dialog
       open={open}
@@ -136,7 +151,7 @@ export default function UserStoryDialog(
           <Box sx={{
             border: "1px solid black",
             margin: 4,
-            padding: 1
+            padding: 2
           }}>
             {joinedDescription}
           </Box>
@@ -147,13 +162,13 @@ export default function UserStoryDialog(
                 // <Stack direction="row" key={i} spacing={1}>
                 <TableRow>
                   {/* <FormControl fullWidth > */}
-                  <TableCell>
+                  <TableCell sx={{ borderBottom: "none", maxWidth: "5rem" }}>
                     <Select
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       variant="standard"
                       value={description.textType}
-                      // sx={maxWidth}
+                      fullWidth
                       label="Type"
                       onChange={(e) => {
                         updateStoryDescriptionTextType(i, e.target.value as "string" | "tableRef" | "tablePropertyRef" | "pageRef" | "componentRef")
@@ -168,7 +183,7 @@ export default function UserStoryDialog(
                   </TableCell>
 
                   {/* <InputLabel>Text</InputLabel> */}
-                  <TableCell>
+                  <TableCell sx={{ borderBottom: "none" }}>
                     <TextField
                       value={description.text}
                       variant="standard"
@@ -189,6 +204,20 @@ export default function UserStoryDialog(
             })}
           </Table>
           {/* </Stack> */}
+          <Button
+            variant="outlined"
+            onClick={() => {
+              console.log("open showUserStoryDialog")
+              addDescriptionRow();
+            }}
+            sx={{ margin: "auto" }}
+          >
+            <Stack direction="row" gap={1}>
+              <span>Create Additional User Story</span>
+              <AddCircleOutline />
+            </Stack>
+
+          </Button>
         </DialogContent>
       </>
     </Dialog>

@@ -15,6 +15,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
   <Tooltip {...props} classes={{ popper: className }} />
 ))(({ theme }) => ({
   [`& .${tooltipClasses.tooltip}`]: {
+    padding: '1.5rem',
     backgroundColor: '#ffffff',
     color: 'rgba(0, 0, 0, 1)',
     maxWidth: 500,
@@ -79,9 +80,9 @@ export default function QueryTooltip({ textType, text }: QueryTooltipProps) {
                 </TableHead>
                 <TableBody>
                   <TableRow>
-                    <TableCell>{tableProperty.field}</TableCell>
-                    <TableCell>{tableProperty.field_type}</TableCell>
-                    <TableCell>{tableProperty.special}</TableCell>
+                    <TableCell sx={{ borderBottom: "none" }}>{tableProperty.field}</TableCell>
+                    <TableCell sx={{ borderBottom: "none" }}>{tableProperty.field_type}</TableCell>
+                    <TableCell sx={{ borderBottom: "none" }}>{tableProperty.special}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
