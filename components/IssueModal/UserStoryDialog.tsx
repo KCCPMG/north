@@ -36,18 +36,6 @@ export default function UserStoryDialog(
 
   const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription())
 
-  // const joinedDescription = story.description.map(des => {
-  //   if (des.textType === "string") {
-  //     return des.text
-  //   } else return (
-  //     <QueryTooltip
-  //       textType={des.textType}
-  //       text={des.text}
-  //       key={uuidv4()}
-  //     />
-  //   )
-  // })
-
   useEffect(() => {
     console.log("firing useEffect");
     const joinedDescription = (
@@ -66,19 +54,12 @@ export default function UserStoryDialog(
       </>
     )
     setJoinedDescription(joinedDescription);
-  },
-    [story.description[0]?.textType] 
-    // [
-      // story.description, 
-      // ...story.description, 
-      // story.description.map(d => d.textType), 
-      // story.description.map(d => d.text)
-    // ]
+  }, [story.description]
   )
 
 
   function updateStoryDescriptionTextType(index: number, value: "string" | "tableRef" | "tablePropertyRef" | "pageRef" | "componentRef") {
-    const description = story.description;
+    const description = structuredClone(story.description);
     description[index].textType = value;
 
     setStory({
@@ -88,7 +69,7 @@ export default function UserStoryDialog(
   }
 
   function updateStoryDescriptionText(index: number, value: string) {
-    const description = story.description;
+    const description = structuredClone(story.description);
     description[index].text = value;
 
     setStory({
@@ -98,22 +79,6 @@ export default function UserStoryDialog(
   }
 
 
-  // function updateStory(field: "textType" | "text", index: number, value: string) {
-
-  //   const description = story.description;
-
-  //   description[i][field] = value;
-
-  //   setStory({
-  //     ...story,
-  //     description
-  //   })
-  // }
-
-
-  // function changeDescriptionType(descriptionType: string, index: number) {
-  //   story.description[index]
-  // }
 
   function updateJoinedDescription() {
     setJoinedDescription(getUpdatedDescription())
