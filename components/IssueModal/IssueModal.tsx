@@ -4,9 +4,9 @@ import { Button, Typography, Box, Divider, Table, TableBody, Dialog, DialogTitle
 import ModalTableRow from "./TableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEditIssueContext } from "@/context/EditIssueContext";
-import IssueModalMergeChecklist from "./MergeChecklist";
-import UserStories from "./UserStories";
-import IssueSummary from "./IssueSummary";
+import IssueModalMergeChecklist from "./MergeChecklistTable";
+import UserStories from "./UserStoriesTable";
+import IssueSummary from "./IssueSummaryTable";
 
 type IssueModalProps = {
   issue: ParsedPopulatedIssueType,

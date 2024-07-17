@@ -1,7 +1,7 @@
 "use client";
 import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Button, DialogActions, Stack } from "@mui/material"
 import { IUserStory } from "@/models/UserStory";
-import UserStory from "./UserStory";
+import UserStory from "./UserStoryRow";
 import { useEditIssueContext } from "@/context/EditIssueContext";
 import { useState } from "react";
 import UserStoryDialog from "./UserStoryDialog";
