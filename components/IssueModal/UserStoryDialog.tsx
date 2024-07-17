@@ -37,12 +37,16 @@ export default function UserStoryDialog(
   const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription())
 
   useEffect(() => {
-    console.log("firing useEffect");
     const joinedDescription = (
       <>
-        {story.description.map(des => {
+        {story.description.map((des, i) => {
           if (des.textType === "string") {
-            return des.text
+            if (i === story.description.length) {
+              return des.text
+            } else {
+              if (des.text.slice(-1) === " ") return des.text;
+              else return (des.text+" ");
+            }
           } else return (
             <QueryTooltip
               textType={des.textType}
@@ -56,6 +60,24 @@ export default function UserStoryDialog(
     setJoinedDescription(joinedDescription);
   }, [story.description]
   )
+
+  // onOpen
+  useEffect(() => {
+    if (open===true) { 
+      // reset props
+      setStory(prop_story ?
+        { ...prop_story } : {
+          issue: issueId,
+          description: [],
+          engineering_done: false,
+          design_done: false,
+          database_references: [],
+          links: [],
+          components: []
+        }
+      );
+    }
+  }, [open])
 
 
   function updateStoryDescriptionTextType(index: number, value: "string" | "tableRef" | "tablePropertyRef" | "pageRef" | "componentRef") {
