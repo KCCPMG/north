@@ -1,13 +1,13 @@
 "use client";
 import { IUserStory } from "@/models/UserStory";
-import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody } from "@mui/material";
 import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import QueryTooltip from "./QueryTooltip";
 import { AddCircleOutline } from "@mui/icons-material";
 
 
-type EditableUserStory = Omit<IUserStory, "issue"> & { issue: string }
+export type EditableUserStory = Omit<IUserStory, "issue"> & { issue: string }
 
 
 type UserStoryDialogProps = {
@@ -23,15 +23,16 @@ export default function UserStoryDialog(
   { issueId, prop_id, prop_story, open, onClose }: UserStoryDialogProps
 ) {
 
-  const [story, setStory] = useState<EditableUserStory>(prop_story || {
-    issue: issueId,
-    description: [],
-    engineering_done: false,
-    design_done: false,
-    database_references: [],
-    links: [],
-    components: []
-  })
+  const [story, setStory] = useState<EditableUserStory>(prop_story ?
+    { ...prop_story } : {
+      issue: issueId,
+      description: [],
+      engineering_done: false,
+      design_done: false,
+      database_references: [],
+      links: [],
+      components: []
+    })
 
   const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription())
 
@@ -65,7 +66,15 @@ export default function UserStoryDialog(
       </>
     )
     setJoinedDescription(joinedDescription);
-  }, [story.description])
+  },
+    [story.description[0]?.textType] 
+    // [
+      // story.description, 
+      // ...story.description, 
+      // story.description.map(d => d.textType), 
+      // story.description.map(d => d.text)
+    // ]
+  )
 
 
   function updateStoryDescriptionTextType(index: number, value: "string" | "tableRef" | "tablePropertyRef" | "pageRef" | "componentRef") {
@@ -145,22 +154,23 @@ export default function UserStoryDialog(
       fullWidth
       maxWidth="md"
     >
-      <>
-        <DialogTitle>{prop_id ? "Edit " : "Create "}User Story</DialogTitle>
-        <DialogContent>
-          <Box sx={{
-            border: "1px solid black",
-            margin: 4,
-            padding: 2
-          }}>
-            {joinedDescription}
-          </Box>
-          {/* <Stack direction="column" gap={1}> */}
-          <Table>
+
+      <DialogTitle>{prop_id ? "Edit " : "Create "}User Story</DialogTitle>
+      <DialogContent>
+        <Box sx={{
+          border: "1px solid black",
+          margin: 4,
+          padding: 2
+        }}>
+          {joinedDescription}
+        </Box>
+        {/* <Stack direction="column" gap={1}> */}
+        <Table>
+          <TableBody>
             {story.description.map((description, i) => {
               return (
                 // <Stack direction="row" key={i} spacing={1}>
-                <TableRow>
+                <TableRow key={i}>
                   {/* <FormControl fullWidth > */}
                   <TableCell sx={{ borderBottom: "none", maxWidth: "5rem" }}>
                     <Select
@@ -202,24 +212,24 @@ export default function UserStoryDialog(
                 </TableRow>
               )
             })}
-          </Table>
-          {/* </Stack> */}
-          <Button
-            variant="outlined"
-            onClick={() => {
-              console.log("open showUserStoryDialog")
-              addDescriptionRow();
-            }}
-            sx={{ margin: "auto" }}
-          >
-            <Stack direction="row" gap={1}>
-              <span>Create Additional User Story</span>
-              <AddCircleOutline />
-            </Stack>
+          </TableBody>
+        </Table>
+        {/* </Stack> */}
+        <Button
+          variant="outlined"
+          onClick={() => {
+            console.log("open showUserStoryDialog")
+            addDescriptionRow();
+          }}
+          sx={{ margin: "auto" }}
+        >
+          <Stack direction="row" gap={1}>
+            <span>Create Additional User Story</span>
+            <AddCircleOutline />
+          </Stack>
 
-          </Button>
-        </DialogContent>
-      </>
+        </Button>
+      </DialogContent>
     </Dialog>
   )
 }

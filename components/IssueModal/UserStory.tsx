@@ -8,7 +8,7 @@ import QueryTooltip from "./QueryTooltip";
 import { v4 as uuidv4 } from 'uuid';
 import EditIcon from '@mui/icons-material/Edit';
 import { Dispatch, SetStateAction, useState } from "react";
-import UserStoryDialog from "./UserStoryDialog";
+import UserStoryDialog, { EditableUserStory } from "./UserStoryDialog";
 import Issue from "@/models/Issue";
 
 
@@ -65,8 +65,10 @@ export default function UserStory({ story }: UserStoryProps) {
             issueId={story.issue.toString()}
             prop_id={story._id}
             prop_story={{
-              issue, description, engineering_done, design_done, database_references, links, components
+              issue, engineering_done, design_done, database_references, links, components,
+              description: structuredClone(description)
             }}
+            // prop_story={structuredClone(story) as EditableUserStory}
             open={showUserStoryDialog}
             onClose={() => setShowUserStoryDialog(false)}
           />
