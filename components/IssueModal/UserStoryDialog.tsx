@@ -5,6 +5,7 @@ import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import QueryTooltip from "./QueryTooltip";
 import { AddCircleOutline } from "@mui/icons-material";
+import CircularProgress from '@mui/material/CircularProgress';
 
 
 export type EditableUserStory = Omit<IUserStory, "issue"> & { issue: string }
@@ -35,7 +36,8 @@ export default function UserStoryDialog(
       components: []
     })
 
-  const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription())
+  const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription());
+  const [saving, setSaving] = useState(false);
 
   useEffect(() => {
     const joinedDescription = (
@@ -130,16 +132,28 @@ export default function UserStoryDialog(
   }
 
   async function saveUserStory() {
-    console.log("clicked Save button")
+    try {
+      console.log("clicked Save button");
+      setSaving(true);
 
-    const slug = prop_id ? `/${prop_id}` : '';
+      const slug = prop_id ? `/${prop_id}` : '';
 
-    const response = await fetch(`/api/userStories${slug}`, {
-      method: 'POST',
-      body: JSON.stringify({ story })
-    })
-    const json = await response.json();
-    console.log(json);
+      const response = await fetch(`/api/userStories${slug}`, {
+        method: 'POST',
+        body: JSON.stringify({ story })
+      })
+      if (response.status < 400) {
+        const json = await response.json();
+        console.log(json);
+        setSaving(false);
+        handleClose();
+      }
+
+    } catch (err) {
+      console.log(err);
+      setSaving(false);
+    }
+    
   }
 
 
@@ -242,7 +256,7 @@ export default function UserStoryDialog(
           variant="outlined"
           onClick={saveUserStory}
         >
-          Save
+          {saving ? <CircularProgress size={25} /> : "Save"}
         </Button>
       </DialogActions>
     </Dialog>
