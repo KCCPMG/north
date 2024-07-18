@@ -8,10 +8,13 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
 
   try {
 
-    const json = await req.json();
-    console.log(json);
+    const {story} = await req.json();
+    console.log(JSON.stringify({"incoming user story" : story}, null, 2));
 
-    return Response.json(params.id);
+
+    const userStory = await UserStory.findByIdAndUpdate(params.id, story);
+
+    return Response.json(userStory);
 
   } catch(err) {
     console.log(err);

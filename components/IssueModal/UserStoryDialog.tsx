@@ -129,15 +129,15 @@ export default function UserStoryDialog(
     })
   }
 
-  function saveUserStory() {
+  async function saveUserStory() {
     console.log("clicked Save button")
     if (prop_id) {
-      fetch(`/api/userStories/${prop_id}`, {
+      const response = await fetch(`/api/userStories/${prop_id}`, {
         method: 'POST',
-        body: JSON.stringify({test: "hello"})
-      }).then(res => {
-        res.json().then(json => console.log(json));
+        body: JSON.stringify({ story })
       })
+      const json = await response.json();
+      console.log(json);
     }
   }
 
@@ -150,7 +150,9 @@ export default function UserStoryDialog(
       maxWidth="md"
     >
 
-      <DialogTitle>{prop_id ? "Edit " : "Create "}User Story</DialogTitle>
+      <DialogTitle>
+        {prop_id ? "Edit " : "Create "}User Story
+      </DialogTitle>
       <DialogContent>
         <Box sx={{
           border: "1px solid black",
