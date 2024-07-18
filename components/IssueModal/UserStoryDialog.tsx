@@ -131,14 +131,15 @@ export default function UserStoryDialog(
 
   async function saveUserStory() {
     console.log("clicked Save button")
-    if (prop_id) {
-      const response = await fetch(`/api/userStories/${prop_id}`, {
-        method: 'POST',
-        body: JSON.stringify({ story })
-      })
-      const json = await response.json();
-      console.log(json);
-    }
+
+    const slug = prop_id ? `/${prop_id}` : '';
+
+    const response = await fetch(`/api/userStories${slug}`, {
+      method: 'POST',
+      body: JSON.stringify({ story })
+    })
+    const json = await response.json();
+    console.log(json);
   }
 
 
