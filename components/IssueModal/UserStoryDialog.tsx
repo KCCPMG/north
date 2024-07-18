@@ -1,6 +1,6 @@
 "use client";
 import { IUserStory } from "@/models/UserStory";
-import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody, DialogActions } from "@mui/material";
 import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import QueryTooltip from "./QueryTooltip";
@@ -15,12 +15,13 @@ type UserStoryDialogProps = {
   prop_id?: string
   prop_story?: EditableUserStory,
   open: boolean,
+  handleClose: () => void,
   onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void
 }
 
 
 export default function UserStoryDialog(
-  { issueId, prop_id, prop_story, open, onClose }: UserStoryDialogProps
+  { issueId, prop_id, prop_story, open, onClose, handleClose }: UserStoryDialogProps
 ) {
 
   const [story, setStory] = useState<EditableUserStory>(prop_story ?
@@ -202,7 +203,7 @@ export default function UserStoryDialog(
           </TableBody>
         </Table>
         {/* </Stack> */}
-        <Button
+        <Stack direction="row" justifyContent={"middle"}><Button
           variant="outlined"
           onClick={() => {
             console.log("open showUserStoryDialog")
@@ -216,7 +217,19 @@ export default function UserStoryDialog(
           </Stack>
 
         </Button>
+        </Stack>
       </DialogContent>
+      <DialogActions>
+        <Button 
+          onClick={() => {
+            handleClose();
+          }} 
+          variant="contained"
+        >
+          Cancel
+        </Button>
+        <Button variant="outlined">Save</Button>
+      </DialogActions>
     </Dialog>
   )
 }

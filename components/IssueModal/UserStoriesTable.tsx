@@ -65,6 +65,7 @@ export default function UserStories({ issueId, stories }: UserStoriesProps) {
             <UserStoryDialog
               issueId={issueId}
               open={showUserStoryDialog}
+              handleClose={() => setShowUserStoryDialog(false)}
               onClose={(e, r) => {
                 console.log("close showUserStoryDialog")
                 console.log({ e });

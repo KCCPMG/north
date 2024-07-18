@@ -70,6 +70,7 @@ export default function UserStory({ story }: UserStoryProps) {
             }}
             // prop_story={structuredClone(story) as EditableUserStory}
             open={showUserStoryDialog}
+            handleClose={() => setShowUserStoryDialog(false)}
             onClose={() => setShowUserStoryDialog(false)}
           />
         </TableCell>
