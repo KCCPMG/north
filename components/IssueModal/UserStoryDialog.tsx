@@ -101,12 +101,6 @@ export default function UserStoryDialog(
     })
   }
 
-
-
-  function updateJoinedDescription() {
-    setJoinedDescription(getUpdatedDescription())
-  }
-
   function getUpdatedDescription() {
     return (
       story.description.map(des => {
@@ -134,6 +128,19 @@ export default function UserStoryDialog(
       description
     })
   }
+
+  function saveUserStory() {
+    console.log("clicked Save button")
+    if (prop_id) {
+      fetch(`/api/userStories/${prop_id}`, {
+        method: 'POST',
+        body: JSON.stringify({test: "hello"})
+      }).then(res => {
+        res.json().then(json => console.log(json));
+      })
+    }
+  }
+
 
   return (
     <Dialog
@@ -228,7 +235,12 @@ export default function UserStoryDialog(
         >
           Cancel
         </Button>
-        <Button variant="outlined">Save</Button>
+        <Button 
+          variant="outlined"
+          onClick={saveUserStory}
+        >
+          Save
+        </Button>
       </DialogActions>
     </Dialog>
   )
