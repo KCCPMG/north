@@ -4,7 +4,7 @@ import { ParsedPopulatedIssueType } from "@/models/Controls";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import IssueModal from "./IssueModal/IssueModal";
 import { useState } from "react";
-import { IssueContextProvider } from "@/context/IssueContext";
+import { useIssueContext } from "@/context/IssueContext";
 
 type IssueCardProps = {
   initialIssue: ParsedPopulatedIssueType
@@ -13,7 +13,8 @@ type IssueCardProps = {
 export default function IssueCard({ initialIssue }: IssueCardProps) {
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [issue, setIssue] = useState<ParsedPopulatedIssueType>(initialIssue);
+  // const [issue, setIssue] = useState<ParsedPopulatedIssueType>(initialIssue);
+  const { issue, setIssue } = useIssueContext();
 
   async function refresh() {
     try {
@@ -21,7 +22,7 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
       const json = await response.json();
       console.log(json);
       setIssue(json);
-    } catch(err) {
+    } catch (err) {
       console.log(err);
     }
   }
@@ -32,7 +33,7 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
         <Typography variant="h5">
           {issue.issueType[0].toUpperCase()}{issue.issueType.slice(1)}: {issue.name}
         </Typography>
-        <Divider/>
+        <Divider />
         <Typography variant="body1">
           {issue.description}
         </Typography>
@@ -43,17 +44,15 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
           Engineers: {issue.assigned_engineers.map(ad => ad.email).join(", ")}
         </Typography>
         <CardActions>
-          <Button onClick={() => setModalOpen(true)} sx={{"marginX": "auto"}}>
+          <Button onClick={() => setModalOpen(true)} sx={{ "marginX": "auto" }}>
             <OpenInFullIcon />
           </Button>
-          <IssueContextProvider>
-            <IssueModal 
-              refresh={refresh}
-              issue={issue} 
-              open={modalOpen} 
-              onClose={() => setModalOpen(false)} 
-            />
-          </IssueContextProvider>
+          <IssueModal
+            refresh={refresh}
+            issue={issue}
+            open={modalOpen}
+            onClose={() => setModalOpen(false)}
+          />
         </CardActions>
       </CardContent>
     </Card>

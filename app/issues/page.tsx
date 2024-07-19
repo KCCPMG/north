@@ -1,5 +1,5 @@
 import { Typography, Box, Stack, Divider } from "@mui/material";
-import Issue from "@/models/Issue";
+import { IssueContextProvider } from "@/context/IssueContext";
 import { ParsedPopulatedIssueType, getPopulatedIssues } from "@/models/Controls";
 import IssueCard from "@/components/IssueCard";
 
@@ -44,7 +44,11 @@ export default async function Page() {
           <Typography sx={{marginX: "auto"}} variant="h5">{tup[0]}</Typography>
         </Stack>
         <Divider variant="fullWidth" />
-        {tup[1].map(issue => <IssueCard initialIssue={issue} key={issue._id} />)}
+        {tup[1].map(issue => (
+          <IssueContextProvider initialIssue={issue}>
+            <IssueCard initialIssue={issue} key={issue._id} />
+          </IssueContextProvider>
+        ))}
       </Stack>
     )
   })
