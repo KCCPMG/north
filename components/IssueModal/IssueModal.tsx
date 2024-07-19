@@ -5,16 +5,17 @@ import ModalTableRow from "./TableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import { useEditIssueContext } from "@/context/EditIssueContext";
 import IssueModalMergeChecklist from "./MergeChecklistTable";
-import UserStories from "./UserStoriesTable";
+import UserStoriesTable from "./UserStoriesTable";
 import IssueSummary from "./IssueSummaryTable";
 
 type IssueModalProps = {
+  refresh: () => void,
   issue: ParsedPopulatedIssueType,
   open: boolean,
   onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void
 }
 
-export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
+export default function IssueModal({ issue, open, onClose, refresh }: IssueModalProps) {
 
   const { editMode, setEditMode } = useEditIssueContext();
 
@@ -58,7 +59,11 @@ export default function IssueModal({ issue, open, onClose }: IssueModalProps) {
               />
             </Box>
             <Box>
-              <UserStories issueId={issue._id} stories={issue.user_stories} />
+              <UserStoriesTable
+                issueId={issue._id} 
+                stories={issue.user_stories} 
+                refresh={refresh}
+              />
             </Box>
             <Box>
               <IssueModalMergeChecklist issue={issue} />

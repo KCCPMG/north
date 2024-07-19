@@ -1,7 +1,7 @@
 "use client";
 import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Button, DialogActions, Stack } from "@mui/material"
 import { IUserStory } from "@/models/UserStory";
-import UserStory from "./UserStoryRow";
+import UserStoryRow from "./UserStoryRow";
 import { useEditIssueContext } from "@/context/EditIssueContext";
 import { useState } from "react";
 import UserStoryDialog from "./UserStoryDialog";
@@ -10,10 +10,11 @@ import { AddCircleOutline } from "@mui/icons-material";
 
 type UserStoriesProps = {
   issueId: string,
-  stories: Array<IUserStory & { _id: string }>
+  stories: Array<IUserStory & { _id: string }>,
+  refresh: () => void
 }
 
-export default function UserStories({ issueId, stories }: UserStoriesProps) {
+export default function UserStories({ issueId, stories, refresh }: UserStoriesProps) {
 
   const { editMode } = useEditIssueContext();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
@@ -36,11 +37,12 @@ export default function UserStories({ issueId, stories }: UserStoriesProps) {
         </TableHead>
         <TableBody>
           {stories.map(story =>
-            <UserStory
+            <UserStoryRow
               story={story}
               showUserStoryDialog={showUserStoryDialog}
               setShowUserStoryDialog={setShowUserStoryDialog}
               key={story._id}
+              refresh={refresh}
             />
           )}
         </TableBody>
@@ -72,6 +74,7 @@ export default function UserStories({ issueId, stories }: UserStoriesProps) {
                 console.log({ r });
                 setShowUserStoryDialog(false);
               }}
+              refresh={refresh}
             />
           </>
         }

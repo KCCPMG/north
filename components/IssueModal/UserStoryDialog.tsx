@@ -17,12 +17,13 @@ type UserStoryDialogProps = {
   prop_story?: EditableUserStory,
   open: boolean,
   handleClose: () => void,
-  onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void
+  onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void,
+  refresh: () => void
 }
 
 
 export default function UserStoryDialog(
-  { issueId, prop_id, prop_story, open, onClose, handleClose }: UserStoryDialogProps
+  { issueId, prop_id, prop_story, open, onClose, handleClose, refresh }: UserStoryDialogProps
 ) {
 
   const [story, setStory] = useState<EditableUserStory>(prop_story ?
@@ -146,6 +147,7 @@ export default function UserStoryDialog(
         const json = await response.json();
         console.log(json);
         setSaving(false);
+        refresh();
         handleClose();
       }
 

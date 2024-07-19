@@ -48,6 +48,7 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
           </Button>
           <EditIssueContextProvider>
             <IssueModal 
+              refresh={refresh}
               issue={issue} 
               open={modalOpen} 
               onClose={() => setModalOpen(false)} 

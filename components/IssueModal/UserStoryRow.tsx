@@ -16,10 +16,11 @@ import Issue from "@/models/Issue";
 type UserStoryProps = {
   story: IUserStory & { _id: string }
   showUserStoryDialog: boolean,
-  setShowUserStoryDialog: Dispatch<SetStateAction<boolean>>
+  setShowUserStoryDialog: Dispatch<SetStateAction<boolean>>,
+  refresh: () => void
 }
 
-export default function UserStory({ story }: UserStoryProps) {
+export default function UserStory({ story, refresh }: UserStoryProps) {
 
   const { editMode } = useEditIssueContext();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
@@ -72,6 +73,7 @@ export default function UserStory({ story }: UserStoryProps) {
             open={showUserStoryDialog}
             handleClose={() => setShowUserStoryDialog(false)}
             onClose={() => setShowUserStoryDialog(false)}
+            refresh={refresh}
           />
         </TableCell>
         // <TextField
