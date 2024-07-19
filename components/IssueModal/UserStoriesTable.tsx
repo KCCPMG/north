@@ -2,7 +2,7 @@
 import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Button, DialogActions, Stack } from "@mui/material"
 import { IUserStory } from "@/models/UserStory";
 import UserStoryRow from "./UserStoryRow";
-import { useEditIssueContext } from "@/context/EditIssueContext";
+import { useIssueContext } from "@/context/IssueContext";
 import { useState } from "react";
 import UserStoryDialog from "./UserStoryDialog";
 import { AddCircleOutline } from "@mui/icons-material";
@@ -16,7 +16,7 @@ type UserStoriesProps = {
 
 export default function UserStories({ issueId, stories, refresh }: UserStoriesProps) {
 
-  const { editMode } = useEditIssueContext();
+  const { editMode } = useIssueContext();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
 
   return (

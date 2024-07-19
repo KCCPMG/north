@@ -3,7 +3,7 @@ import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Checkbox,
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import { IUserStory } from "@/models/UserStory"
-import { useEditIssueContext } from "@/context/EditIssueContext"
+import { useIssueContext } from "@/context/IssueContext"
 import QueryTooltip from "./QueryTooltip";
 import { v4 as uuidv4 } from 'uuid';
 import EditIcon from '@mui/icons-material/Edit';
@@ -22,7 +22,7 @@ type UserStoryProps = {
 
 export default function UserStory({ story, refresh }: UserStoryProps) {
 
-  const { editMode } = useEditIssueContext();
+  const { editMode } = useIssueContext();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
 
   const joinedDescription = story.description.map(des => {

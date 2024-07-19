@@ -1,4 +1,4 @@
-import { useEditIssueContext } from "@/context/EditIssueContext";
+import { useIssueContext } from "@/context/IssueContext";
 import { Typography, TableRow, TableCell, TextField } from "@mui/material";
 import { ReactNode } from "react";
 
@@ -10,7 +10,7 @@ type ModalTableRowProps = {
 
 export default function ModalTableRow({ property, textValue, child }: ModalTableRowProps) {
 
-  const { editMode } = useEditIssueContext();
+  const { editMode } = useIssueContext();
 
 
   return (

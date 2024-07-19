@@ -3,7 +3,7 @@ import { ParsedPopulatedIssueType } from "@/models/Controls"
 import { Button, Typography, Box, Divider, Table, TableBody, Dialog, DialogTitle, DialogContent, Link, Stack } from "@mui/material"
 import ModalTableRow from "./TableRow";
 import EditIcon from '@mui/icons-material/Edit';
-import { useEditIssueContext } from "@/context/EditIssueContext";
+import { useIssueContext } from "@/context/IssueContext";
 import IssueModalMergeChecklist from "./MergeChecklistTable";
 import UserStoriesTable from "./UserStoriesTable";
 import IssueSummary from "./IssueSummaryTable";
@@ -17,7 +17,7 @@ type IssueModalProps = {
 
 export default function IssueModal({ issue, open, onClose, refresh }: IssueModalProps) {
 
-  const { editMode, setEditMode } = useEditIssueContext();
+  const { editMode, setEditMode } = useIssueContext();
 
   return (
     <Dialog

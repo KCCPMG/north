@@ -2,7 +2,7 @@ import { Table, TableBody, TableRow, TableCell, Typography, Checkbox } from "@mu
 import { ParsedPopulatedIssueType } from "@/models/Controls"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
-import { useEditIssueContext } from "@/context/EditIssueContext";
+import { useIssueContext } from "@/context/IssueContext";
 
 type IssueModalMergeChecklistProps = {
   issue: ParsedPopulatedIssueType
@@ -11,7 +11,7 @@ type IssueModalMergeChecklistProps = {
 
 export default function IssueModalMergeChecklist({ issue }: IssueModalMergeChecklistProps) {
 
-  const { editMode } = useEditIssueContext();
+  const { editMode } = useIssueContext();
 
   return (
     <>
