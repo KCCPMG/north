@@ -24,7 +24,7 @@ type UserStoryDialogProps = {
 
 
 export default function UserStoryDialog(
-  { issueId, prop_id, prop_story, open, onClose, handleClose, 
+  { issueId, prop_id, prop_story, open, onClose, handleClose,
     // refresh 
   }: UserStoryDialogProps
 ) {
@@ -49,6 +49,7 @@ export default function UserStoryDialog(
   const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription());
   const [saving, setSaving] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 
   useEffect(() => {
     const joinedDescription = (
@@ -59,7 +60,7 @@ export default function UserStoryDialog(
               return des.text
             } else {
               if (des.text.slice(-1) === " ") return des.text;
-              else return (des.text+" ");
+              else return (des.text + " ");
             }
           } else return (
             <QueryTooltip
@@ -77,7 +78,7 @@ export default function UserStoryDialog(
 
   // onOpen
   useEffect(() => {
-    if (open===true) { 
+    if (open === true) {
       // reset props
       setErrorMessageVisible(false);
       setStory(prop_story ?
@@ -175,7 +176,7 @@ export default function UserStoryDialog(
       setErrorMessageVisible(true);
       setSaving(false);
     }
-    
+
   }
 
 
@@ -266,28 +267,80 @@ export default function UserStoryDialog(
         </Stack>
       </DialogContent>
       <DialogActions>
-        <Button 
-          onClick={() => {
-            handleClose();
-          }} 
-          variant="contained"
-        >
-          Cancel
-        </Button>
-        <Button 
-          variant="outlined"
-          onClick={saveUserStory}
-        >
-          {saving ? <CircularProgress size={25} /> : "Save"}
-        </Button>
+        <Stack direction="row" width={"100%"} justifyContent={"space-between"}>
+          <Stack direction="row">
+            {prop_id &&
+            <Button
+              sx={{ color: theme.palette.error.main }}
+              onClick={() => {
+                console.log("clicked")
+                setShowDeleteDialog(true)
+              }}
+            >
+              Delete User Story
+            </Button>
+            }
+          </Stack>
+          <Stack direction="row" columnGap={2}>
+            <Button
+              onClick={() => {
+                handleClose();
+              }}
+              variant="contained"
+            >
+              Cancel
+            </Button>
+            <Button
+              variant="outlined"
+              onClick={saveUserStory}
+            >
+              {saving ? <CircularProgress size={25} /> : "Save"}
+            </Button>
+          </Stack>
+        </Stack>
       </DialogActions>
-      {errorMessageVisible && 
+      {errorMessageVisible &&
         <DialogContent>
-          <Typography sx={{color: theme.palette.error.main}}>
+          <Typography sx={{ color: theme.palette.error.main }}>
             Something went wrong, please try again.
           </Typography>
         </DialogContent>
       }
+      <Dialog
+        open={showDeleteDialog}
+        onClose={(e,r) => setShowDeleteDialog(false)}
+      >
+        <DialogTitle>
+          Are you sure you want to delete this User Story?
+        </DialogTitle>
+        <DialogActions>
+          <Button
+            onClick={() => setShowDeleteDialog(false)}
+            variant="outlined"
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="contained"
+            onClick={async () => {
+              try {
+                const response = await fetch(`/api/userStories/${prop_id}/delete`, {
+                  method: 'post',
+                  body: JSON.stringify({ story })
+                });
+                const json = await response.json();
+                console.log(json);
+                setIssue(json);
+                setShowDeleteDialog(false);
+              } catch(err) {
+                console.log(err);
+              }
+            }}
+          >
+            Confirm Delete
+          </Button>
+        </DialogActions>
+      </Dialog>
     </Dialog>
   )
 }
