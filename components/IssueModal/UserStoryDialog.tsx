@@ -1,12 +1,13 @@
 "use client";
 import { IUserStory } from "@/models/UserStory";
-import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody, DialogActions } from "@mui/material";
+import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody, DialogActions, Typography } from "@mui/material";
 import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import QueryTooltip from "./QueryTooltip";
 import { AddCircleOutline } from "@mui/icons-material";
 import CircularProgress from '@mui/material/CircularProgress';
-
+import { useIssueContext } from "@/context/IssueContext";
+import { useTheme } from "@mui/material";
 
 export type EditableUserStory = Omit<IUserStory, "issue"> & { issue: string }
 
@@ -18,18 +19,26 @@ type UserStoryDialogProps = {
   open: boolean,
   handleClose: () => void,
   onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void,
-  refresh: () => void
+  // refresh: () => void
 }
 
 
 export default function UserStoryDialog(
-  { issueId, prop_id, prop_story, open, onClose, handleClose, refresh }: UserStoryDialogProps
+  { issueId, prop_id, prop_story, open, onClose, handleClose, 
+    // refresh 
+  }: UserStoryDialogProps
 ) {
+
+  const theme = useTheme();
+  const { setIssue } = useIssueContext();
 
   const [story, setStory] = useState<EditableUserStory>(prop_story ?
     { ...prop_story } : {
       issue: issueId,
-      description: [],
+      description: [{
+        textType: "string",
+        text: ""
+      }],
       engineering_done: false,
       design_done: false,
       database_references: [],
@@ -39,6 +48,7 @@ export default function UserStoryDialog(
 
   const [joinedDescription, setJoinedDescription] = useState<ReactNode>(getUpdatedDescription());
   const [saving, setSaving] = useState(false);
+  const [errorMessageVisible, setErrorMessageVisible] = useState(false);
 
   useEffect(() => {
     const joinedDescription = (
@@ -69,10 +79,14 @@ export default function UserStoryDialog(
   useEffect(() => {
     if (open===true) { 
       // reset props
+      setErrorMessageVisible(false);
       setStory(prop_story ?
         { ...prop_story } : {
           issue: issueId,
-          description: [],
+          description: [{
+            textType: "string",
+            text: ""
+          }],
           engineering_done: false,
           design_done: false,
           database_references: [],
@@ -135,6 +149,7 @@ export default function UserStoryDialog(
   async function saveUserStory() {
     try {
       console.log("clicked Save button");
+      setErrorMessageVisible(false);
       setSaving(true);
 
       const slug = prop_id ? `/${prop_id}` : '';
@@ -147,12 +162,17 @@ export default function UserStoryDialog(
         const json = await response.json();
         console.log(json);
         setSaving(false);
-        refresh();
+        // refresh();
+        setIssue(json);
         handleClose();
+      } else {
+        setSaving(false);
+        setErrorMessageVisible(true);
       }
 
     } catch (err) {
       console.log(err);
+      setErrorMessageVisible(true);
       setSaving(false);
     }
     
@@ -238,7 +258,7 @@ export default function UserStoryDialog(
           sx={{ margin: "auto" }}
         >
           <Stack direction="row" gap={1}>
-            <span>Create Additional User Story</span>
+            <span>Add Row to User Story</span>
             <AddCircleOutline />
           </Stack>
 
@@ -261,6 +281,13 @@ export default function UserStoryDialog(
           {saving ? <CircularProgress size={25} /> : "Save"}
         </Button>
       </DialogActions>
+      {errorMessageVisible && 
+        <DialogContent>
+          <Typography sx={{color: theme.palette.error.main}}>
+            Something went wrong, please try again.
+          </Typography>
+        </DialogContent>
+      }
     </Dialog>
   )
 }

@@ -73,7 +73,7 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
             open={showUserStoryDialog}
             handleClose={() => setShowUserStoryDialog(false)}
             onClose={() => setShowUserStoryDialog(false)}
-            refresh={refresh}
+            // refresh={refresh}
           />
         </TableCell>
         // <TextField

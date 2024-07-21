@@ -74,7 +74,7 @@ export default function UserStories({ issueId, stories, refresh }: UserStoriesPr
                 console.log({ r });
                 setShowUserStoryDialog(false);
               }}
-              refresh={refresh}
+              // refresh={refresh}
             />
           </>
         }
