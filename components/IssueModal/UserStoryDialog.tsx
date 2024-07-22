@@ -50,6 +50,8 @@ export default function UserStoryDialog(
   const [saving, setSaving] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const [deleteErrorMessageVisible, setDeleteErrorMessageVisible] = useState(false);
 
   useEffect(() => {
     const joinedDescription = (
@@ -273,8 +275,8 @@ export default function UserStoryDialog(
             <Button
               sx={{ color: theme.palette.error.main }}
               onClick={() => {
-                console.log("clicked")
-                setShowDeleteDialog(true)
+                setDeleteErrorMessageVisible(false);
+                setShowDeleteDialog(true);
               }}
             >
               Delete User Story
@@ -324,22 +326,37 @@ export default function UserStoryDialog(
             variant="contained"
             onClick={async () => {
               try {
+                setDeleteErrorMessageVisible(false);
+                setDeleting(true);
                 const response = await fetch(`/api/userStories/${prop_id}/delete`, {
                   method: 'post',
                   body: JSON.stringify({ story })
                 });
                 const json = await response.json();
                 console.log(json);
+                setDeleting(false);
                 setIssue(json);
                 setShowDeleteDialog(false);
               } catch(err) {
+                setDeleteErrorMessageVisible(true);
+                setDeleting(false);
                 console.log(err);
               }
             }}
           >
-            Confirm Delete
+            {deleting ? 
+            <CircularProgress sx={{color: "white"}} size={25} /> :
+            "Confirm Delete"
+            }
           </Button>
         </DialogActions>
+        {deleteErrorMessageVisible && 
+        <DialogContent>
+          <Typography sx={{ color: theme.palette.error.main }}>
+            Something went wrong, please try again.
+          </Typography>
+        </DialogContent>
+        }
       </Dialog>
     </Dialog>
   )
