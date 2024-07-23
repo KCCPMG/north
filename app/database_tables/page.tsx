@@ -14,19 +14,19 @@ export default async function Page() {
       <Grid container>
         {tables.map(table => {
           return (
-            <Grid item xs={12} sm={12} md={6}>
-            <DBTableAccordion 
-              table_id={table._id.toString()}
-              table_name={table.name}
-              table_properties={table.table_properties.map(tp => {
-                return {
-                  tp_id: tp._id.toString(),
-                  tp_field: tp.field,
-                  tp_field_type: tp.field_type,
-                  tp_special: tp.special
-                }
-              })}
-            />
+            <Grid item xs={12} sm={12} md={6} key={table._id.toString()}>
+              <DBTableAccordion
+                table_id={table._id.toString()}
+                table_name={table.name}
+                table_properties={table.table_properties.map(tp => {
+                  return {
+                    tp_id: tp._id.toString(),
+                    tp_field: tp.field,
+                    tp_field_type: tp.field_type,
+                    tp_special: tp.special
+                  }
+                })}
+              />
             </Grid>
           )
         })}
