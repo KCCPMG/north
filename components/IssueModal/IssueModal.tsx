@@ -6,7 +6,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { useIssueContext } from "@/context/IssueContext";
 import IssueModalMergeChecklist from "./MergeChecklistTable";
 import UserStoriesTable from "./UserStoriesTable";
-import IssueSummary from "./IssueSummaryTable";
+import IssueSummaryTable from "./IssueSummaryTable";
 import { useState } from "react";
 
 type IssueModalProps = {
@@ -54,15 +54,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
           divider={<Divider orientation="horizontal" />}
         >
           <Box>
-            <IssueSummary
-              description={issue.description}
-              assigned_designers={issue.assigned_designers}
-              assigned_engineers={issue.assigned_engineers}
-              route_location={issue.route_location}
-              design_figma_link={issue.design_figma_link}
-              eng_team_gh_issue_link={issue.eng_team_gh_issue_link}
-              eng_team_files={issue.eng_team_files}
-            />
+            <IssueSummaryTable/>
           </Box>
           <Box>
             <UserStoriesTable
@@ -84,7 +76,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
             onClick={() => {
               setEditMode(false);
               setSaving(false);
-              handleClose();
+              // handleClose();
             }}
           >
             Cancel

@@ -1,68 +1,58 @@
 import { Typography, Table, TableBody, Link } from "@mui/material";
-import ModalTableRow from "./TableRow";
+import TableRow from "./TableRow";
 import { IUser } from "@/models/User";
+import { useIssueContext } from "@/context/IssueContext";
 
 
-type IssueSummaryProps = {
-  description: string,
-  assigned_designers: Array<IUser & {
-    _id: string
-  }>,
-  assigned_engineers: Array<IUser & {
-    _id: string
-  }>,
-  route_location: string | undefined,
-  design_figma_link: string | undefined,
-  eng_team_gh_issue_link: string | undefined,
-  eng_team_files: Array<string>
-}
 
-export default function IssueSummary(
-  {description, assigned_designers, assigned_engineers, route_location, design_figma_link, eng_team_gh_issue_link, eng_team_files}: IssueSummaryProps) {
+export default function IssueSummary() {
+
+  const { issue } = useIssueContext();
+
   return (
     <>
       <Typography variant="h6">Summary</Typography>
       <Table>
         <TableBody>
-          <ModalTableRow
+          <TableRow
             property="Description:"
-            textValue={description}
+            textValue={issue.description}
           />
-          <ModalTableRow
+          <TableRow
             property="Designers:"
-            textValue={assigned_designers.map(ad => ad.email).join(", ")}
+            textValue={issue.assigned_designers.map(ad => ad.email).join(", ")}
           />
-          <ModalTableRow
+          <TableRow
             property="Engineers:"
-            textValue={assigned_engineers.map(ad => ad.email).join(", ")}
+            textValue={issue.assigned_engineers.map(ad => ad.email).join(", ")}
           />
-          <ModalTableRow
+          <TableRow
             property="Route Location:"
-            textValue={route_location}
+            textValue={issue.route_location}
           />
-          <ModalTableRow
+          <TableRow
             property="Design Figma Link"
-            textValue={design_figma_link}
-            child={design_figma_link &&
+            textValue={issue.design_figma_link}
+            child={issue.design_figma_link &&
               <Link
-                href={design_figma_link}
+                href={issue.design_figma_link}
               >
-                {design_figma_link}
+                {issue.design_figma_link}
               </Link>
             }
           />
-          <ModalTableRow
+          <TableRow
             property="Eng. GitHub Issue Link"
-            textValue={eng_team_gh_issue_link}
-            child={eng_team_gh_issue_link &&
-              <Link href={eng_team_gh_issue_link} >
-                {eng_team_gh_issue_link}
+            textValue={issue.eng_team_gh_issue_link}
+            child={issue.eng_team_gh_issue_link &&
+              <Link href={issue.eng_team_gh_issue_link} >
+                {issue.eng_team_gh_issue_link}
               </Link>
             }
           />
-          <ModalTableRow
+          <TableRow
             property="Eng. Team Files"
-            textValue={eng_team_files.join(", ") || ""}
+            textValue={issue.eng_team_files.join(", ") || ""}
           />
         </TableBody>
       </Table>

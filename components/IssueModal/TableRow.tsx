@@ -1,20 +1,26 @@
 import { useIssueContext } from "@/context/IssueContext";
 import { Typography, TableRow, TableCell, TextField } from "@mui/material";
-import { ReactNode } from "react";
+import { ChangeEvent, ReactNode } from "react";
 
 type ModalTableRowProps = {
   property: string,
   textValue: string | undefined,
+  // onChange: (e: ChangeEvent) => React.SetStateAction<string>,
   child?: ReactNode
 }
 
-export default function ModalTableRow({ property, textValue, child }: ModalTableRowProps) {
+export default function ModalTableRow(
+  { property, textValue, child }: ModalTableRowProps) 
+{
 
   const { editMode } = useIssueContext();
 
 
   return (
     <TableRow>
+      <TableCell>
+        
+      </TableCell>
       <TableCell
         sx={{
           width: "12rem",
@@ -30,6 +36,7 @@ export default function ModalTableRow({ property, textValue, child }: ModalTable
           <TextField
             defaultValue={textValue}
             variant="standard"
+            // onChange={(e)=>}
             multiline
             fullWidth
             maxRows={2}
