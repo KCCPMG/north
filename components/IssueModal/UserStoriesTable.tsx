@@ -4,7 +4,7 @@ import { IUserStory } from "@/models/UserStory";
 import UserStoryRow from "./UserStoryRow";
 import { useIssueContext } from "@/context/IssueContext";
 import { useState } from "react";
-import UserStoryDialog from "./UserStoryDialog";
+import UserStoryDialog from "./Dialogs/UserStoryDialog";
 import { AddCircleOutline } from "@mui/icons-material";
 
 

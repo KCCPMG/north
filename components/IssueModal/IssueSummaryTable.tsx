@@ -2,12 +2,13 @@ import { Typography, Table, TableBody, Link } from "@mui/material";
 import TableRow from "./TableRow";
 import { IUser } from "@/models/User";
 import { useIssueContext } from "@/context/IssueContext";
+import DescriptionDialog from "./Dialogs/DescriptionDialog";
 
 
 
 export default function IssueSummary() {
 
-  const { issue } = useIssueContext();
+  const { issue, setDescriptionModalOpen } = useIssueContext();
 
   return (
     <>
@@ -17,6 +18,7 @@ export default function IssueSummary() {
           <TableRow
             property="Description:"
             textValue={issue.description}
+            setShowDialog={setDescriptionModalOpen}
           />
           <TableRow
             property="Designers:"
@@ -56,6 +58,8 @@ export default function IssueSummary() {
           />
         </TableBody>
       </Table>
+      {/* dialogs */}
+      <DescriptionDialog />
     </>
   )
 }

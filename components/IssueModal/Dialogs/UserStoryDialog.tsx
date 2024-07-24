@@ -3,7 +3,7 @@ import { IUserStory } from "@/models/UserStory";
 import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody, DialogActions, Typography } from "@mui/material";
 import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
-import QueryTooltip from "./QueryTooltip";
+import QueryTooltip from "../QueryTooltip";
 import { AddCircleOutline } from "@mui/icons-material";
 import CircularProgress from '@mui/material/CircularProgress';
 import { useIssueContext } from "@/context/IssueContext";
@@ -288,12 +288,12 @@ export default function UserStoryDialog(
               onClick={() => {
                 handleClose();
               }}
-              variant="contained"
+              variant="outlined"
             >
               Cancel
             </Button>
             <Button
-              variant="outlined"
+              variant="contained"
               onClick={saveUserStory}
             >
               {saving ? <CircularProgress size={25} /> : "Save"}

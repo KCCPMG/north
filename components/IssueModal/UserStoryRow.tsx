@@ -8,7 +8,7 @@ import QueryTooltip from "./QueryTooltip";
 import { v4 as uuidv4 } from 'uuid';
 import EditIcon from '@mui/icons-material/Edit';
 import { Dispatch, SetStateAction, useState } from "react";
-import UserStoryDialog, { EditableUserStory } from "./UserStoryDialog";
+import UserStoryDialog, { EditableUserStory } from "./Dialogs/UserStoryDialog";
 import Issue from "@/models/Issue";
 
 

@@ -1,25 +1,51 @@
 import { useIssueContext } from "@/context/IssueContext";
-import { Typography, TableRow, TableCell, TextField } from "@mui/material";
+import { Button, Typography, TableRow, TableCell, TextField, useTheme } from "@mui/material";
 import { ChangeEvent, ReactNode } from "react";
+import EditIcon from '@mui/icons-material/Edit';
+import { useState, Dispatch, SetStateAction } from "react";
 
 type ModalTableRowProps = {
   property: string,
   textValue: string | undefined,
   // onChange: (e: ChangeEvent) => React.SetStateAction<string>,
-  child?: ReactNode
+  child?: ReactNode,
+  // showDialog: (e: MouseEventHandler<HTMLAnchorElement>) => SetStateAction<boolean>
+  setShowDialog: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ModalTableRow(
-  { property, textValue, child }: ModalTableRowProps) 
+  { property, textValue, child, setShowDialog }: ModalTableRowProps) 
 {
 
   const { editMode } = useIssueContext();
 
+  const theme = useTheme();
+
+  const [showEditIcon, setShowEditIcon] = useState(false);
+
 
   return (
-    <TableRow>
-      <TableCell>
-        
+    <TableRow 
+      onMouseEnter={(e) => setShowEditIcon(true)}
+      onMouseLeave={(e) => setShowEditIcon(false)}  
+    >
+      <TableCell sx={{
+          width: "4rem",
+          borderBottom: "none",
+          padding: "0"
+        }}>
+        {showEditIcon &&
+          <Button onClick={()=>{
+            console.log("button in table row clicked");
+            console.log(setShowDialog);
+            setShowDialog(true);
+          }}>
+
+            <EditIcon 
+              color="primary"
+            />
+          </Button> 
+        }
       </TableCell>
       <TableCell
         sx={{
