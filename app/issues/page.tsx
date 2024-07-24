@@ -35,7 +35,11 @@ export default async function Page() {
 
   const columns = columnTuples.map(tup => {
     return (
-      <Stack direction="column" width={1/4}>
+      <Stack 
+        direction="column" 
+        width={1/4} 
+        key={tup[0].toLowerCase().replaceAll(" ", "-")}
+      >
         <Stack direction="row" sx={{
           width: 1,
           justifyContent: "center",
@@ -45,7 +49,10 @@ export default async function Page() {
         </Stack>
         <Divider variant="fullWidth" />
         {tup[1].map(issue => (
-          <IssueContextProvider initialIssue={issue}>
+          <IssueContextProvider 
+            initialIssue={issue} 
+            key={issue._id.toString()}
+          >
             <IssueCard initialIssue={issue} key={issue._id} />
           </IssueContextProvider>
         ))}

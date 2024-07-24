@@ -27,7 +27,7 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
 export default function QueryTooltip({ textType, text }: QueryTooltipProps) {
 
   const theme = useTheme();
-  const [searchResult, setSearchResult] = useState(<span>"Searching..."</span>)
+  const [searchResult, setSearchResult] = useState(<span>Searching...</span>)
 
   async function searchRef() {
     try {
@@ -95,13 +95,9 @@ export default function QueryTooltip({ textType, text }: QueryTooltipProps) {
       // setSearchResult(json);
     } catch (err) {
       console.log(err);
-      setSearchResult(<span>"Something went wrong"</span>);
+      setSearchResult(<span>Something went wrong</span>);
     }
   }
-
-  // useEffect(() => {
-  //   searchRef();
-  // }, [])
 
   return (
     <HtmlTooltip
