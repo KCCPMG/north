@@ -49,7 +49,7 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
 
     const json = await req.json();
 
-    const issue = await Issue.findByIdAndUpdate(params.id, json)
+    const issue = await Issue.findByIdAndUpdate(params.id, json, {new: true})
       .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
         path: 'user_stories',
         select: '_id issue description database_references links components'

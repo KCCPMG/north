@@ -7,10 +7,9 @@ export default function DescriptionDialog() {
 
   const { 
     issue,
+    setIssue,
     descriptionModalOpen, 
     setDescriptionModalOpen,
-    // pendingDescriptionText,
-    // setPendingDescriptionText
   } = useIssueContext();
 
 
@@ -26,10 +25,26 @@ export default function DescriptionDialog() {
         setDescriptionModalOpen(false);
       }}
       handleSave={async () => {
-        console.log("placeholder");
+        try {
+          const response = await fetch(`api/issues/${issue._id}`, {
+            method: 'post',
+            body: JSON.stringify({description: pendingDescriptionText})
+          })
+          if (response.status >= 400) throw new Error("Response Error");
+          const json = await response.json();
+          console.log(json);
+          setIssue(json);
+        } catch(err) {
+          console.log(err);
+          throw err;
+        }
       }}
       content={
         <TextField
+          variant="outlined"
+          multiline
+          maxRows={3}
+          fullWidth
           value={pendingDescriptionText}
           onChange={(e) => setPendingDescriptionText(e.target.value)}
         />
