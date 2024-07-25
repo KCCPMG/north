@@ -9,8 +9,10 @@ type IssueContext = {
   setEditMode: Dispatch<SetStateAction<boolean>>,
   issue: ParsedPopulatedIssueType,
   setIssue: Dispatch<SetStateAction<ParsedPopulatedIssueType>>,
-  descriptionModalOpen: boolean,
-  setDescriptionModalOpen: Dispatch<SetStateAction<boolean>>,
+  descriptionDialogOpen: boolean,
+  setDescriptionDialogOpen: Dispatch<SetStateAction<boolean>>,
+  designersDialogOpen: boolean,
+  setDesignersDialogOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const IssueContext = createContext<IssueContext | null>(null);
@@ -26,9 +28,9 @@ export function IssueContextProvider(
   const [editMode, setEditMode] = useState(false);
   const [issue, setIssue] = useState(initialIssue);
 
-  // description
-  const [descriptionModalOpen, setDescriptionModalOpen] = useState(false);
-
+  // Dialog visibility controls
+  const [descriptionDialogOpen, setDescriptionDialogOpen] = useState(false);
+  const [designersDialogOpen, setDesignersDialogOpen] = useState(false);
 
 
   return (
@@ -37,8 +39,11 @@ export function IssueContextProvider(
       setEditMode, 
       issue, 
       setIssue, 
-      descriptionModalOpen, 
-      setDescriptionModalOpen
+      descriptionDialogOpen, 
+      setDescriptionDialogOpen,
+      designersDialogOpen, 
+      setDesignersDialogOpen
+      
     }}>
       {children}
     </IssueContext.Provider>

@@ -3,12 +3,17 @@ import TableRow from "./TableRow";
 import { IUser } from "@/models/User";
 import { useIssueContext } from "@/context/IssueContext";
 import DescriptionDialog from "./Dialogs/DescriptionDialog";
+import DesignersDialog from "./Dialogs/DesignersDialog";
 
 
 
 export default function IssueSummary() {
 
-  const { issue, setDescriptionModalOpen } = useIssueContext();
+  const { 
+    issue, 
+    setDescriptionDialogOpen,
+    setDesignersDialogOpen
+  } = useIssueContext();
 
   return (
     <>
@@ -18,11 +23,12 @@ export default function IssueSummary() {
           <TableRow
             property="Description:"
             textValue={issue.description}
-            setShowDialog={setDescriptionModalOpen}
+            setShowDialog={setDescriptionDialogOpen}
           />
           <TableRow
             property="Designers:"
             textValue={issue.assigned_designers.map(ad => ad.email).join(", ")}
+            setShowDialog={setDesignersDialogOpen}
           />
           <TableRow
             property="Engineers:"
@@ -60,6 +66,7 @@ export default function IssueSummary() {
       </Table>
       {/* dialogs */}
       <DescriptionDialog />
+      <DesignersDialog />
     </>
   )
 }

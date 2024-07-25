@@ -36,8 +36,6 @@ export default function ModalTableRow(
         }}>
         {showEditIcon &&
           <Button onClick={()=>{
-            console.log("button in table row clicked");
-            console.log(setShowDialog);
             setShowDialog(true);
           }}>
 
