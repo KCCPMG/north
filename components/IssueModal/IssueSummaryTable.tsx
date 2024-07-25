@@ -1,9 +1,10 @@
 import { Typography, Table, TableBody, Link } from "@mui/material";
-import TableRow from "./TableRow";
+import ModalTableRow from "./ModalTableRow";
 import { IUser } from "@/models/User";
 import { useIssueContext } from "@/context/IssueContext";
 import DescriptionDialog from "./Dialogs/DescriptionDialog";
 import DesignersDialog from "./Dialogs/DesignersDialog";
+import EngineersDialog from "./Dialogs/EngineersDialog";
 
 
 
@@ -12,7 +13,8 @@ export default function IssueSummary() {
   const { 
     issue, 
     setDescriptionDialogOpen,
-    setDesignersDialogOpen
+    setDesignersDialogOpen,
+    setEngineersDialogOpen
   } = useIssueContext();
 
   return (
@@ -20,25 +22,26 @@ export default function IssueSummary() {
       <Typography variant="h6">Summary</Typography>
       <Table>
         <TableBody>
-          <TableRow
+          <ModalTableRow
             property="Description:"
             textValue={issue.description}
             setShowDialog={setDescriptionDialogOpen}
           />
-          <TableRow
+          <ModalTableRow
             property="Designers:"
             textValue={issue.assigned_designers.map(ad => ad.email).join(", ")}
             setShowDialog={setDesignersDialogOpen}
           />
-          <TableRow
+          <ModalTableRow
             property="Engineers:"
             textValue={issue.assigned_engineers.map(ad => ad.email).join(", ")}
+            setShowDialog={setEngineersDialogOpen}
           />
-          <TableRow
+          <ModalTableRow
             property="Route Location:"
             textValue={issue.route_location}
           />
-          <TableRow
+          <ModalTableRow
             property="Design Figma Link"
             textValue={issue.design_figma_link}
             child={issue.design_figma_link &&
@@ -49,7 +52,7 @@ export default function IssueSummary() {
               </Link>
             }
           />
-          <TableRow
+          <ModalTableRow
             property="Eng. GitHub Issue Link"
             textValue={issue.eng_team_gh_issue_link}
             child={issue.eng_team_gh_issue_link &&
@@ -58,7 +61,7 @@ export default function IssueSummary() {
               </Link>
             }
           />
-          <TableRow
+          <ModalTableRow
             property="Eng. Team Files"
             textValue={issue.eng_team_files.join(", ") || ""}
           />
@@ -67,6 +70,7 @@ export default function IssueSummary() {
       {/* dialogs */}
       <DescriptionDialog />
       <DesignersDialog />
+      <EngineersDialog />
     </>
   )
 }

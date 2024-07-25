@@ -1,7 +1,7 @@
 "use client";
 import { ParsedPopulatedIssueType } from "@/models/Controls"
 import { Button, Typography, Box, Divider, Table, TableBody, Dialog, DialogTitle, DialogContent, Link, Stack, DialogActions, CircularProgress, useTheme } from "@mui/material"
-import ModalTableRow from "./TableRow";
+import ModalTableRow from "./ModalTableRow";
 import EditIcon from '@mui/icons-material/Edit';
 import { useIssueContext } from "@/context/IssueContext";
 import IssueModalMergeChecklist from "./MergeChecklistTable";

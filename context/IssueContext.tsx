@@ -12,7 +12,9 @@ type IssueContext = {
   descriptionDialogOpen: boolean,
   setDescriptionDialogOpen: Dispatch<SetStateAction<boolean>>,
   designersDialogOpen: boolean,
-  setDesignersDialogOpen: Dispatch<SetStateAction<boolean>>
+  setDesignersDialogOpen: Dispatch<SetStateAction<boolean>>,
+  engineersDialogOpen: boolean, 
+  setEngineersDialogOpen: Dispatch<SetStateAction<boolean>>  
 }
 
 const IssueContext = createContext<IssueContext | null>(null);
@@ -31,6 +33,7 @@ export function IssueContextProvider(
   // Dialog visibility controls
   const [descriptionDialogOpen, setDescriptionDialogOpen] = useState(false);
   const [designersDialogOpen, setDesignersDialogOpen] = useState(false);
+  const [engineersDialogOpen, setEngineersDialogOpen] = useState(false);
 
 
   return (
@@ -42,7 +45,9 @@ export function IssueContextProvider(
       descriptionDialogOpen, 
       setDescriptionDialogOpen,
       designersDialogOpen, 
-      setDesignersDialogOpen
+      setDesignersDialogOpen,
+      engineersDialogOpen, 
+      setEngineersDialogOpen  
       
     }}>
       {children}

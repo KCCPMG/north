@@ -9,25 +9,25 @@ type FullIUser = IUser & {
   _id: string
 }
 
-type PotentialDesigner = FullIUser & {
+type PotentialEngineer = FullIUser & {
   assigned: boolean
 }
 
-export default function DesignersDialog() {
+export default function EngineersDialog() {
 
   const { 
     issue,
     setIssue,
-    designersDialogOpen, 
-    setDesignersDialogOpen  
+    engineersDialogOpen, 
+    setEngineersDialogOpen  
   } = useIssueContext();
 
-  const [designers, setDesigners] = useState<Array<PotentialDesigner>>([])
+  const [engineers, setEngineers] = useState<Array<PotentialEngineer>>([])
 
-  async function populateDesigners() {
+  async function populateEngineers() {
     const response = await fetch('/api/users');
     const json = await response.json();
-    const users: PotentialDesigner[] = (json.users as FullIUser[]).map(user => {
+    const users: PotentialEngineer[] = (json.users as FullIUser[]).map(user => {
       return {
         ...user,
         assigned: false
@@ -37,32 +37,32 @@ export default function DesignersDialog() {
     console.log(users);
 
     users.forEach(user => {
-      if (issue.assigned_designers.find(ad => ad._id === user._id)) {
+      if (issue.assigned_engineers.find(ae => ae._id === user._id)) {
         user.assigned = true;
       }
     })
 
-    setDesigners(users);
+    setEngineers(users);
   }
 
 
   useEffect(() => {
-    if (designersDialogOpen) populateDesigners();
-  }, [designersDialogOpen])
+    if (engineersDialogOpen) populateEngineers();
+  }, [engineersDialogOpen])
 
   return (
     <BaseDialog 
-      title="Assigned Designers"
-      open={designersDialogOpen}
+      title="Assigned Engineers"
+      open={engineersDialogOpen}
       handleClose={() => {
 
-        setDesignersDialogOpen(false);
+        setEngineersDialogOpen(false);
       }}
       handleSave={async () => {
         try {
           const response = await fetch(`api/issues/${issue._id}`, {
             method: 'post',
-            body: JSON.stringify({assigned_designers: designers.filter(d => d.assigned === true).map(d => d._id)})
+            body: JSON.stringify({assigned_engineers: engineers.filter(d => d.assigned === true).map(d => d._id)})
           })
           if (response.status >= 400) throw new Error("Response Error");
           const json = await response.json();
@@ -76,22 +76,22 @@ export default function DesignersDialog() {
       content={
         <FormControl>
           <FormGroup>
-            {designers.map(designer => 
+            {engineers.map(engineer => 
               <FormControlLabel
-                key={designer._id}
+                key={engineer._id}
                 control={
                   <Checkbox 
-                    checked={designer.assigned}
+                    checked={engineer.assigned}
                     onChange={(e) => {
-                      const designersCopy = [...designers];
-                      const foundDesigner = designersCopy.find(d => d._id === designer._id);
-                      if (!foundDesigner) throw new Error("Cannot find designer, something went wrong");
-                      foundDesigner.assigned = !(foundDesigner.assigned);
-                      setDesigners(designersCopy);
+                      const engineersCopy = [...engineers];
+                      const foundEngineer = engineersCopy.find(d => d._id === engineer._id);
+                      if (!foundEngineer) throw new Error("Cannot find engineer, something went wrong");
+                      foundEngineer.assigned = !(foundEngineer.assigned);
+                      setEngineers(engineersCopy);
                     }}
                   />
                 }
-                label={designer.email}
+                label={engineer.email}
               />
             )}
           </FormGroup>
