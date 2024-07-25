@@ -14,7 +14,11 @@ export default function IssueSummary() {
     issue, 
     setDescriptionDialogOpen,
     setDesignersDialogOpen,
-    setEngineersDialogOpen
+    setEngineersDialogOpen,
+    setRouteLocationDialogOpen,
+    setFigmaLinkDialogOpen,
+    setGithubLinkDialogOpen,
+    setEngFilesDialogOpen
   } = useIssueContext();
 
   return (
@@ -40,10 +44,12 @@ export default function IssueSummary() {
           <ModalTableRow
             property="Route Location:"
             textValue={issue.route_location}
+            setShowDialog={setRouteLocationDialogOpen}
           />
           <ModalTableRow
             property="Design Figma Link"
             textValue={issue.design_figma_link}
+            setShowDialog={setFigmaLinkDialogOpen}
             child={issue.design_figma_link &&
               <Link
                 href={issue.design_figma_link}
@@ -55,6 +61,7 @@ export default function IssueSummary() {
           <ModalTableRow
             property="Eng. GitHub Issue Link"
             textValue={issue.eng_team_gh_issue_link}
+            setShowDialog={setEngFilesDialogOpen}
             child={issue.eng_team_gh_issue_link &&
               <Link href={issue.eng_team_gh_issue_link} >
                 {issue.eng_team_gh_issue_link}
@@ -64,6 +71,7 @@ export default function IssueSummary() {
           <ModalTableRow
             property="Eng. Team Files"
             textValue={issue.eng_team_files.join(", ") || ""}
+            setShowDialog={setEngFilesDialogOpen}
           />
         </TableBody>
       </Table>

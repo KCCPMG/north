@@ -14,7 +14,15 @@ type IssueContext = {
   designersDialogOpen: boolean,
   setDesignersDialogOpen: Dispatch<SetStateAction<boolean>>,
   engineersDialogOpen: boolean, 
-  setEngineersDialogOpen: Dispatch<SetStateAction<boolean>>  
+  setEngineersDialogOpen: Dispatch<SetStateAction<boolean>>,
+  routeLocationDialogOpen: boolean, 
+  setRouteLocationDialogOpen: Dispatch<SetStateAction<boolean>>,
+  figmaLinkDialogOpen: boolean, 
+  setFigmaLinkDialogOpen: Dispatch<SetStateAction<boolean>>,
+  githubLinkDialogOpen: boolean, 
+  setGithubLinkDialogOpen: Dispatch<SetStateAction<boolean>>,
+  engFilesDialogOpen: boolean, 
+  setEngFilesDialogOpen: Dispatch<SetStateAction<boolean>> 
 }
 
 const IssueContext = createContext<IssueContext | null>(null);
@@ -34,6 +42,10 @@ export function IssueContextProvider(
   const [descriptionDialogOpen, setDescriptionDialogOpen] = useState(false);
   const [designersDialogOpen, setDesignersDialogOpen] = useState(false);
   const [engineersDialogOpen, setEngineersDialogOpen] = useState(false);
+  const [routeLocationDialogOpen, setRouteLocationDialogOpen] = useState(false);
+  const [figmaLinkDialogOpen, setFigmaLinkDialogOpen] = useState(false);
+  const [githubLinkDialogOpen, setGithubLinkDialogOpen] = useState(false);
+  const [engFilesDialogOpen, setEngFilesDialogOpen] = useState(false);
 
 
   return (
@@ -47,8 +59,15 @@ export function IssueContextProvider(
       designersDialogOpen, 
       setDesignersDialogOpen,
       engineersDialogOpen, 
-      setEngineersDialogOpen  
-      
+      setEngineersDialogOpen,
+      routeLocationDialogOpen, 
+      setRouteLocationDialogOpen,
+      figmaLinkDialogOpen, 
+      setFigmaLinkDialogOpen,
+      githubLinkDialogOpen, 
+      setGithubLinkDialogOpen,
+      engFilesDialogOpen, 
+      setEngFilesDialogOpen      
     }}>
       {children}
     </IssueContext.Provider>
