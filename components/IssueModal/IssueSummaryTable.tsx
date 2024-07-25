@@ -6,6 +6,7 @@ import DescriptionDialog from "./Dialogs/DescriptionDialog";
 import DesignersDialog from "./Dialogs/DesignersDialog";
 import EngineersDialog from "./Dialogs/EngineersDialog";
 import RouteLocationDialog from "./Dialogs/RouteLocationDialog";
+import FigmaLinkDialog from "./Dialogs/FigmaLinkDialog";
 
 
 
@@ -88,6 +89,7 @@ export default function IssueSummary() {
       <DesignersDialog />
       <EngineersDialog />
       <RouteLocationDialog />
+      <FigmaLinkDialog />
     </>
   )
 }
