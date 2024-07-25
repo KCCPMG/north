@@ -5,6 +5,7 @@ import { useIssueContext } from "@/context/IssueContext";
 import DescriptionDialog from "./Dialogs/DescriptionDialog";
 import DesignersDialog from "./Dialogs/DesignersDialog";
 import EngineersDialog from "./Dialogs/EngineersDialog";
+import RouteLocationDialog from "./Dialogs/RouteLocationDialog";
 
 
 
@@ -45,6 +46,13 @@ export default function IssueSummary() {
             property="Route Location:"
             textValue={issue.route_location}
             setShowDialog={setRouteLocationDialogOpen}
+            child={issue.route_location &&
+              <Link
+                href={issue.route_location}
+              >
+                {issue.route_location}
+              </Link>
+            }
           />
           <ModalTableRow
             property="Design Figma Link"
@@ -79,6 +87,7 @@ export default function IssueSummary() {
       <DescriptionDialog />
       <DesignersDialog />
       <EngineersDialog />
+      <RouteLocationDialog />
     </>
   )
 }

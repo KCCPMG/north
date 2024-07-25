@@ -9,12 +9,13 @@ type BaseDialogProps = {
   open: boolean,
   handleClose: () => void,
   handleSave: () => Promise<void>,
-  content: ReactNode
+  content: ReactNode,
+  disabled?: boolean
 }
 
 
 export default function BaseDialog(
-  { title, open, handleClose, content, handleSave }: BaseDialogProps
+  { title, open, handleClose, content, handleSave, disabled }: BaseDialogProps
 ) {
 
   const theme = useTheme();
@@ -38,6 +39,7 @@ export default function BaseDialog(
           Cancel
         </Button>
         <Button
+          disabled={disabled}
           variant="contained"
           onClick={async () => {
             try {

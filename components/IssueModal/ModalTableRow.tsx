@@ -29,7 +29,8 @@ export default function ModalTableRow(
       onMouseEnter={(e) => setShowEditIcon(true)}
       onMouseLeave={(e) => setShowEditIcon(false)}  
     >
-      <TableCell sx={{
+      <TableCell 
+        sx={{
           width: "4rem",
           borderBottom: "none",
           padding: "0"
