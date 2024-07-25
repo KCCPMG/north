@@ -7,6 +7,7 @@ import DesignersDialog from "./Dialogs/DesignersDialog";
 import EngineersDialog from "./Dialogs/EngineersDialog";
 import RouteLocationDialog from "./Dialogs/RouteLocationDialog";
 import FigmaLinkDialog from "./Dialogs/FigmaLinkDialog";
+import GithubLinkDialog from "./Dialogs/GithubLinkDialog";
 
 
 
@@ -70,7 +71,7 @@ export default function IssueSummary() {
           <ModalTableRow
             property="Eng. GitHub Issue Link"
             textValue={issue.eng_team_gh_issue_link}
-            setShowDialog={setEngFilesDialogOpen}
+            setShowDialog={setGithubLinkDialogOpen}
             child={issue.eng_team_gh_issue_link &&
               <Link href={issue.eng_team_gh_issue_link} >
                 {issue.eng_team_gh_issue_link}
@@ -90,6 +91,7 @@ export default function IssueSummary() {
       <EngineersDialog />
       <RouteLocationDialog />
       <FigmaLinkDialog />
+      <GithubLinkDialog />
     </>
   )
 }
