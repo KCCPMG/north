@@ -1,28 +1,37 @@
 import { TextField } from "@mui/material";
 import BaseDialog from "./BaseDialog";
 import { useIssueContext } from "@/context/IssueContext";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function DescriptionDialog() {
 
   const { 
     issue,
     setIssue,
-    descriptionModalOpen, 
-    setDescriptionModalOpen,
+    descriptionDialogOpen, 
+    setDescriptionDialogOpen,
   } = useIssueContext();
 
 
-  const [pendingDescriptionText,
-    setPendingDescriptionText] = useState(issue.description);
+  const [
+    pendingDescriptionText,
+    setPendingDescriptionText
+  ] = useState(issue.description);
+
+
+  useEffect(() => {
+    if (descriptionDialogOpen === true) {
+      setPendingDescriptionText(issue.description);
+    }
+  }, [descriptionDialogOpen])
+
 
   return (
     <BaseDialog 
       title="Description"
-      open={descriptionModalOpen}
+      open={descriptionDialogOpen}
       handleClose={()=>{
-        setPendingDescriptionText(issue.description);
-        setDescriptionModalOpen(false);
+        setDescriptionDialogOpen(false);
       }}
       handleSave={async () => {
         try {
