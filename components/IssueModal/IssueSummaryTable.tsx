@@ -8,6 +8,7 @@ import EngineersDialog from "./Dialogs/EngineersDialog";
 import RouteLocationDialog from "./Dialogs/RouteLocationDialog";
 import FigmaLinkDialog from "./Dialogs/FigmaLinkDialog";
 import GithubLinkDialog from "./Dialogs/GithubLinkDialog";
+import EngFilesDialog from "./Dialogs/EngFilesDialog";
 
 
 
@@ -92,6 +93,7 @@ export default function IssueSummary() {
       <RouteLocationDialog />
       <FigmaLinkDialog />
       <GithubLinkDialog />
+      <EngFilesDialog />
     </>
   )
 }

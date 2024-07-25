@@ -252,20 +252,21 @@ export default function UserStoryDialog(
           </TableBody>
         </Table>
         {/* </Stack> */}
-        <Stack direction="row" justifyContent={"middle"}><Button
-          variant="outlined"
-          onClick={() => {
-            console.log("open showUserStoryDialog")
-            addDescriptionRow();
-          }}
-          sx={{ margin: "auto" }}
-        >
-          <Stack direction="row" gap={1}>
-            <span>Add Row to User Story</span>
-            <AddCircleOutline />
-          </Stack>
+        <Stack direction="row" justifyContent={"middle"}>
+          <Button
+            variant="outlined"
+            onClick={() => {
+              console.log("open showUserStoryDialog")
+              addDescriptionRow();
+            }}
+            sx={{ margin: "auto" }}
+          >
+            <Stack direction="row" gap={1}>
+              <span>Add Row to User Story</span>
+              <AddCircleOutline />
+            </Stack>
 
-        </Button>
+          </Button>
         </Stack>
       </DialogContent>
       <DialogActions>
