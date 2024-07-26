@@ -1,10 +1,13 @@
 import UserStory from "@/models/UserStory";
 import { NextRequest } from "next/server";
+import mongooseConnect from "@/lib/mongooseConnect";
 
 
 export async function POST(req: NextRequest, {params} : {params: {id: string}}) {
 
   try {
+
+    await mongooseConnect();
 
     const {story} = await req.json();
     console.log(JSON.stringify({"incoming user story" : story}, null, 2));

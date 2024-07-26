@@ -4,11 +4,14 @@ import { IUserStory } from "@/models/UserStory";
 import { IUser } from "@/models/User";
 import mongoose from "mongoose";
 import Issue from "@/models/Issue";
+import mongooseConnect from "@/lib/mongooseConnect";
 
 
 export async function POST(req: NextRequest, {params} : {params: {id: string}}) {
 
   try {
+
+    await mongooseConnect();
 
     const {story} = await req.json();
 

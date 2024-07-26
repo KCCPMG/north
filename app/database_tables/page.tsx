@@ -2,10 +2,13 @@ import Typography from '@mui/joy/Typography';
 import { getPopulatedTables, PopulatedTableType } from "@/models/Controls";
 import Grid from "@mui/material/Grid";
 import DBTableAccordion from "@/components/DBTableAccordion";
+import mongooseConnect from '@/lib/mongooseConnect';
 
 
 export default async function Page() {
 
+
+  await mongooseConnect();
   const tables: PopulatedTableType[] = await getPopulatedTables();
 
   return (
