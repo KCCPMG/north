@@ -2,9 +2,11 @@ import { Typography, Box, Stack, Divider } from "@mui/material";
 import { IssueContextProvider } from "@/context/IssueContext";
 import { ParsedPopulatedIssueType, getPopulatedIssues } from "@/models/Controls";
 import IssueCard from "@/components/IssueCard";
+import mongooseConnect from "@/lib/mongooseConnect";
 
 export default async function Page() {
 
+  await mongooseConnect();
   const issues = await getPopulatedIssues();
   const parsedIssues: Array<ParsedPopulatedIssueType> = JSON.parse(JSON.stringify(issues));
 

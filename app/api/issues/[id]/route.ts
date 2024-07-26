@@ -3,11 +3,14 @@ import { NextRequest } from "next/server";
 import { IUserStory } from "@/models/UserStory";
 import mongoose from "mongoose";
 import { IUser } from "@/models/User";
+import mongooseConnect from "@/lib/mongooseConnect";
 
 
 export async function GET(req: NextRequest, {params} : {params: {id: string}}) {
   try {
     
+    await mongooseConnect();
+
     const issue = await Issue.findById(params.id)
       .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
         path: 'user_stories',
@@ -46,6 +49,8 @@ export async function GET(req: NextRequest, {params} : {params: {id: string}}) {
 
 export async function POST(req: NextRequest, {params} : {params: {id: string}}) {
   try {
+
+    await mongooseConnect();
 
     const json = await req.json();
 
