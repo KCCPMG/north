@@ -10,6 +10,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { Dispatch, SetStateAction, useState } from "react";
 import UserStoryDialog, { EditableUserStory } from "./Dialogs/UserStoryDialog";
 import Issue from "@/models/Issue";
+import { useSession } from "next-auth/react";
 
 
 
@@ -23,7 +24,9 @@ type UserStoryProps = {
 export default function UserStory({ story, refresh }: UserStoryProps) {
 
   const { editMode } = useIssueContext();
+  const { data: session } = useSession();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
+  const [showEditIcon, setShowEditIcon] = useState(false);
 
   const joinedDescription = story.description.map(des => {
     if (des.textType === "string") {
@@ -50,18 +53,30 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
 
 
   return (
-    <TableRow key={story._id}>
+    <TableRow 
+      onMouseEnter={() => setShowEditIcon(true)}
+      onMouseLeave={() => setShowEditIcon(false)}
+      key={story._id}
+    >
       {
-        editMode &&
+        session?.user &&
 
-        <TableCell sx={{ borderBottom: "none" }}>
-          <Button
-            onClick={()=>setShowUserStoryDialog(true)}
-          >
-            <EditIcon
-              color="primary"
-            />
-          </Button>
+        <TableCell 
+          sx={{ 
+            width: "4rem",
+            borderBottom: "none",
+            padding: "0"
+          }}
+        >
+          {showEditIcon &&
+            <Button
+              onClick={()=>setShowUserStoryDialog(true)}
+            >
+              <EditIcon
+                color="primary"
+              />
+            </Button>
+          }
           <UserStoryDialog
             issueId={story.issue.toString()}
             prop_id={story._id}
@@ -98,7 +113,7 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
           textAlign: "center"
         }}
       >
-        {editMode ?
+        {session?.user ?
           <Checkbox defaultChecked={story.design_done} /> :
 
           story.design_done ?
@@ -113,7 +128,7 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
           textAlign: "center"
         }}
       >
-        {editMode ?
+        {session?.user ?
           <Checkbox defaultChecked={story.engineering_done} /> :
 
           story.engineering_done ?

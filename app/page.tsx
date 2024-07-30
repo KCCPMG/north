@@ -11,7 +11,7 @@ export default async function Home() {
   if (session) return redirect("/issues")
 
   const providers = await getProviders() || [];
-  typeof providers;
+  typeof providers;  // this looks like it got in by mistake, confirm and delete
   // else
   return (
     <LoginHome />

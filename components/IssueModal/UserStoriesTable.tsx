@@ -6,6 +6,7 @@ import { useIssueContext } from "@/context/IssueContext";
 import { useState } from "react";
 import UserStoryDialog from "./Dialogs/UserStoryDialog";
 import { AddCircleOutline } from "@mui/icons-material";
+import { useSession } from "next-auth/react";
 
 
 type UserStoriesProps = {
@@ -17,6 +18,7 @@ type UserStoriesProps = {
 export default function UserStories({ issueId, stories, refresh }: UserStoriesProps) {
 
   const { editMode } = useIssueContext();
+  const { data: session } = useSession();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
 
   return (
@@ -25,7 +27,7 @@ export default function UserStories({ issueId, stories, refresh }: UserStoriesPr
       <Table sx={{ marginTop: 2 }}>
         <TableHead>
           <TableRow>
-            {editMode &&
+            {session?.user &&
               <TableCell>Edit</TableCell>
             }
             <TableCell>
@@ -48,7 +50,7 @@ export default function UserStories({ issueId, stories, refresh }: UserStoriesPr
         </TableBody>
       </Table>
       <DialogActions>
-        {editMode &&
+        {session?.user &&
           <>
             <Button
               variant="outlined"

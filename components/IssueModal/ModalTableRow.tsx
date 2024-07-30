@@ -3,6 +3,7 @@ import { Button, Typography, TableRow, TableCell, TextField, useTheme } from "@m
 import { ChangeEvent, ReactNode } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { useState, Dispatch, SetStateAction } from "react";
+import { useSession } from "next-auth/react";
 
 type ModalTableRowProps = {
   property: string,
@@ -19,6 +20,7 @@ export default function ModalTableRow(
 
   const { editMode } = useIssueContext();
 
+  const { data: session } = useSession();
   const theme = useTheme();
 
   const [showEditIcon, setShowEditIcon] = useState(false);
@@ -57,7 +59,7 @@ export default function ModalTableRow(
         </Typography>
       </TableCell>
       <TableCell sx={{ borderBottom: "none" }}>
-        {editMode ?
+        {session?.user ?
           <TextField
             defaultValue={textValue}
             variant="standard"
