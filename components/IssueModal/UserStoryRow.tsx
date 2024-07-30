@@ -11,6 +11,8 @@ import { Dispatch, SetStateAction, useState } from "react";
 import UserStoryDialog, { EditableUserStory } from "./Dialogs/UserStoryDialog";
 import Issue from "@/models/Issue";
 import { useSession } from "next-auth/react";
+import IssueCheckbox from "./IssueCheckbox";
+import { saveUserStory } from "@/lib/api";
 
 
 
@@ -23,7 +25,7 @@ type UserStoryProps = {
 
 export default function UserStory({ story, refresh }: UserStoryProps) {
 
-  const { editMode } = useIssueContext();
+  const { setIssue } = useIssueContext();
   const { data: session } = useSession();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
   const [showEditIcon, setShowEditIcon] = useState(false);
@@ -113,13 +115,19 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
           textAlign: "center"
         }}
       >
-        {session?.user ?
+        <IssueCheckbox 
+          checked={story.design_done}
+          saveFunction={async (newValue) => {
+            saveUserStory(story._id, {design_done: newValue}, setIssue)
+          }}
+        />
+        {/* {session?.user ?
           <Checkbox defaultChecked={story.design_done} /> :
 
           story.design_done ?
             <CheckCircleIcon /> :
             <BlockIcon />
-        }
+        } */}
       </TableCell>
       <TableCell
         sx={{

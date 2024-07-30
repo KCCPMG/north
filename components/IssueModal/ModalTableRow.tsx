@@ -15,8 +15,7 @@ type ModalTableRowProps = {
 }
 
 export default function ModalTableRow(
-  { property, textValue, child, setShowDialog }: ModalTableRowProps) 
-{
+  { property, textValue, child, setShowDialog }: ModalTableRowProps) {
 
   const { editMode } = useIssueContext();
 
@@ -27,25 +26,25 @@ export default function ModalTableRow(
 
 
   return (
-    <TableRow 
+    <TableRow
       onMouseEnter={(e) => setShowEditIcon(true)}
-      onMouseLeave={(e) => setShowEditIcon(false)}  
+      onMouseLeave={(e) => setShowEditIcon(false)}
     >
-      <TableCell 
+      <TableCell
         sx={{
           width: "4rem",
           borderBottom: "none",
           padding: "0"
         }}>
         {showEditIcon &&
-          <Button onClick={()=>{
+          <Button onClick={() => {
             setShowDialog(true);
           }}>
 
-            <EditIcon 
+            <EditIcon
               color="primary"
             />
-          </Button> 
+          </Button>
         }
       </TableCell>
       <TableCell
@@ -59,19 +58,9 @@ export default function ModalTableRow(
         </Typography>
       </TableCell>
       <TableCell sx={{ borderBottom: "none" }}>
-        {session?.user ?
-          <TextField
-            defaultValue={textValue}
-            variant="standard"
-            // onChange={(e)=>}
-            multiline
-            fullWidth
-            maxRows={2}
-          /> :
-          <Typography variant="body2">
-            {child ? child : textValue}
-          </Typography>
-        }
+        <Typography variant="body2">
+          {child ? child : textValue}
+        </Typography>
       </TableCell>
     </TableRow>
   )
