@@ -88,7 +88,7 @@ export async function getPopulatedIssues(): Promise<Array<PopulatedIssueType>> {
     const issues = await Issue.find({})
       .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
         path: 'user_stories',
-        select: '_id issue description database_references links components'
+        select: '_id issue description database_references links components engineering_done design_done'
       })
       .populate<{assigned_designers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_designers',

@@ -28,6 +28,6 @@ export default function IssueCheckbox({checked, saveFunction}: IssueCheckboxProp
     />
   }
 
-  else return checked ? <CheckCircleIcon /> : <BlockIcon />
+  else return checked ? <CheckCircleIcon color="primary"/> : <BlockIcon />
 
 }

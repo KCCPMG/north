@@ -24,7 +24,7 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
       populate: [
         {
           path: 'user_stories',
-          select: '_id issue description database_references links components'
+          select: '_id issue description database_references links components engineering_done design_done'
         },
         {
           path: 'assigned_designers',

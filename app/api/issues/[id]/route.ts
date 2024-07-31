@@ -14,7 +14,7 @@ export async function GET(req: NextRequest, {params} : {params: {id: string}}) {
     const issue = await Issue.findById(params.id)
       .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
         path: 'user_stories',
-        select: '_id issue description database_references links components'
+        select: '_id issue description database_references links components engineering_done design_done'
       })
       .populate<{assigned_designers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_designers',
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
     const issue = await Issue.findByIdAndUpdate(params.id, json, {new: true})
       .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
         path: 'user_stories',
-        select: '_id issue description database_references links components'
+        select: '_id issue description database_references links components engineering_done design_done'
       })
       .populate<{assigned_designers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_designers',

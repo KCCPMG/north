@@ -61,7 +61,7 @@ export async function GET(req: NextRequest) {
       const pages = await Issue.find({name: query, issueType: "page"})
       .populate<{user_stories: Array<IUserStory & {_id: mongoose.Types.ObjectId}>}>({
         path: 'user_stories',
-        select: '_id issue description database_references links components'
+        select: '_id issue description database_references links components engineering_done design_done'
       })
       .populate<{assigned_designers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_designers',
