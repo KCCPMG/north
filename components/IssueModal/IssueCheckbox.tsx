@@ -16,9 +16,11 @@ export default function IssueCheckbox({checked, saveFunction}: IssueCheckboxProp
   const { data: session } = useSession();
   const [saving, setSaving] = useState(false);
 
+  if (saving) return <CircularProgress />
+
+  // else 
   if (session?.user) {
-    if (saving) return <CircularProgress />
-    else return <Checkbox 
+    return <Checkbox 
       checked={checked} 
       onClick={async () => {
         setSaving(true);

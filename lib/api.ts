@@ -37,7 +37,7 @@ export async function saveUserStory(
   try {
     const response = await fetch(`api/userStories/${userStoryId}`, {
       method: 'post',
-      body: JSON.stringify(bodyObj)
+      body: JSON.stringify({story: bodyObj})
     })
     if (response.status >= 400) throw new Error("Response Error");
     const json = await response.json();
