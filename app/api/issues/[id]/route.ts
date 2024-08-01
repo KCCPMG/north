@@ -4,6 +4,9 @@ import { IUserStory } from "@/models/UserStory";
 import mongoose from "mongoose";
 import { IUser } from "@/models/User";
 import mongooseConnect from "@/lib/mongooseConnect";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { getServerSession } from "next-auth/next"
+import checkSession from "@/lib/checkSession";
 
 
 export async function GET(req: NextRequest, {params} : {params: {id: string}}) {
@@ -18,11 +21,11 @@ export async function GET(req: NextRequest, {params} : {params: {id: string}}) {
       })
       .populate<{assigned_designers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_designers',
-        select: '_id email imageUrl registered active'
+        select: '_id name email imageUrl registered active'
       })
       .populate<{assigned_engineers: Array<IUser & {_id: mongoose.Types.ObjectId}>}>({
         path: 'assigned_engineers',
-        select: '_id email imageUrl registered active'
+        select: '_id name email imageUrl registered active'
       })
       .populate<{eng_implementation_meets_design: {
         meets_design: boolean,
@@ -51,6 +54,19 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
   try {
 
     await mongooseConnect();
+
+    const noSession = await checkSession();
+    if (noSession) return noSession;
+
+    const session = await getServerSession();
+    if (!session) {
+      return new Response(
+        JSON.stringify({Error: "You must be logged in to do that"}), 
+        {
+          status: 401
+        }
+      );
+    }
 
     const json = await req.json();
 

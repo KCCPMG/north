@@ -2,8 +2,9 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import User from "@/models/User";
 import mongooseConnect from "@/lib/mongooseConnect";
+import { NextAuthOptions } from "next-auth";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   providers: [
     GoogleProvider({
@@ -33,6 +34,7 @@ const handler = NextAuth({
       return true;
     }
   }
-})
+}
+const handler = NextAuth(authOptions);
 
 export {handler as GET, handler as POST}

@@ -1,13 +1,18 @@
 import UserStory from "@/models/UserStory";
 import { NextRequest } from "next/server";
 import mongooseConnect from "@/lib/mongooseConnect";
-
+import { authOptions } from "@/app/api/auth/[...nextauth]/route"
+import { getServerSession } from "next-auth/next"
+import checkSession from "@/lib/checkSession";
 
 export async function POST(req: NextRequest, {params} : {params: {id: string}}) {
 
   try {
 
     await mongooseConnect();
+
+    const noSession = await checkSession();
+    if (noSession) return noSession;
 
     const {story} = await req.json();
     console.log(JSON.stringify({"incoming user story" : story}, null, 2));

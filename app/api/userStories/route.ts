@@ -5,6 +5,7 @@ import { IIssue } from "@/models/Issue";
 import { NextRequest } from "next/server";
 import UserStory from "@/models/UserStory";
 import mongooseConnect from "@/lib/mongooseConnect";
+import checkSession from "@/lib/checkSession";
 
 
 
@@ -13,6 +14,9 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
   try {
 
     await mongooseConnect();
+
+    const noSession = await checkSession();
+    if (noSession) return noSession;
 
     const {story} = await req.json();
 
