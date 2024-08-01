@@ -1,7 +1,7 @@
 import { useSession } from "next-auth/react"
 import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from '@mui/material/CircularProgress';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { saveIssue } from "@/lib/api";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
@@ -16,20 +16,34 @@ export default function IssueCheckbox({checked, saveFunction}: IssueCheckboxProp
   const { data: session } = useSession();
   const [saving, setSaving] = useState(false);
 
-  if (saving) return <CircularProgress />
 
-  // else 
-  if (session?.user) {
-    return <Checkbox 
-      checked={checked} 
-      onClick={async () => {
-        setSaving(true);
-        await saveFunction(!checked);
-        setSaving(false);
-      }}
-    />
+  async function handleClick() {
+    try {
+      setSaving(true);
+      await saveFunction(!checked);
+      setSaving(false);
+    } catch(err) {
+      console.log(err);
+      // TODO: add toast notification
+    }
   }
 
-  else return checked ? <CheckCircleIcon color="primary"/> : <BlockIcon />
+
+  return (
+    <>
+      {session?.user ?     
+        saving ? 
+          <CircularProgress size={20} /> : 
+          <Checkbox 
+            checked={checked} 
+            onClick={handleClick}
+          />
+        :
+        checked ?
+          <CheckCircleIcon color="primary" /> : 
+          <BlockIcon />
+      }
+    </>
+  )
 
 }

@@ -118,7 +118,7 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
         <IssueCheckbox 
           checked={design_done}
           saveFunction={async (newValue) => {
-            saveUserStory(story._id, {design_done: newValue}, setIssue)
+            await saveUserStory(story._id, {design_done: newValue}, setIssue)
           }}
         />
         {/* {session?.user ?
