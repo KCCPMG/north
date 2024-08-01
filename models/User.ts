@@ -4,6 +4,7 @@ import mongoose from "mongoose";
 
 // basic interface
 export interface IUser {
+  name: string,
   email: string,
   imageUrl?: string,
   registered: boolean,
@@ -25,9 +26,14 @@ const UserSchema = new mongoose.Schema<IUser, UserModel, IUserMethods>({
   // when a user is created, they are invited
   // when a user first logs in, they become registered and active
   // when a user is deactivated, they become registered and no longer active
+  name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
-    required: true
+    required: true,
+    unique: true
   },
   imageUrl: {
     type: String,
