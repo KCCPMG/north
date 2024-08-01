@@ -121,13 +121,6 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
             await saveUserStory(story._id, {design_done: newValue}, setIssue)
           }}
         />
-        {/* {session?.user ?
-          <Checkbox defaultChecked={story.design_done} /> :
-
-          story.design_done ?
-            <CheckCircleIcon /> :
-            <BlockIcon />
-        } */}
       </TableCell>
       <TableCell
         sx={{
@@ -136,13 +129,12 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
           textAlign: "center"
         }}
       >
-        {session?.user ?
-          <Checkbox defaultChecked={story.engineering_done} /> :
-
-          story.engineering_done ?
-            <CheckCircleIcon /> :
-            <BlockIcon />
-        }
+        <IssueCheckbox 
+          checked={engineering_done}
+          saveFunction={async (newValue) => {
+            await saveUserStory(story._id, {engineering_done: newValue}, setIssue)
+          }}
+        />
       </TableCell>
     </TableRow>
   )
