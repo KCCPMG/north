@@ -7,10 +7,9 @@ import { ParsedPopulatedIssueType } from "@/models/Controls";
 
 export async function saveIssue(
   issueId: string, 
-  bodyObj: Partial<IIssue>
+  bodyObj: Partial<IIssue>,
+  setIssue: Dispatch<SetStateAction<ParsedPopulatedIssueType>>
 ) {
-
-  const { setIssue } = useIssueContext();
 
   try {
     const response = await fetch(`api/issues/${issueId}`, {

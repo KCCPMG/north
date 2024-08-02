@@ -3,6 +3,9 @@ import { ParsedPopulatedIssueType } from "@/models/Controls"
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
 import { useIssueContext } from "@/context/IssueContext";
+import { useSession } from "next-auth/react";
+import IssueCheckbox from "./IssueCheckbox";
+import { saveIssue } from "@/lib/api";
 
 type IssueModalMergeChecklistProps = {
   issue: ParsedPopulatedIssueType
@@ -11,7 +14,8 @@ type IssueModalMergeChecklistProps = {
 
 export default function IssueModalMergeChecklist({ issue }: IssueModalMergeChecklistProps) {
 
-  const { editMode } = useIssueContext();
+  const { setIssue } = useIssueContext();
+  const { data: session } = useSession();
 
   return (
     <>
@@ -26,8 +30,17 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
               Design Complete:
             </TableCell>
             <TableCell sx={{ borderBottom: "none" }}>
-              {editMode ?
-                <Checkbox defaultChecked={issue.design_complete} /> :
+              {session?.user ?
+                <IssueCheckbox 
+                  checked={issue.design_complete}
+                  saveFunction={async () => {
+                    console.log("save function placeholder")
+                    await saveIssue(issue._id, {
+                      design_complete: !issue.design_complete
+                    }, setIssue);
+                  }}
+                /> :
+                // <Checkbox defaultChecked={issue.design_complete} /> :
                 issue.design_complete ?
                   <CheckCircleIcon color="primary" /> :
                   <BlockIcon />
@@ -42,7 +55,7 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
               Engineering Complete:
             </TableCell>
             <TableCell sx={{ borderBottom: "none" }}>
-              {editMode ?
+              {session?.user ?
                 <Checkbox defaultChecked={issue.eng_implementation_complete} /> :
 
                 issue.eng_implementation_complete ?
@@ -59,7 +72,7 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
               Engineering Meets Design:
             </TableCell>
             <TableCell sx={{ borderBottom: "none" }}>
-              {editMode ?
+              {session?.user ?
                 <Checkbox
                   defaultChecked={issue.eng_implementation_meets_design.meets_design}
                 /> :
