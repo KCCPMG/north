@@ -9,6 +9,7 @@ import UserStoriesTable from "./UserStoriesTable";
 import IssueSummaryTable from "./IssueSummaryTable";
 import { useState } from "react";
 import IssueHeaderDialog from "./Dialogs/IssueHeaderDialog";
+import { useSession } from "next-auth/react";
 
 type IssueModalProps = {
   refresh: () => void,
@@ -24,6 +25,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
   } = useIssueContext();
 
   const theme = useTheme();
+  const { data: session } = useSession();
 
   const [saving, setSaving] = useState(false);
   const [saveErrorMessageVisible, setSaveErrorMessageVisible] = useState(false);
@@ -49,7 +51,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
         onMouseLeave={() => {setShowDialogTitleButton(false)}}
       >
         {issue.issueType[0].toUpperCase()}{issue.issueType.slice(1)}: {issue.name}
-        {showDialogTitleButton &&        
+        {showDialogTitleButton && session?.user &&       
           <Button>
             <EditIcon onClick={() => setIssueHeaderDialogOpen(true)} color="primary" />
           </Button>

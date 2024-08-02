@@ -30,23 +30,24 @@ export default function ModalTableRow(
       onMouseEnter={(e) => setShowEditIcon(true)}
       onMouseLeave={(e) => setShowEditIcon(false)}
     >
-      <TableCell
-        sx={{
-          width: "4rem",
-          borderBottom: "none",
-          padding: "0"
-        }}>
-        {showEditIcon &&
-          <Button onClick={() => {
-            setShowDialog(true);
+      {session?.user &&       
+        <TableCell
+          sx={{
+            width: "4rem",
+            borderBottom: "none",
+            padding: "0"
           }}>
-
-            <EditIcon
-              color="primary"
-            />
-          </Button>
-        }
-      </TableCell>
+          {showEditIcon &&
+            <Button onClick={() => {
+              setShowDialog(true);
+            }}>
+              <EditIcon
+                color="primary"
+              />
+            </Button>
+          }
+        </TableCell>
+      }
       <TableCell
         sx={{
           width: "12rem",

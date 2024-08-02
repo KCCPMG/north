@@ -18,7 +18,7 @@ export interface IIssue {
   eng_implementation_complete: boolean,
   eng_implementation_meets_design: {
     meets_design: boolean,
-    approving_designer: mongoose.Types.ObjectId,
+    approving_designer?: mongoose.Types.ObjectId,
     approval_date: Date
   }
 

@@ -34,7 +34,6 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
                 <IssueCheckbox 
                   checked={issue.design_complete}
                   saveFunction={async () => {
-                    console.log("save function placeholder")
                     await saveIssue(issue._id, {
                       design_complete: !issue.design_complete
                     }, setIssue);
@@ -56,7 +55,15 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
             </TableCell>
             <TableCell sx={{ borderBottom: "none" }}>
               {session?.user ?
-                <Checkbox defaultChecked={issue.eng_implementation_complete} /> :
+                <IssueCheckbox 
+                  checked={issue.eng_implementation_complete}
+                  saveFunction={async () => {
+                    await saveIssue(issue._id, {
+                      eng_implementation_complete: !issue.eng_implementation_complete
+                    }, setIssue);
+                  }}
+                /> :
+                // <Checkbox defaultChecked={issue.eng_implementation_complete} /> :
 
                 issue.eng_implementation_complete ?
                   <CheckCircleIcon color="primary" /> :
@@ -73,17 +80,34 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
             </TableCell>
             <TableCell sx={{ borderBottom: "none" }}>
               {session?.user ?
-                <Checkbox
-                  defaultChecked={issue.eng_implementation_meets_design.meets_design}
+                <IssueCheckbox 
+                  checked={issue.eng_implementation_meets_design.meets_design}
+                  saveFunction={async () => {
+                    await saveIssue(issue._id, {
+                      eng_implementation_meets_design: {
+                        approval_date: issue.eng_implementation_meets_design.approval_date,
+                        // approving_designer: issue.eng_implementation_meets_design.approving_designer || undefined,
+                        meets_design: !issue.eng_implementation_meets_design.meets_design
+                      }
+                    }, setIssue);
+                  }}
                 /> :
+                // <Checkbox
+                //   defaultChecked={issue.eng_implementation_meets_design.meets_design}
+                // /> :
 
 
                 issue.eng_implementation_meets_design.meets_design ?
                   <>
                     <CheckCircleIcon color="primary" />
                     <Typography variant="body2">
-                      {issue.eng_implementation_meets_design.approving_designer.email}{" - "}
-                      {issue.eng_implementation_meets_design.approval_date.toDateString()}
+                      {issue.eng_implementation_meets_design.approving_designer?.email}
+                      {
+                        issue.eng_implementation_meets_design.approving_designer?.email && 
+                        issue.eng_implementation_meets_design.approval_date &&
+                        " - "
+                      }
+                      {issue.eng_implementation_meets_design.approval_date?.toDateString()}
                     </Typography>
                   </> :
                   <BlockIcon />
