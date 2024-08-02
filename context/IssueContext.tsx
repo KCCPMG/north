@@ -9,6 +9,8 @@ type IssueContext = {
   setEditMode: Dispatch<SetStateAction<boolean>>,
   issue: ParsedPopulatedIssueType,
   setIssue: Dispatch<SetStateAction<ParsedPopulatedIssueType>>,
+  issueHeaderDialogOpen: boolean,
+  setIssueHeaderDialogOpen: Dispatch<SetStateAction<boolean>>,
   descriptionDialogOpen: boolean,
   setDescriptionDialogOpen: Dispatch<SetStateAction<boolean>>,
   designersDialogOpen: boolean,
@@ -39,6 +41,7 @@ export function IssueContextProvider(
   const [issue, setIssue] = useState(initialIssue);
 
   // Dialog visibility controls
+  const [issueHeaderDialogOpen, setIssueHeaderDialogOpen] = useState(false);
   const [descriptionDialogOpen, setDescriptionDialogOpen] = useState(false);
   const [designersDialogOpen, setDesignersDialogOpen] = useState(false);
   const [engineersDialogOpen, setEngineersDialogOpen] = useState(false);
@@ -54,6 +57,8 @@ export function IssueContextProvider(
       setEditMode, 
       issue, 
       setIssue, 
+      issueHeaderDialogOpen, 
+      setIssueHeaderDialogOpen,
       descriptionDialogOpen, 
       setDescriptionDialogOpen,
       designersDialogOpen, 

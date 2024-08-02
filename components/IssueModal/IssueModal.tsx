@@ -8,6 +8,7 @@ import IssueModalMergeChecklist from "./MergeChecklistTable";
 import UserStoriesTable from "./UserStoriesTable";
 import IssueSummaryTable from "./IssueSummaryTable";
 import { useState } from "react";
+import IssueHeaderDialog from "./Dialogs/IssueHeaderDialog";
 
 type IssueModalProps = {
   refresh: () => void,
@@ -18,12 +19,15 @@ type IssueModalProps = {
 
 export default function IssueModal({ open, onClose, refresh, handleClose }: IssueModalProps) {
 
-  const { editMode, setEditMode, issue, setIssue } = useIssueContext();
+  const { 
+    editMode, setEditMode, issue, setIssue, setIssueHeaderDialogOpen 
+  } = useIssueContext();
 
   const theme = useTheme();
 
   const [saving, setSaving] = useState(false);
   const [saveErrorMessageVisible, setSaveErrorMessageVisible] = useState(false);
+  const [showDialogTitleButton, setShowDialogTitleButton] = useState(false);
 
   return (
     <Dialog
@@ -38,13 +42,19 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
       aria-describedby="issue-dialog-description"
     >
       {/* <Box> */}
-      <DialogTitle id="issue-dialog-title">
+      <DialogTitle 
+        id="issue-dialog-title"
+        sx={{lineHeight: 2}}
+        onMouseEnter={() => {setShowDialogTitleButton(true)}}
+        onMouseLeave={() => {setShowDialogTitleButton(false)}}
+      >
         {issue.issueType[0].toUpperCase()}{issue.issueType.slice(1)}: {issue.name}
-        {!editMode &&
+        {showDialogTitleButton &&        
           <Button>
-            <EditIcon onClick={() => setEditMode(true)} color="primary" />
+            <EditIcon onClick={() => setIssueHeaderDialogOpen(true)} color="primary" />
           </Button>
         }
+        <IssueHeaderDialog />
       </DialogTitle>
       <Divider />
       <DialogContent>
