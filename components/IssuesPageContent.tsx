@@ -4,6 +4,7 @@ import { IssueContextProvider } from "@/context/IssueContext";
 import { ParsedPopulatedIssueType, getPopulatedIssues } from "@/models/Controls";
 import IssueCard from "@/components/IssueCard";
 import { useState, useEffect } from "react";
+import NewIssueDialog from "./NewIssueDialog";
 
 
 type IssuesPageContentProps = {
@@ -27,6 +28,8 @@ export default function IssuesPageContent(
   const [inProgressIssues, setInProgressIssues] = useState<Array<ParsedPopulatedIssueType>>([]);
   const [mergingIssues, setMergingIssues] = useState<Array<ParsedPopulatedIssueType>>([]);
   const [completeIssues, setCompleteIssues] = useState<Array<ParsedPopulatedIssueType>>([]);
+
+  const [showNewIssueDialog, setShowNewIssueDialog] = useState(false);
 
 
   useEffect(() => {
@@ -56,17 +59,12 @@ export default function IssuesPageContent(
 
   }, [issues])
 
-  // sort out issues
-  // while (parsedIssues.length > 0) {
-  //   const issue = parsedIssues.shift() as ParsedPopulatedIssueType;
-  //   if (issue?.eng_implementation_meets_design.meets_design === true) {
-  //     completeIssues.push(issue);
-  //   } else if (issue?.user_stories.every(us => us.design_done && us.engineering_done)) {
-  //     mergingIssues.push(issue);
-  //   } else if (issue?.assigned_designers?.length > 0 && issue?.assigned_engineers.length > 0) {
-  //     inProgressIssues.push(issue);
-  //   } else inDesignIssues.push(issue);
-  // }
+
+  function addIssue(issue: ParsedPopulatedIssueType) {
+    const issuesCopy = [...issues];
+    issuesCopy.push(issue);
+    setIssues(issuesCopy);
+  }
 
   const columnTuples: Array<[string, Array<ParsedPopulatedIssueType>]> = [
     ["In Design", inDesignIssues],
@@ -81,7 +79,10 @@ export default function IssuesPageContent(
         <Typography sx={{paddingBottom: 3}} variant="h1">
           Issues
         </Typography>
-        <Button variant="outlined">
+        <Button 
+          variant="outlined"
+          onClick={() => setShowNewIssueDialog(true)}
+        >
           New Issue
         </Button>
       </Stack>
@@ -101,19 +102,22 @@ export default function IssuesPageContent(
                   direction="column" 
                   width={1/4} 
                   key={tup[0].toLowerCase().replaceAll(" ", "-")}
+                  spacing={1}
                 >
                   <Stack direction="row" sx={{
                     width: 1,
                     justifyContent: "center",
                     paddingY: 2
                   }}>
-                    <Typography sx={{marginX: "auto"}} variant="h5">{tup[0]}</Typography>
+                    <Typography sx={{marginX: "auto"}} variant="h5">
+                      {tup[0]}
+                    </Typography>
                   </Stack>
                   <Divider variant="fullWidth" />
                   {tup[1].map(issue => (
                     <IssueContextProvider 
                       initialIssue={issue} 
-                      key={issue._id.toString()}
+                      key={issue._id.toString()}                      
                     >
                       <IssueCard initialIssue={issue} key={issue._id} />
                     </IssueContextProvider>
@@ -124,6 +128,11 @@ export default function IssuesPageContent(
           }
         </Stack>
       </Box>
+      <NewIssueDialog 
+        open={showNewIssueDialog}
+        handleClose={() => setShowNewIssueDialog(false)}
+        addIssue={addIssue}
+      />
     </>
   )
 }

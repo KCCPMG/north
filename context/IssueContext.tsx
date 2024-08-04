@@ -24,7 +24,8 @@ type IssueContext = {
   githubLinkDialogOpen: boolean, 
   setGithubLinkDialogOpen: Dispatch<SetStateAction<boolean>>,
   engFilesDialogOpen: boolean, 
-  setEngFilesDialogOpen: Dispatch<SetStateAction<boolean>> 
+  setEngFilesDialogOpen: Dispatch<SetStateAction<boolean>>,
+  // addIssue: (issue: ParsedPopulatedIssueType) => void
 }
 
 const IssueContext = createContext<IssueContext | null>(null);
@@ -32,6 +33,7 @@ const IssueContext = createContext<IssueContext | null>(null);
 type IssueContextProviderProps = {
   children: ReactNode,
   initialIssue: ParsedPopulatedIssueType
+  // addIssue: (issue: ParsedPopulatedIssueType) => void
 }
 
 export function IssueContextProvider(
@@ -72,7 +74,7 @@ export function IssueContextProvider(
       githubLinkDialogOpen, 
       setGithubLinkDialogOpen,
       engFilesDialogOpen, 
-      setEngFilesDialogOpen      
+      setEngFilesDialogOpen,
     }}>
       {children}
     </IssueContext.Provider>
