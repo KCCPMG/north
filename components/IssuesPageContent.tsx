@@ -66,6 +66,13 @@ export default function IssuesPageContent(
     setIssues(issuesCopy);
   }
 
+  function updateIssue(issue: ParsedPopulatedIssueType) {
+    console.log("update issue");
+    const issuesCopy = [...issues].filter(i => i._id !== issue._id);
+    issuesCopy.push(issue);
+    setIssues(issuesCopy);
+  }
+
   const columnTuples: Array<[string, Array<ParsedPopulatedIssueType>]> = [
     ["In Design", inDesignIssues],
     ["In Progress", inProgressIssues],
@@ -117,7 +124,8 @@ export default function IssuesPageContent(
                   {tup[1].map(issue => (
                     <IssueContextProvider 
                       initialIssue={issue} 
-                      key={issue._id.toString()}                      
+                      key={issue._id.toString()}   
+                      updateIssue={updateIssue}                   
                     >
                       <IssueCard initialIssue={issue} key={issue._id} />
                     </IssueContextProvider>

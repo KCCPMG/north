@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState, useEffect } from "react";
 import { ParsedPopulatedIssueType } from "@/models/Controls";
 
 
@@ -25,19 +25,19 @@ type IssueContext = {
   setGithubLinkDialogOpen: Dispatch<SetStateAction<boolean>>,
   engFilesDialogOpen: boolean, 
   setEngFilesDialogOpen: Dispatch<SetStateAction<boolean>>,
-  // addIssue: (issue: ParsedPopulatedIssueType) => void
+  updateIssue: (issue: ParsedPopulatedIssueType) => void
 }
 
 const IssueContext = createContext<IssueContext | null>(null);
 
 type IssueContextProviderProps = {
   children: ReactNode,
-  initialIssue: ParsedPopulatedIssueType
-  // addIssue: (issue: ParsedPopulatedIssueType) => void
+  initialIssue: ParsedPopulatedIssueType,
+  updateIssue: (issue: ParsedPopulatedIssueType) => void
 }
 
 export function IssueContextProvider(
-  {children, initialIssue}: IssueContextProviderProps
+  {children, initialIssue, updateIssue}: IssueContextProviderProps
 ) {
   const [editMode, setEditMode] = useState(false);
   const [issue, setIssue] = useState(initialIssue);
@@ -51,6 +51,11 @@ export function IssueContextProvider(
   const [figmaLinkDialogOpen, setFigmaLinkDialogOpen] = useState(false);
   const [githubLinkDialogOpen, setGithubLinkDialogOpen] = useState(false);
   const [engFilesDialogOpen, setEngFilesDialogOpen] = useState(false);
+
+
+  useEffect(() => {
+    updateIssue(issue);
+  }, [issue])
 
 
   return (
@@ -75,6 +80,7 @@ export function IssueContextProvider(
       setGithubLinkDialogOpen,
       engFilesDialogOpen, 
       setEngFilesDialogOpen,
+      updateIssue
     }}>
       {children}
     </IssueContext.Provider>
