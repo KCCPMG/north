@@ -1,6 +1,6 @@
 "use client";
 
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState, useEffect } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
 import { ParsedPopulatedIssueType } from "@/models/Controls";
 
 
@@ -25,7 +25,9 @@ type IssueContext = {
   setGithubLinkDialogOpen: Dispatch<SetStateAction<boolean>>,
   engFilesDialogOpen: boolean, 
   setEngFilesDialogOpen: Dispatch<SetStateAction<boolean>>,
-  updateIssue: (issue: ParsedPopulatedIssueType) => void
+  updateIssue: (id: string, issue?: ParsedPopulatedIssueType) => void,
+  deleteIssueDialogOpen: boolean,
+  setDeleteIssueDialogOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const IssueContext = createContext<IssueContext | null>(null);
@@ -33,7 +35,7 @@ const IssueContext = createContext<IssueContext | null>(null);
 type IssueContextProviderProps = {
   children: ReactNode,
   initialIssue: ParsedPopulatedIssueType,
-  updateIssue: (issue: ParsedPopulatedIssueType) => void
+  updateIssue: (id: string, issue?: ParsedPopulatedIssueType) => void
 }
 
 export function IssueContextProvider(
@@ -51,6 +53,7 @@ export function IssueContextProvider(
   const [figmaLinkDialogOpen, setFigmaLinkDialogOpen] = useState(false);
   const [githubLinkDialogOpen, setGithubLinkDialogOpen] = useState(false);
   const [engFilesDialogOpen, setEngFilesDialogOpen] = useState(false);
+  const [deleteIssueDialogOpen, setDeleteIssueDialogOpen] = useState(false);
 
   return (
     <IssueContext.Provider value={{
@@ -74,7 +77,9 @@ export function IssueContextProvider(
       setGithubLinkDialogOpen,
       engFilesDialogOpen, 
       setEngFilesDialogOpen,
-      updateIssue
+      updateIssue,
+      deleteIssueDialogOpen,
+      setDeleteIssueDialogOpen
     }}>
       {children}
     </IssueContext.Provider>

@@ -10,6 +10,7 @@ import IssueSummaryTable from "./IssueSummaryTable";
 import { useState } from "react";
 import IssueHeaderDialog from "./Dialogs/IssueHeaderDialog";
 import { useSession } from "next-auth/react";
+import DeleteIssueDialog from "./Dialogs/DeleteIssueDialog";
 
 type IssueModalProps = {
   refresh: () => void,
@@ -21,7 +22,7 @@ type IssueModalProps = {
 export default function IssueModal({ open, onClose, refresh, handleClose }: IssueModalProps) {
 
   const { 
-    editMode, setEditMode, issue, setIssue, setIssueHeaderDialogOpen 
+    editMode, setEditMode, issue, setIssue, setIssueHeaderDialogOpen, setDeleteIssueDialogOpen
   } = useIssueContext();
 
   const theme = useTheme();
@@ -85,6 +86,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
           <Button 
             color="error"
             variant="outlined"
+            onClick={() => {setDeleteIssueDialogOpen(true)}}
           >
             Delete Issue
           </Button>
@@ -139,6 +141,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
         </DialogContent>
       } */}
       {/* </Box> */}
+      <DeleteIssueDialog />
     </Dialog >
   )
 }
