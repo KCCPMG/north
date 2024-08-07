@@ -52,12 +52,6 @@ export function IssueContextProvider(
   const [githubLinkDialogOpen, setGithubLinkDialogOpen] = useState(false);
   const [engFilesDialogOpen, setEngFilesDialogOpen] = useState(false);
 
-
-  useEffect(() => {
-    updateIssue(issue);
-  }, [issue])
-
-
   return (
     <IssueContext.Provider value={{
       editMode, 

@@ -3,7 +3,7 @@ import { Card, CardActions, CardContent, Typography, Button, Divider } from "@mu
 import { ParsedPopulatedIssueType } from "@/models/Controls";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
 import IssueModal from "./IssueModal/IssueModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useIssueContext } from "@/context/IssueContext";
 
 type IssueCardProps = {
@@ -14,7 +14,12 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
 
   const [modalOpen, setModalOpen] = useState(false);
   // const [issue, setIssue] = useState<ParsedPopulatedIssueType>(initialIssue);
-  const { issue, setIssue } = useIssueContext();
+  const { issue, setIssue, updateIssue } = useIssueContext();
+
+  // refresh issue on close
+  useEffect(() => {
+    if (!modalOpen) updateIssue(issue);
+  }, [modalOpen])
 
   async function refresh() {
     try {
