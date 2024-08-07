@@ -80,7 +80,18 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
           </Box>
         </Stack>
       </DialogContent>
-      {editMode &&
+      {session?.user &&
+        <DialogActions>
+          <Button 
+            color="error"
+            variant="outlined"
+          >
+            Delete Issue
+          </Button>
+        </DialogActions>
+
+      }
+      {/* {editMode &&
 
         <DialogActions>
           <Button
@@ -126,7 +137,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
             Something went wrong, please try again.
           </Typography>
         </DialogContent>
-      }
+      } */}
       {/* </Box> */}
     </Dialog >
   )

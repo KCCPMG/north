@@ -66,10 +66,11 @@ export default function IssuesPageContent(
     setIssues(issuesCopy);
   }
 
-  function updateIssue(issue: ParsedPopulatedIssueType) {
+  // an undefined issue will mean to delete this issue
+  function updateIssue(id: string, issue: ParsedPopulatedIssueType | undefined) {
     console.log("update issue");
-    const issuesCopy = [...issues].filter(i => i._id !== issue._id);
-    issuesCopy.push(issue);
+    const issuesCopy = [...issues].filter(i => i._id !== id);
+    if (issue) issuesCopy.push(issue);
     setIssues(issuesCopy);
   }
 

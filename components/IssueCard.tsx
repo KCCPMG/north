@@ -18,7 +18,7 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
 
   // refresh issue on close
   useEffect(() => {
-    if (!modalOpen) updateIssue(issue);
+    if (!modalOpen) updateIssue(issue._id, issue);
   }, [modalOpen])
 
   async function refresh() {
