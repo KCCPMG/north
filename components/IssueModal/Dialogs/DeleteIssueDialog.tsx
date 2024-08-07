@@ -27,7 +27,7 @@ export default function DeleteIssueDialog(
       </DialogTitle>
       <DialogContent>
         <Typography variant="body1">
-          Are you sure you wish to delete "{issue.issueType.slice(0,1).toUpperCase()}{issue.issueType.slice(1)}: {issue.name}"? This cannot be undone.
+          Are you sure you wish to delete &quot;{issue.issueType.slice(0,1).toUpperCase()}{issue.issueType.slice(1)}: {issue.name}&quot;? This cannot be undone.
         </Typography>
       </DialogContent>
       <DialogActions>
