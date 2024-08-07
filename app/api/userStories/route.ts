@@ -6,6 +6,7 @@ import { NextRequest } from "next/server";
 import UserStory from "@/models/UserStory";
 import mongooseConnect from "@/lib/mongooseConnect";
 import checkSession from "@/lib/checkSession";
+import { revalidatePath } from "next/cache";
 
 
 
@@ -44,6 +45,8 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
         }
       ]
     })
+
+    revalidatePath('/issues', 'page');
 
     return Response.json(userStory.issue);
 

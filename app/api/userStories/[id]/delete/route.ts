@@ -4,6 +4,7 @@ import mongooseConnect from "@/lib/mongooseConnect";
 import authOptions from "@/lib/authOptions"
 import { getServerSession } from "next-auth/next"
 import checkSession from "@/lib/checkSession";
+import { revalidatePath } from "next/cache";
 
 export async function POST(req: NextRequest, {params} : {params: {id: string}}) {
 
@@ -41,6 +42,8 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
     })
 
     if (!deletedUserStory) throw new Error("userStory not found");
+
+    revalidatePath('/issues', 'page');
 
     return Response.json(deletedUserStory.issue);
 

@@ -2,6 +2,7 @@ import mongooseConnect from "@/lib/mongooseConnect";
 import { NextRequest } from "next/server";
 import checkSession from "@/lib/checkSession";
 import Issue from "@/models/Issue";
+import { revalidatePath } from "next/cache";
 
 
 
@@ -16,7 +17,10 @@ export async function POST(req: NextRequest) {
 
     const json = await req.json();
 
-    const issue = await Issue.create(json)
+    const issue = await Issue.create(json);
+
+    revalidatePath('/issues', 'page');
+
     await issue.populate([
       {
         path: 'user_stories',
@@ -34,7 +38,7 @@ export async function POST(req: NextRequest) {
         path: 'eng_implementation_meets_design.approving_designer',
         select: '_id email imageUrl registered active'
       }
-    ])
+    ]);
       
     return Response.json(issue);
 

@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import Issue from "@/models/Issue";
 import mongooseConnect from "@/lib/mongooseConnect";
 import checkSession from "@/lib/checkSession";
+import { revalidatePath } from "next/cache";
 
 
 export async function POST(req: NextRequest, {params} : {params: {id: string}}) {
@@ -43,8 +44,11 @@ export async function POST(req: NextRequest, {params} : {params: {id: string}}) 
       ]
     })
 
+    // revalidate path prior to throwing error to clean up ghost user stories on client
+    revalidatePath('/issues', 'page');
 
     if (!userStory) throw new Error("userStory not found");
+
 
     return Response.json(userStory.issue);
 
