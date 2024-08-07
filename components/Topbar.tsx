@@ -9,7 +9,6 @@ import { useSession } from "next-auth/react";
 export default function Topbar() {
 
   const { data: session } = useSession();
-  console.log(session);
 
   return (
     <AppBar position="fixed" sx={{ zIndex: theme.zIndex.drawer + 1 }}>

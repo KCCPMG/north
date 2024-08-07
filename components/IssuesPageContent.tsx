@@ -5,6 +5,7 @@ import { ParsedPopulatedIssueType, getPopulatedIssues } from "@/models/Controls"
 import IssueCard from "@/components/IssueCard";
 import { useState, useEffect } from "react";
 import NewIssueDialog from "./NewIssueDialog";
+import { useSession } from "next-auth/react";
 
 
 type IssuesPageContentProps = {
@@ -15,12 +16,8 @@ export default function IssuesPageContent(
   { parsedIssues }: IssuesPageContentProps
 ) {
 
-
-
-  // const inDesignIssues: Array<ParsedPopulatedIssueType> = [];
-  // const inProgressIssues: Array<ParsedPopulatedIssueType> = []; 
-  // const mergingIssues: Array<ParsedPopulatedIssueType> = []; 
-  // const completeIssues: Array<ParsedPopulatedIssueType> = [];
+  const {data: session} = useSession();
+  console.log(session);
 
   const [issues, setIssues] = useState<Array<ParsedPopulatedIssueType>>(parsedIssues) 
 
@@ -87,12 +84,14 @@ export default function IssuesPageContent(
         <Typography sx={{paddingBottom: 3}} variant="h1">
           Issues
         </Typography>
-        <Button 
-          variant="outlined"
-          onClick={() => setShowNewIssueDialog(true)}
-        >
-          New Issue
-        </Button>
+        {session?.user && 
+          <Button 
+            variant="outlined"
+            onClick={() => setShowNewIssueDialog(true)}
+          >
+            New Issue
+          </Button>
+        }
       </Stack>
       <Box width={"100%"}>
         <Stack 
@@ -137,11 +136,13 @@ export default function IssuesPageContent(
           }
         </Stack>
       </Box>
-      <NewIssueDialog 
-        open={showNewIssueDialog}
-        handleClose={() => setShowNewIssueDialog(false)}
-        addIssue={addIssue}
-      />
+      {session?.user &&  
+        <NewIssueDialog 
+          open={showNewIssueDialog}
+          handleClose={() => setShowNewIssueDialog(false)}
+          addIssue={addIssue}
+        />
+      }
     </>
   )
 }

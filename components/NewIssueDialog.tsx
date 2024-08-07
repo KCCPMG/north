@@ -52,6 +52,10 @@ export default function NewIssueDialog(
             variant="outlined"
             value={name}
             onChange={(e) => setName(e.target.value)}
+            error={name.length == 0}
+            helperText={name.length == 0 && 
+              "Please add an issue name."
+            }
           />
           <TextField
             label="Issue Type"
@@ -67,10 +71,14 @@ export default function NewIssueDialog(
             value={description}
             rows={2}
             onChange={(e) => setDescription(e.target.value)}
+            error={description.length == 0}
+            helperText={description.length == 0 && 
+              "Please add an issue description."
+            }
           />
         </Stack>
       }
-      
+      disabled={!(description.length > 0 && name.length > 0)}
     />
   )
 }
