@@ -24,6 +24,7 @@ export default function IssueCheckbox({checked, saveFunction}: IssueCheckboxProp
       setSaving(false);
     } catch(err) {
       console.log(err);
+      setSaving(false);
       // TODO: add toast notification
     }
   }
