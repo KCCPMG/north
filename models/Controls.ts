@@ -151,3 +151,45 @@ export async function updateUserStoryAndPopulateIssue(user_story_id: string, sto
   }
 
 }
+
+
+export async function createUserStoryAndPopulateIssue(story: IUserStory): Promise<ParsedPopulatedIssueType | null> {
+
+  try {
+
+    const userStory = await UserStory.create(story);
+
+    const populatedUserStory = await userStory
+    .populate<Omit<IUserStory, 'issue'> & {issue: ParsedPopulatedIssueType}>
+    ({
+      path: 'issue',
+      select: '_id name description issueType assigned_designers assigned_engineers route_location design_figma_link eng_team_gh_issue_link eng_team_files design_complete eng_implementation_meets_design',
+      populate: [
+        {
+          path: 'user_stories',
+          select: '_id issue description database_references links components engineering_done design_done'
+        },
+        {
+          path: 'assigned_designers',
+          select: '_id email imageUrl registered active'
+        },
+        {
+          path: 'assigned_engineers',
+          select: '_id email imageUrl registered active'
+        },
+        {
+          path: 'eng_implementation_meets_design.approving_designer',
+          select: '_id email imageUrl registered active'
+        }
+      ]
+    })
+
+    return populatedUserStory?.issue || null;
+
+  } catch(err) {
+    console.log(err);
+    throw err;
+  }
+
+
+}
