@@ -2,6 +2,7 @@ import GoogleProvider from "next-auth/providers/google";
 import User from "@/models/User";
 import mongooseConnect from "@/lib/mongooseConnect";
 import { NextAuthOptions } from "next-auth";
+import { revalidatePath } from "next/cache";
 
 const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
@@ -29,7 +30,15 @@ const authOptions: NextAuthOptions = {
           registered: true,
           active: true
         })
+        
+        revalidatePath('/api/users')
       }
+
+      // sample
+      console.log("should revalidate api/sample");
+      revalidatePath('/api/sample');
+      console.log("should have revalidated api/sample");
+
       return true;
     }
   }

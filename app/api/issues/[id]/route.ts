@@ -4,7 +4,7 @@ import { IUserStory } from "@/models/UserStory";
 import mongoose from "mongoose";
 import { IUser } from "@/models/User";
 import mongooseConnect from "@/lib/mongooseConnect";
-import authOptions from "@/lib/authOptions"
+import authOptions from "@/app/lib/authOptions"
 import { getServerSession } from "next-auth/next"
 import checkSession from "@/lib/checkSession";
 import { revalidatePath } from "next/cache";
