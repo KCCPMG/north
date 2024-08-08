@@ -1,7 +1,7 @@
 import UserStory from "@/models/UserStory";
 import { NextRequest } from "next/server";
 import mongooseConnect from "@/lib/mongooseConnect";
-import authOptions from "@/app/lib/authOptions"
+import authOptions from "@/lib/authOptions"
 import { getServerSession } from "next-auth/next"
 import checkSession from "@/lib/checkSession";
 import { revalidatePath } from "next/cache";

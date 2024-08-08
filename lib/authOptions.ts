@@ -30,14 +30,7 @@ const authOptions: NextAuthOptions = {
           registered: true,
           active: true
         })
-        
-        revalidatePath('/api/users')
       }
-
-      // sample
-      console.log("should revalidate api/sample");
-      revalidatePath('/api/sample');
-      console.log("should have revalidated api/sample");
 
       return true;
     }

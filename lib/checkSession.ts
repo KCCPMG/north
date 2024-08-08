@@ -1,4 +1,4 @@
-import authOptions from "@/app/lib/authOptions"
+import authOptions from "@/lib/authOptions"
 import { getServerSession } from "next-auth/next"
 
 export default async function checkSession() {
