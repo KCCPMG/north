@@ -193,3 +193,45 @@ export async function createUserStoryAndPopulateIssue(story: IUserStory): Promis
 
 
 }
+
+
+export async function deleteUserStoryAndRetrieveIssue(userStoryId: string): Promise<ParsedPopulatedIssueType | null> {
+
+  try {
+
+    const deletedUserStory = await UserStory.findByIdAndDelete(userStoryId, {new: true})
+      .populate<Omit<IUserStory, 'issue'> & {issue: ParsedPopulatedIssueType}>
+      ({
+        path: 'issue',
+        select: '_id name description issueType assigned_designers assigned_engineers route_location design_figma_link eng_team_gh_issue_link eng_team_files design_complete eng_implementation_meets_design',
+        populate: [
+          {
+            path: 'user_stories',
+            select: '_id issue description database_references links components engineering_done design_done'
+          },
+          {
+            path: 'assigned_designers',
+            select: '_id email imageUrl registered active'
+          },
+          {
+            path: 'assigned_engineers',
+            select: '_id email imageUrl registered active'
+          },
+          {
+            path: 'eng_implementation_meets_design.approving_designer',
+            select: '_id email imageUrl registered active'
+          }
+        ]
+      });
+
+  if (!deletedUserStory) throw new Error("userStory not found");
+
+  return deletedUserStory?.issue || null;
+
+
+  } catch(err) {
+    console.log(err);
+    throw(err);
+  }
+
+}
