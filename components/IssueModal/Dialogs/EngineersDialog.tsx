@@ -1,7 +1,10 @@
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import BaseDialog from "./BaseDialog";
 import { useIssueContext } from "@/context/IssueContext";
 import { IUser } from "@/models/User";
-import { FormControl, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
 import { useState, useEffect } from "react";
 
 
@@ -34,17 +37,13 @@ export default function EngineersDialog() {
       }
     });
 
-    console.log(users);
-
     users.forEach(user => {
       if (issue.assigned_engineers.find(ae => ae._id === user._id)) {
         user.assigned = true;
       }
     })
-
     setEngineers(users);
   }
-
 
   useEffect(() => {
     if (engineersDialogOpen) populateEngineers();
@@ -55,7 +54,6 @@ export default function EngineersDialog() {
       title="Assigned Engineers"
       open={engineersDialogOpen}
       handleClose={() => {
-
         setEngineersDialogOpen(false);
       }}
       handleSave={async () => {
@@ -66,7 +64,6 @@ export default function EngineersDialog() {
           })
           if (response.status >= 400) throw new Error("Response Error");
           const json = await response.json();
-          console.log(json);
           setIssue(json);
         } catch(err) {
           console.log(err);

@@ -1,7 +1,12 @@
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
 import { useState, ReactNode } from "react";
 import { CircularProgress } from "@mui/material";
-import { useTheme } from "@mui/material";
 
 
 type BaseDialogProps = {
@@ -17,8 +22,6 @@ type BaseDialogProps = {
 export default function BaseDialog(
   { title, open, handleClose, content, handleSave, disabled }: BaseDialogProps
 ) {
-
-  const theme = useTheme();
 
   const [saving, setSaving] = useState(false);
   const [errorMessageVisible, setErrorMessageVisible] = useState(false);
@@ -59,7 +62,7 @@ export default function BaseDialog(
       </DialogActions>
       {errorMessageVisible &&
         <DialogContent>
-          <Typography sx={{ color: theme.palette.error.main }}>
+          <Typography color="error">
             Something went wrong, please try again.
           </Typography>
         </DialogContent>

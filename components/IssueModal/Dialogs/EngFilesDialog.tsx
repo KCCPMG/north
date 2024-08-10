@@ -1,9 +1,11 @@
-import { TextField, Button, Stack } from "@mui/material";
+import TextField from "@mui/material/TextField";
+import Button from "@mui/material/Button"; 
+import Stack from "@mui/material/Stack";
 import BaseDialog from "./BaseDialog";
-import { useIssueContext } from "@/context/IssueContext";
-import { useState, useEffect } from "react";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
+import { useIssueContext } from "@/context/IssueContext";
+import { useState, useEffect } from "react";
 
 
 export default function EngFilesDialog() {
@@ -15,19 +17,16 @@ export default function EngFilesDialog() {
     setEngFilesDialogOpen,
   } = useIssueContext();
 
-
   const [
     pendingEngFiles,
     setPendingEngFiles
   ] = useState<Array<string>>(issue.eng_team_files);
-
 
   useEffect(() => {
     if (engFilesDialogOpen === true) {
       setPendingEngFiles(issue.eng_team_files);
     }
   }, [engFilesDialogOpen])
-
 
   return (
     <BaseDialog 
@@ -44,7 +43,6 @@ export default function EngFilesDialog() {
           })
           if (response.status >= 400) throw new Error("Response Error");
           const json = await response.json();
-          console.log(json);
           setIssue(json);
         } catch(err) {
           console.log(err);
@@ -54,12 +52,8 @@ export default function EngFilesDialog() {
       content={
         <Stack direction="column" rowGap={1} >
           {pendingEngFiles.map((file, index) => 
-
             <Stack direction="row" key={index}>
-
               <TextField
-                // key={file.replaceAll(" ", "-").toLowerCase().concat(String(index))}
-                
                 variant="outlined"
                 fullWidth
                 value={file}
@@ -79,7 +73,6 @@ export default function EngFilesDialog() {
                 <RemoveCircleOutlineIcon />
               </Button>
             </Stack>
-
           )}
           <Stack direction="row" justifyContent={"middle"}>
             <Button
@@ -95,13 +88,10 @@ export default function EngFilesDialog() {
                 <span>Add Engineering File</span>
                 <AddCircleOutline />
               </Stack>
-
             </Button>
           </Stack>
-
         </Stack>
       }
     />
   )
-
 }

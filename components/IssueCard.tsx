@@ -1,7 +1,12 @@
 "use client";
-import { Card, CardActions, CardContent, Typography, Button, Divider } from "@mui/material"
-import { ParsedPopulatedIssueType } from "@/models/Controls";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions"; 
+import CardContent from "@mui/material/CardContent"; 
+import Typography from "@mui/material/Typography"; 
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
 import OpenInFullIcon from '@mui/icons-material/OpenInFull';
+import { ParsedPopulatedIssueType } from "@/models/Controls";
 import IssueModal from "./IssueModal/IssueModal";
 import { useState, useEffect } from "react";
 import { useIssueContext } from "@/context/IssueContext";
@@ -13,7 +18,6 @@ type IssueCardProps = {
 export default function IssueCard({ initialIssue }: IssueCardProps) {
 
   const [modalOpen, setModalOpen] = useState(false);
-  // const [issue, setIssue] = useState<ParsedPopulatedIssueType>(initialIssue);
   const { issue, setIssue, updateIssue } = useIssueContext();
 
   // refresh issue on close
@@ -25,7 +29,6 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
     try {
       const response = await fetch(`/api/issues/${issue._id}`)
       const json = await response.json();
-      console.log(json);
       setIssue(json);
     } catch (err) {
       console.log(err);

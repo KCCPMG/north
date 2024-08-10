@@ -7,7 +7,6 @@ import mongooseConnect from '@/lib/mongooseConnect';
 
 export default async function Page() {
 
-
   await mongooseConnect();
   const tables: PopulatedTableType[] = await getPopulatedTables();
 

@@ -7,7 +7,6 @@ export default async function Page() {
   await mongooseConnect();
   const issues = await getPopulatedIssues();
   const parsedIssues: Array<ParsedPopulatedIssueType> = JSON.parse(JSON.stringify(issues));
-  console.log(parsedIssues, new Date());
 
   return (
     <IssuesPageContent parsedIssues={parsedIssues} />

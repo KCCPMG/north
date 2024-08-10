@@ -1,4 +1,4 @@
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import BaseDialog from "./BaseDialog";
 import { useIssueContext } from "@/context/IssueContext";
 import { useState, useEffect } from "react";

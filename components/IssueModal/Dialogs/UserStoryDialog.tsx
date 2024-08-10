@@ -1,11 +1,25 @@
 "use client";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import Box from "@mui/material/Box";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Table from "@mui/material/Table";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Button from "@mui/material/Button";
+import TableBody from "@mui/material/TableBody";
+import DialogActions from "@mui/material/DialogActions";
+import Typography from "@mui/material/Typography";
+import CircularProgress from '@mui/material/CircularProgress';
 import { IUserStory } from "@/models/UserStory";
-import { Dialog, DialogTitle, DialogContent, Box, FormControl, Select, InputLabel, MenuItem, TextField, Stack, Table, TableRow, TableCell, Button, TableBody, DialogActions, Typography } from "@mui/material";
 import { useState, useEffect, ReactNode } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import QueryTooltip from "../QueryTooltip";
 import { AddCircleOutline } from "@mui/icons-material";
-import CircularProgress from '@mui/material/CircularProgress';
 import { useIssueContext } from "@/context/IssueContext";
 import { useTheme } from "@mui/material";
 
@@ -19,14 +33,11 @@ type UserStoryDialogProps = {
   open: boolean,
   handleClose: () => void,
   onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void,
-  // refresh: () => void
 }
 
 
 export default function UserStoryDialog(
-  { issueId, prop_id, prop_story, open, onClose, handleClose,
-    // refresh 
-  }: UserStoryDialogProps
+  { issueId, prop_id, prop_story, open, onClose, handleClose }: UserStoryDialogProps
 ) {
 
   const theme = useTheme();
@@ -151,7 +162,6 @@ export default function UserStoryDialog(
 
   async function saveUserStory() {
     try {
-      console.log("clicked Save button");
       setErrorMessageVisible(false);
       setSaving(true);
 
@@ -165,7 +175,6 @@ export default function UserStoryDialog(
         const json = await response.json();
         console.log(json);
         setSaving(false);
-        // refresh();
         setIssue(json);
         handleClose();
       } else {
@@ -189,7 +198,6 @@ export default function UserStoryDialog(
       fullWidth
       maxWidth="md"
     >
-
       <DialogTitle>
         {prop_id ? "Edit " : "Create "}User Story
       </DialogTitle>
@@ -201,14 +209,11 @@ export default function UserStoryDialog(
         }}>
           {joinedDescription}
         </Box>
-        {/* <Stack direction="column" gap={1}> */}
         <Table>
           <TableBody>
             {story.description.map((description, i) => {
               return (
-                // <Stack direction="row" key={i} spacing={1}>
                 <TableRow key={i}>
-                  {/* <FormControl fullWidth > */}
                   <TableCell sx={{ borderBottom: "none", maxWidth: "5rem" }}>
                     <Select
                       labelId="demo-simple-select-label"
@@ -228,8 +233,6 @@ export default function UserStoryDialog(
                       <MenuItem value={"componentRef"}>Component Reference</MenuItem>
                     </Select>
                   </TableCell>
-
-                  {/* <InputLabel>Text</InputLabel> */}
                   <TableCell sx={{ borderBottom: "none" }}>
                     <TextField
                       value={description.text}
@@ -240,23 +243,18 @@ export default function UserStoryDialog(
                       maxRows={2}
                       onChange={(e) => {
                         updateStoryDescriptionText(i, e.target.value);
-
                       }}
                     />
-                    {/* </FormControl> */}
-                    {/* </Stack> */}
                   </TableCell>
                 </TableRow>
               )
             })}
           </TableBody>
         </Table>
-        {/* </Stack> */}
         <Stack direction="row" justifyContent={"middle"}>
           <Button
             variant="outlined"
             onClick={() => {
-              console.log("open showUserStoryDialog")
               addDescriptionRow();
             }}
             sx={{ margin: "auto" }}
@@ -265,7 +263,6 @@ export default function UserStoryDialog(
               <span>Add Row to User Story</span>
               <AddCircleOutline />
             </Stack>
-
           </Button>
         </Stack>
       </DialogContent>
@@ -334,7 +331,6 @@ export default function UserStoryDialog(
                   body: JSON.stringify({ story })
                 });
                 const json = await response.json();
-                console.log(json);
                 setDeleting(false);
                 setIssue(json);
                 setShowDeleteDialog(false);
@@ -352,11 +348,11 @@ export default function UserStoryDialog(
           </Button>
         </DialogActions>
         {deleteErrorMessageVisible && 
-        <DialogContent>
-          <Typography sx={{ color: theme.palette.error.main }}>
-            Something went wrong, please try again.
-          </Typography>
-        </DialogContent>
+          <DialogContent>
+            <Typography color="error">
+              Something went wrong, please try again.
+            </Typography>
+          </DialogContent>
         }
       </Dialog>
     </Dialog>

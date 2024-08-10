@@ -1,13 +1,13 @@
 "use client";
-import { useState } from "react";
+import Stack from "@mui/material/Stack";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
 import BaseDialog from "./BaseDialog";
+import { useState } from "react";
 import { useIssueContext } from "@/context/IssueContext";
-import { Stack, MenuItem, Select, TextField } from "@mui/material";
 
 export default function IssueHeaderDialog() {
 
-
-  
   const { 
     issueHeaderDialogOpen, setIssueHeaderDialogOpen, issue, setIssue 
   } = useIssueContext();
@@ -31,7 +31,6 @@ export default function IssueHeaderDialog() {
           })
           if (response.status >= 400) throw new Error("Response Error");
           const json = await response.json();
-          console.log(json);
           setIssue(json);
         } catch(err) {
           console.log(err);
@@ -57,7 +56,6 @@ export default function IssueHeaderDialog() {
           </TextField>
         </Stack>
       }
-      
     />
   )
 }

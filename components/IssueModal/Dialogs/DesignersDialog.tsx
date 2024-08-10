@@ -1,7 +1,10 @@
 import BaseDialog from "./BaseDialog";
 import { useIssueContext } from "@/context/IssueContext";
 import { IUser } from "@/models/User";
-import { FormControl, FormGroup, FormControlLabel, Checkbox } from "@mui/material";
+import FormControl from "@mui/material/FormControl";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
 import { useState, useEffect } from "react";
 
 
@@ -45,7 +48,6 @@ export default function DesignersDialog() {
     setDesigners(users);
   }
 
-
   useEffect(() => {
     if (designersDialogOpen) populateDesigners();
   }, [designersDialogOpen])
@@ -66,7 +68,6 @@ export default function DesignersDialog() {
           })
           if (response.status >= 400) throw new Error("Response Error");
           const json = await response.json();
-          console.log(json);
           setIssue(json);
         } catch(err) {
           console.log(err);

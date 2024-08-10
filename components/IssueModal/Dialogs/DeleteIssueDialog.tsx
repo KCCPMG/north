@@ -1,18 +1,16 @@
 "use client"
-import { Dialog, DialogTitle, DialogContent, DialogActions, Button, Typography } from "@mui/material";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography"; 
+import CircularProgress from "@mui/material/CircularProgress";
 import { useState } from "react";
-import { CircularProgress } from "@mui/material";
 import { useIssueContext } from "@/context/IssueContext";
 
 
-// type DeleteIssueDialogProps = {
-//   open: boolean
-// }
-
-
-export default function DeleteIssueDialog(
-  // {open}: DeleteIssueDialogProps
-) {
+export default function DeleteIssueDialog() {
 
   const { issue, deleteIssueDialogOpen, setDeleteIssueDialogOpen, updateIssue } = useIssueContext();
 
