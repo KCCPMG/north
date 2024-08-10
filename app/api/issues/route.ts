@@ -5,8 +5,6 @@ import Issue from "@/models/Issue";
 import { revalidatePath } from "next/cache";
 
 
-
-
 export async function POST(req: NextRequest) {
 
   try {

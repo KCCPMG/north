@@ -13,7 +13,6 @@ export async function GET(req: NextRequest) {
     await mongooseConnect();
 
     const params = req.nextUrl.searchParams;
-    console.log(params);
     const ref = params.get('ref');
     const query = req.nextUrl.searchParams.get('query');
     
@@ -36,15 +35,11 @@ export async function GET(req: NextRequest) {
         query.slice(0,splitIndex), query.slice(splitIndex+1)
       ]
 
-      console.log({tableName, propertyName})
-
       const tableProperties = await TableProperty.find({field: propertyName})
       .populate<{table: {name: string, _id: mongoose.Types.ObjectId}}>({
         path: 'table',
         select: '_id name'
       })
-
-      console.log(JSON.stringify(tableProperties, null, 2));
 
       if (tableProperties.length === 0) return Response.json("Document not found");
       else {
@@ -112,13 +107,11 @@ export async function GET(req: NextRequest) {
       if (components.length === 0) return Response.json("Document not found");
       else return Response.json(components[0]);
 
-
     } else {
       return Response.error();
     }
     
     return Response.json(query);
-
 
   } catch (err) {
     console.log(err);
