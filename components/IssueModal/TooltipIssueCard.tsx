@@ -1,10 +1,12 @@
 import { IUser } from "@/models/User"
-import { Card, CardActions, CardContent, Typography, Button, Divider } from "@mui/material"
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
 
 
 type TooltipIssueCardProps = {
   issueType: string,
-  name: string,
   description: string,
   assigned_designers: Array<IUser>, 
   assigned_engineers: Array<IUser>
@@ -12,7 +14,7 @@ type TooltipIssueCardProps = {
 
 
 export default function TooltipIssueCard(
-  {issueType, name, description, assigned_designers, assigned_engineers} : TooltipIssueCardProps
+  {issueType, description, assigned_designers, assigned_engineers} : TooltipIssueCardProps
 ) {
 
   return (

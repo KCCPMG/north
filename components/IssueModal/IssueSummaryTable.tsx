@@ -1,6 +1,8 @@
-import { Typography, Table, TableBody, Link } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import Link from "@mui/material/Link";
 import ModalTableRow from "./ModalTableRow";
-import { IUser } from "@/models/User";
 import { useIssueContext } from "@/context/IssueContext";
 import DescriptionDialog from "./Dialogs/DescriptionDialog";
 import DesignersDialog from "./Dialogs/DesignersDialog";
@@ -9,7 +11,6 @@ import RouteLocationDialog from "./Dialogs/RouteLocationDialog";
 import FigmaLinkDialog from "./Dialogs/FigmaLinkDialog";
 import GithubLinkDialog from "./Dialogs/GithubLinkDialog";
 import EngFilesDialog from "./Dialogs/EngFilesDialog";
-
 
 
 export default function IssueSummary() {

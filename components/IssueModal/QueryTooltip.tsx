@@ -1,5 +1,11 @@
 "use client";
-import { Typography, Chip, Table, TableBody, TableHead, TableRow, TableCell, Box } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Chip from "@mui/material/Chip";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
 import { styled } from '@mui/material/styles';
 import Tooltip, { TooltipProps, tooltipClasses } from '@mui/material/Tooltip';
 import { Fragment, useState } from "react";
@@ -55,7 +61,6 @@ export default function QueryTooltip({ textType, text }: QueryTooltipProps) {
         setSearchResult(
           <TooltipIssueCard 
             issueType={issueType}
-            name={name}
             description={description}
             assigned_designers={assigned_designers}
             assigned_engineers={assigned_engineers}
@@ -90,9 +95,6 @@ export default function QueryTooltip({ textType, text }: QueryTooltipProps) {
         )
       }
 
-
-      console.log(json);
-      // setSearchResult(json);
     } catch (err) {
       console.log(err);
       setSearchResult(<span>Something went wrong</span>);

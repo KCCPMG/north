@@ -1,5 +1,13 @@
 "use client";
-import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Button, DialogActions, Stack } from "@mui/material"
+import TableCell from "@mui/material/TableCell";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Table from "@mui/material/Table";
+import Typography from "@mui/material/Typography";
+import TableBody from "@mui/material/TableBody";
+import Button from "@mui/material/Button";
+import DialogActions from "@mui/material/DialogActions";
+import Stack from "@mui/material/Stack";
 import { IUserStory } from "@/models/UserStory";
 import UserStoryRow from "./UserStoryRow";
 import { useIssueContext } from "@/context/IssueContext";
@@ -17,7 +25,6 @@ type UserStoriesProps = {
 
 export default function UserStories({ issueId, stories, refresh }: UserStoriesProps) {
 
-  const { editMode } = useIssueContext();
   const { data: session } = useSession();
   const [showUserStoryDialog, setShowUserStoryDialog] = useState(false);
 
@@ -71,12 +78,8 @@ export default function UserStories({ issueId, stories, refresh }: UserStoriesPr
               open={showUserStoryDialog}
               handleClose={() => setShowUserStoryDialog(false)}
               onClose={(e, r) => {
-                console.log("close showUserStoryDialog")
-                console.log({ e });
-                console.log({ r });
                 setShowUserStoryDialog(false);
               }}
-              // refresh={refresh}
             />
           </>
         }

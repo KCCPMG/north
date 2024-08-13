@@ -1,6 +1,8 @@
-import { useIssueContext } from "@/context/IssueContext";
-import { Button, Typography, TableRow, TableCell, TextField, useTheme } from "@mui/material";
-import { ChangeEvent, ReactNode } from "react";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import { ReactNode } from "react";
 import EditIcon from '@mui/icons-material/Edit';
 import { useState, Dispatch, SetStateAction } from "react";
 import { useSession } from "next-auth/react";
@@ -8,20 +10,14 @@ import { useSession } from "next-auth/react";
 type ModalTableRowProps = {
   property: string,
   textValue: string | undefined,
-  // onChange: (e: ChangeEvent) => React.SetStateAction<string>,
   child?: ReactNode,
-  // showDialog: (e: MouseEventHandler<HTMLAnchorElement>) => SetStateAction<boolean>
   setShowDialog: Dispatch<SetStateAction<boolean>>
 }
 
 export default function ModalTableRow(
   { property, textValue, child, setShowDialog }: ModalTableRowProps) {
 
-  const { editMode } = useIssueContext();
-
   const { data: session } = useSession();
-  const theme = useTheme();
-
   const [showEditIcon, setShowEditIcon] = useState(false);
 
 

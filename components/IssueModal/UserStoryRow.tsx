@@ -1,15 +1,14 @@
 "use client";
-import { TableCell, TableHead, TableRow, Table, Typography, TableBody, Checkbox, TextField, Chip, Button } from "@mui/material"
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import BlockIcon from '@mui/icons-material/Block';
+import TableCell from "@mui/material/Button";
+import TableRow from "@mui/material/Button";
+import Button from "@mui/material/Button";
 import { IUserStory } from "@/models/UserStory"
 import { useIssueContext } from "@/context/IssueContext"
 import QueryTooltip from "./QueryTooltip";
 import { v4 as uuidv4 } from 'uuid';
 import EditIcon from '@mui/icons-material/Edit';
 import { Dispatch, SetStateAction, useState } from "react";
-import UserStoryDialog, { EditableUserStory } from "./Dialogs/UserStoryDialog";
-import Issue from "@/models/Issue";
+import UserStoryDialog from "./Dialogs/UserStoryDialog";
 import { useSession } from "next-auth/react";
 import IssueCheckbox from "./IssueCheckbox";
 import { saveUserStory } from "@/lib/api";
@@ -42,17 +41,11 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
     )
   })
 
-  // const assembledStory = <span>
-  //   {description.join("")}
-  // </span>
-
-
   const {
     description, engineering_done, design_done, database_references, links, components
   } = story;
 
   const issue = story.issue.toString();
-
 
   return (
     <TableRow 
@@ -86,23 +79,11 @@ export default function UserStory({ story, refresh }: UserStoryProps) {
               issue, engineering_done, design_done, database_references, links, components,
               description: structuredClone(description)
             }}
-            // prop_story={structuredClone(story) as EditableUserStory}
             open={showUserStoryDialog}
             handleClose={() => setShowUserStoryDialog(false)}
             onClose={() => setShowUserStoryDialog(false)}
-            // refresh={refresh}
           />
         </TableCell>
-        // <TextField
-        //   defaultValue={story.description.map(des => des.text).join("")}
-        //   variant="standard"
-        //   multiline
-        //   fullWidth
-        //   maxRows={2}
-        // /> :
-
-
-
       }
 
       <TableCell sx={{ borderBottom: "none" }}>

@@ -1,16 +1,19 @@
-import { Table, TableBody, TableRow, TableCell, Typography, Checkbox } from "@mui/material";
-import { ParsedPopulatedIssueType } from "@/models/Controls"
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import Typography from "@mui/material/Typography"; 
 import BlockIcon from '@mui/icons-material/Block';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import { ParsedPopulatedIssueType } from "@/models/Controls"
+import IssueCheckbox from "./IssueCheckbox";
 import { useIssueContext } from "@/context/IssueContext";
 import { useSession } from "next-auth/react";
-import IssueCheckbox from "./IssueCheckbox";
 import { saveIssue } from "@/lib/api";
 
 type IssueModalMergeChecklistProps = {
   issue: ParsedPopulatedIssueType
 }
-
 
 export default function IssueModalMergeChecklist({ issue }: IssueModalMergeChecklistProps) {
 
@@ -39,7 +42,6 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
                     }, setIssue);
                   }}
                 /> :
-                // <Checkbox defaultChecked={issue.design_complete} /> :
                 issue.design_complete ?
                   <CheckCircleIcon color="primary" /> :
                   <BlockIcon />
@@ -63,8 +65,6 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
                     }, setIssue);
                   }}
                 /> :
-                // <Checkbox defaultChecked={issue.eng_implementation_complete} /> :
-
                 issue.eng_implementation_complete ?
                   <CheckCircleIcon color="primary" /> :
                   <BlockIcon />
@@ -86,17 +86,11 @@ export default function IssueModalMergeChecklist({ issue }: IssueModalMergeCheck
                     await saveIssue(issue._id, {
                       eng_implementation_meets_design: {
                         approval_date: issue.eng_implementation_meets_design.approval_date,
-                        // approving_designer: issue.eng_implementation_meets_design.approving_designer || undefined,
                         meets_design: !issue.eng_implementation_meets_design.meets_design
                       }
                     }, setIssue);
                   }}
                 /> :
-                // <Checkbox
-                //   defaultChecked={issue.eng_implementation_meets_design.meets_design}
-                // /> :
-
-
                 issue.eng_implementation_meets_design.meets_design ?
                   <>
                     <CheckCircleIcon color="primary" />

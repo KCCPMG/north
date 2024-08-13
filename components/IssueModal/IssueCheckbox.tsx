@@ -1,10 +1,9 @@
-import { useSession } from "next-auth/react"
 import Checkbox from "@mui/material/Checkbox";
 import CircularProgress from '@mui/material/CircularProgress';
-import { useEffect, useState } from "react";
-import { saveIssue } from "@/lib/api";
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import BlockIcon from '@mui/icons-material/Block';
+import { useSession } from "next-auth/react"
+import { useState } from "react";
 
 
 type IssueCheckboxProps = {
