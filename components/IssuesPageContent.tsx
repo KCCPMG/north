@@ -1,7 +1,11 @@
 "use client";
-import { Typography, Box, Stack, Divider, Button } from "@mui/material";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import Button from "@mui/material/Button";
 import { IssueContextProvider } from "@/context/IssueContext";
-import { ParsedPopulatedIssueType, getPopulatedIssues } from "@/models/Controls";
+import { ParsedPopulatedIssueType } from "@/models/Controls";
 import IssueCard from "@/components/IssueCard";
 import { useState, useEffect } from "react";
 import NewIssueDialog from "./NewIssueDialog";
@@ -17,7 +21,6 @@ export default function IssuesPageContent(
 ) {
 
   const {data: session} = useSession();
-  console.log(session);
 
   const [issues, setIssues] = useState<Array<ParsedPopulatedIssueType>>(parsedIssues) 
 

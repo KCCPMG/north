@@ -1,20 +1,17 @@
 "use client"
-import Paper from "@mui/material/Paper";
 import Accordion from "@mui/material/Accordion"
 import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import KeyboardArrowUpDown from '@mui/icons-material/KeyboardArrowDown';
 import Typography from '@mui/joy/Typography';
-import { PopulatedTableType } from "@/models/Controls";
-import { Table, TableHead, TableRow, TableCell, TableBody, Box, useTheme } from "@mui/material";
+import Table from "@mui/material/Table";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import TableCell from "@mui/material/TableCell";
+import TableBody from "@mui/material/TableBody";
 
-
-// type DBTableAccordionProps = {
-//   table: PopulatedTableType
-// }
 
 type DBTableAccordionProps = {
-  table_id: string,
   table_name: string,
   table_properties: {
     tp_id: string,
@@ -25,7 +22,7 @@ type DBTableAccordionProps = {
 }
 
 
-export default function DBTableAccordion({table_id, table_name, table_properties}: DBTableAccordionProps ) {
+export default function DBTableAccordion({table_name, table_properties}: DBTableAccordionProps ) {
 
   return (
     <Accordion>

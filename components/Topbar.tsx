@@ -1,6 +1,10 @@
 "use client";
 
-import { AppBar, Toolbar, Typography, Box, Button } from "@mui/material";
+import AppBar from "@mui/material/AppBar"; 
+import Toolbar from "@mui/material/Toolbar"; 
+import Typography from "@mui/material/Typography"; 
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import theme from "@/theme";
 import { signIn, signOut } from "next-auth/react";
 import { useSession } from "next-auth/react";

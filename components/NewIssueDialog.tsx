@@ -1,8 +1,9 @@
 "use client";
 import { useState } from "react";
 import BaseDialog from "./IssueModal/Dialogs/BaseDialog";
-
-import { Stack, MenuItem, Select, TextField } from "@mui/material";
+import Stack from "@mui/material/Stack";
+import MenuItem from "@mui/material/MenuItem";
+import TextField from "@mui/material/TextField";
 import { ParsedPopulatedIssueType } from "@/models/Controls";
 
 
@@ -10,7 +11,6 @@ type NewIssueDialogProps = {
   open: boolean,
   handleClose: () => void,
   addIssue: (issue: ParsedPopulatedIssueType) => void
-
 }
 
 export default function NewIssueDialog(
@@ -38,7 +38,6 @@ export default function NewIssueDialog(
           })
           if (response.status >= 400) throw new Error("Response Error");
           const json = await response.json();
-          console.log(json);
           addIssue(json);
         } catch(err) {
           console.log(err);

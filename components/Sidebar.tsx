@@ -1,12 +1,15 @@
-import theme from "@/theme";
-import { Drawer, List, ListItem, ListItemText, Toolbar, Link } from "@mui/material";
+import Drawer from "@mui/material/Drawer"; 
+import List from "@mui/material/List"; 
+import ListItem from "@mui/material/ListItem"; 
+import ListItemText from "@mui/material/ListItemText"; 
+import Toolbar from "@mui/material/Toolbar"; 
+import Link from "@mui/material/Link";
 
 
 export default function Sidebar({ width }: { width: string }) {
   return (
     <Drawer
       anchor="left"
-      // classes={}
       open={true}
       variant="persistent"
       sx={{
