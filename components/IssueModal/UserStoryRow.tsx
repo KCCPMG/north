@@ -1,6 +1,6 @@
 "use client";
-import TableCell from "@mui/material/Button";
-import TableRow from "@mui/material/Button";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 import Button from "@mui/material/Button";
 import { IUserStory } from "@/models/UserStory"
 import { useIssueContext } from "@/context/IssueContext"
