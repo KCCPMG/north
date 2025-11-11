@@ -12,7 +12,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import Topbar from "@/components/Topbar";
+import TopBar from "@/components/TopBar"
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -39,7 +39,7 @@ export default async function RootLayout({
             <ThemeProvider theme={theme}>
               <CssBaseline />
               <Box display="flex">
-                <Topbar />
+                <TopBar />
                 <Sidebar width={drawerWidth} />
                 <Box width={"100%"} sx={{margin: 4}} component="main">
                   <Toolbar />
