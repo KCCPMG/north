@@ -20,11 +20,10 @@ import { useSession } from "next-auth/react";
 type IssueModalProps = {
   refresh: () => void,
   open: boolean,
-  onClose: (event: {}, reason: "backdropClick" | "escapeKeyDown") => void,
-  handleClose: () => void
+  handleClose: (event: {}, reason: "backdropClick" | "escapeKeyDown" | "closeButtonClick") => void,
 }
 
-export default function IssueModal({ open, onClose, refresh, handleClose }: IssueModalProps) {
+export default function IssueModal({ open, refresh, handleClose }: IssueModalProps) {
 
   const { 
     setEditMode, issue, setIssueHeaderDialogOpen, setDeleteIssueDialogOpen
@@ -38,7 +37,7 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
       open={open}
       onClose={(event, reason) => {
         setEditMode(false);
-        onClose(event, reason);
+        handleClose(event, reason);
       }}
       fullWidth
       maxWidth="md"
@@ -84,6 +83,13 @@ export default function IssueModal({ open, onClose, refresh, handleClose }: Issu
       </DialogContent>
       {session?.user &&
         <DialogActions>
+          <Button
+            color="primary"
+            variant="contained"
+            onClick={(e) => handleClose(e, "closeButtonClick")}
+          >
+            Close
+          </Button>
           <Button 
             color="error"
             variant="outlined"

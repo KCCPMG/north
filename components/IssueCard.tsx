@@ -58,7 +58,6 @@ export default function IssueCard({ initialIssue }: IssueCardProps) {
           <IssueModal
             refresh={refresh}
             open={modalOpen}
-            onClose={() => setModalOpen(false)}
             handleClose={() => setModalOpen(false)}
           />
         </CardActions>
