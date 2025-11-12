@@ -18,7 +18,6 @@ export default async function Page() {
           return (
             <Grid item xs={12} sm={12} md={6} key={table._id.toString()}>
               <DBTableAccordion
-                table_id={table._id.toString()}
                 table_name={table.name}
                 table_properties={table.table_properties.map(tp => {
                   return {
