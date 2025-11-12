@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import ClientSessionProvider from "@/context/ClientSessionProvider";
 import mongooseConnect from "@/lib/mongooseConnect";
-import Sidebar from "@/components/Sidebar";
+import Sidebar from "@/components/Layout/Sidebar";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v13-appRouter";
 import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import theme from "@/theme";
@@ -12,7 +12,7 @@ import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/700.css';
-import TopBar from "@/components/TopBar"
+import TopBar from "@/components/Layout/TopBar"
 import { Box, CssBaseline, Toolbar } from "@mui/material";
 
 const inter = Inter({ subsets: ["latin"] });
