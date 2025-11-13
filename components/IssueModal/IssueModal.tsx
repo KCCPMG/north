@@ -25,7 +25,7 @@ type IssueModalProps = {
 
 export default function IssueModal({ open, refresh, handleClose }: IssueModalProps) {
 
-  const { 
+  const {
     setEditMode, issue, setIssueHeaderDialogOpen, setDeleteIssueDialogOpen
   } = useIssueContext();
 
@@ -45,14 +45,14 @@ export default function IssueModal({ open, refresh, handleClose }: IssueModalPro
       aria-describedby="issue-dialog-description"
     >
       {/* <Box> */}
-      <DialogTitle 
+      <DialogTitle
         id="issue-dialog-title"
-        sx={{lineHeight: 2}}
-        onMouseEnter={() => {setShowDialogTitleButton(true)}}
-        onMouseLeave={() => {setShowDialogTitleButton(false)}}
+        sx={{ lineHeight: 2 }}
+        onMouseEnter={() => { setShowDialogTitleButton(true) }}
+        onMouseLeave={() => { setShowDialogTitleButton(false) }}
       >
         {issue.issueType[0].toUpperCase()}{issue.issueType.slice(1)}: {issue.name}
-        {showDialogTitleButton && session?.user &&       
+        {showDialogTitleButton && session?.user &&
           <Button>
             <EditIcon onClick={() => setIssueHeaderDialogOpen(true)} color="primary" />
           </Button>
@@ -67,7 +67,7 @@ export default function IssueModal({ open, refresh, handleClose }: IssueModalPro
           divider={<Divider orientation="horizontal" />}
         >
           <Box>
-            <IssueSummaryTable/>
+            <IssueSummaryTable />
           </Box>
           <Box>
             <UserStoriesTable
@@ -81,24 +81,24 @@ export default function IssueModal({ open, refresh, handleClose }: IssueModalPro
           </Box>
         </Stack>
       </DialogContent>
-      {session?.user &&
-        <DialogActions>
+      <DialogActions>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={(e) => handleClose(e, "closeButtonClick")}
+        >
+          Close
+        </Button>
+        {session?.user &&
           <Button
-            color="primary"
-            variant="contained"
-            onClick={(e) => handleClose(e, "closeButtonClick")}
-          >
-            Close
-          </Button>
-          <Button 
             color="error"
             variant="outlined"
-            onClick={() => {setDeleteIssueDialogOpen(true)}}
+            onClick={() => { setDeleteIssueDialogOpen(true) }}
           >
             Delete Issue
           </Button>
-        </DialogActions>
-      }
+        }
+      </DialogActions>
       <DeleteIssueDialog />
     </Dialog >
   )
